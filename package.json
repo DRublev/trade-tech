@@ -1,0 +1,21 @@
+{
+  "name": "contest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "scripts": {
+    "dev": "nodemon -e ts,js --exec 'ts-node -r tsconfig-paths/register' ./src/index.ts",
+    "postinstall": "cd ./node_modules/invest-nodejs-grpc-sdk && tsc && cd ../.."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",
+    "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16",
+    "tsconfig-paths": "^4.0.0"
+  }
+}

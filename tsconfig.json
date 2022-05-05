@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es5",
+    "outDir": "./built",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+    },
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths",
+      }
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+}
