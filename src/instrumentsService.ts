@@ -1,5 +1,5 @@
 
-import { InstrumentIdType, Share } from "invest-nodejs-grpc-sdk/dist/generated/instruments";
+import { InstrumentStatus, Share } from "invest-nodejs-grpc-sdk/dist/generated/instruments";
 import { InvestSdk } from "./types";
 
 
@@ -11,34 +11,22 @@ export default class InstrumentsService {
     this.client = client;
   }
 
-  public async filterByAvailable(candidates: string[]): Promise<[string[], string[]]> {
+  public async filterByAvailable(candidates: string[]): Promise<[Share[], Share[]]> {
     try {
+      const allShares = await this.client.instruments.shares({
+        instrumentStatus: InstrumentStatus.INSTRUMENT_STATUS_BASE,
+      });
+      const available = allShares.instruments
+        .filter((share) => candidates.includes(share.ticker));
+      const notAvailable = candidates
+        .filter((ticker) => !available.some((c) => c.ticker === ticker))
+        .map((ticker) => ({ ticker })) as Share[];
 
+      return [available, notAvailable];
     } catch (e) {
+      console.log(typeof e, Object.entries(e))
       console.error(`Ошибка при фильтрации инструментов: ${e.message}`);
-      return [[], candidates];
-    }
-  }
-
-  public async getSharesByTickers(candidates: string[]): Promise<Share[]> {
-    try {
-      const acc = [];
-      for await (const candidate of candidates) {
-        try {
-          const share = await this.client.instruments.shareBy({
-            idType: InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER,
-            id: candidate,
-          });
-          acc.push(share);
-        } catch (e) {
-          console.warn(`Не смог получить информацию о ${candidate}`, e.message);
-        }
-      }
-
-      return acc;
-    } catch (e) {
-      console.error(`Ошибка при получении figi для инструментов: ${e.message}`);
-      return [];
+      return [[], candidates.map((ticker) => ({ ticker })) as Share[]];
     }
   }
 }
