@@ -1,7 +1,9 @@
+import { SubscriptionInterval } from 'invest-nodejs-grpc-sdk/dist/generated/marketdata';
 import { Strategies } from './strategies';
 
 
 type TradeShare = {
+  candleInterval: SubscriptionInterval,
   /**
    * Максимальное количество лотов для торговли
    */

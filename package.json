@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.ts",
+  "engines": {
+    "node": ">=15.0.0"
+  },
   "scripts": {
     "dev": "nodemon -e ts,js --exec 'ts-node -r tsconfig-paths/register' ./src/index.ts",
     "postinstall": "cd ./node_modules/invest-nodejs-grpc-sdk && tsc && cd ../.."

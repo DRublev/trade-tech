@@ -2,17 +2,23 @@ import { Account } from "invest-nodejs-grpc-sdk/dist/generated/users";
 import { InvestSdk } from "./types";
 
 export default class AccountService {
-  private client: InvestSdk;
+  private readonly client: InvestSdk;
+  private readonly isSandbox: boolean;
 
-  constructor(client: InvestSdk) {
+  constructor(client: InvestSdk, isSandbox: boolean) {
     if (!client) throw new Error('client is required');
     this.client = client;
+    this.isSandbox = isSandbox;
   }
 
   public async getList(): Promise<Account[]> {
     try {
-      const accounts = await this.client.users.getAccounts({});
-      return accounts.accounts;
+      let response;
+      if (this.isSandbox) {
+        response = await this.client.sandbox.getSandboxAccounts({});
+      }
+      response = await this.client.users.getAccounts({});
+      return response.accounts;
     } catch (e) {
       console.warn(`Ошибка при получении списка аккаунтов: ${e.message}`);
       return [];

@@ -3,14 +3,19 @@ import { InstrumentStatus, Share } from "invest-nodejs-grpc-sdk/dist/generated/i
 import { InvestSdk } from "./types";
 
 
-export default class InstrumentsService {
-  private client: InvestSdk;
+class InstrumentsService {
+  private readonly client: InvestSdk;
 
   constructor(client: InvestSdk) {
     if (!client) throw new Error('client is required');
     this.client = client;
   }
 
+  /**
+   * Получить интрументы по списку тикеров и отфильтровать по доступности их для торговли
+   * @param candidates - Список тикеров для получения информации о них
+   * @returns Картеж из доступных и недоступных для торговли инструментов
+   */
   public async filterByAvailable(candidates: string[]): Promise<[Share[], Share[]]> {
     try {
       const allShares = await this.client.instruments.shares({
@@ -30,3 +35,5 @@ export default class InstrumentsService {
     }
   }
 }
+
+export default InstrumentsService;
