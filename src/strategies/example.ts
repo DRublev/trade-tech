@@ -1,22 +1,161 @@
-import TradeShare from "@/tradeShare";
+import { randomUUID } from 'crypto';
+import { roundToNearestStep, toNum } from "@/helpers";
+import logger from "@/logger";
+import ShareTradeConfig from "@/tradeShare";
 import { Share } from "invest-nodejs-grpc-sdk/dist/generated/instruments";
 import { Candle } from "invest-nodejs-grpc-sdk/dist/generated/marketdata";
-import { OrderState, PostOrderRequest } from "invest-nodejs-grpc-sdk/dist/generated/orders";
+import { OrderDirection, OrderState, OrderType, PostOrderRequest } from "invest-nodejs-grpc-sdk/dist/generated/orders";
+import { Quotation } from "invest-nodejs-grpc-sdk/src/generated/common";
 import { IStrategy } from ".";
 
-class ExampleStrategy implements IStrategy {
-  private readonly config: TradeShare;
 
-  constructor(share: Share, config: TradeShare) {
+/**
+ * Стратегия работает по принципу "Купил дешевле, продал дороже"
+ */
+class ExampleStrategy implements IStrategy {
+  private readonly config: ShareTradeConfig;
+  private readonly instrumentInfo: Share;
+
+  private lastTradesInfo = {
+    sell: { price: Infinity, quantity: 0 },
+    buy: { price: -Infinity, quantity: 0 },
+  };
+  private processingQuantity = {
+    buy: 0,
+    sell: 0,
+  };
+  private processingMoney = 0;
+  private holdingSharesQuantity = 0;
+  private leftAvailableBalance = 0;
+
+  private lastProcessedOrderStage: string = null;
+
+
+  constructor(share: Share, config: ShareTradeConfig) {
+    if (!share || !config) {
+      throw new Error('Необходимо предоставить информацию об инструменте!');
+    }
     this.config = config;
+    this.instrumentInfo = share;
+
+    this.leftAvailableBalance = config.maxBalance;
   }
 
-  onCandle(candle: Candle): AsyncIterable<PostOrderRequest> {
-    console.log('15 example', candle);
+  * onCandle(candle: Candle): Generator<Partial<PostOrderRequest>> {
+    logger.info(`[Example] ${this.instrumentInfo.ticker} Получена новая свеча ${candle.time}\n`
+    + `Держим ${this.holdingSharesQuantity} last buy ${this.lastTradesInfo.buy.price} ${this.lastTradesInfo.buy.quantity} \n`
+    + `last sell ${this.lastTradesInfo.sell.price} ${this.lastTradesInfo.sell.quantity} \n`
+    + `processing: ${this.processingQuantity.buy} (buy), ${this.processingQuantity.sell} (sell) \n`
+    + `balance: ${this.leftAvailableBalance}`
+    );
+    const high = toNum(candle.high);
+    const low = toNum(candle.low);
+
+    // Округляем цену с учетом шага цены инструмента
+    const buyPrice = roundToNearestStep(
+      Number(low) + this.config.commission,
+      toNum(this.instrumentInfo.minPriceIncrement),
+    );
+    // Если мы можем купить дешевле, чем продавали
+    if (buyPrice + this.config.priceStep < this.lastTradesInfo.sell.price) {
+      // Сколько лотов теоретически можем купить
+      const availableToBuy = this.config.maxToTradeAmount - this.processingQuantity.buy - this.holdingSharesQuantity;
+
+      let lotsToBuy = Math.floor(availableToBuy);
+      // Если денег на покупку не хвататет, уменьшаем кол-во лотов, пока их не хватит
+      while(lotsToBuy * buyPrice > this.leftAvailableBalance - this.processingMoney) {
+        lotsToBuy--;
+      }
+      if (lotsToBuy > 0) {
+        this.processingQuantity.buy += lotsToBuy;
+        this.processingMoney += buyPrice;
+        // Возвращаем заявку на покупку
+        // Мы учитываем комиссию при расчетах, но не учитываем при выставлении заявки, так как это делает брокер
+        yield this.makeBuyOrder(candle.low, lotsToBuy);
+
+        /*
+          Так как эта стратегия не предусматривает выставление встречной заявки на продажу,
+          то после выставления заявки на покупку мы завершаем обработку свечи.
+          Если нужно выставлять также встречную заявку, то следует убрать return
+        */
+        return;
+      }
+    }
+
+    // Логика расчета продажи обратна логике покупки
+    const sellPrice = roundToNearestStep(
+      Number(high) + this.config.commission,
+      toNum(this.instrumentInfo.minPriceIncrement),
+    );
+    if (sellPrice - this.config.priceStep > this.lastTradesInfo.buy.price) {
+      const availableToSell = Math.floor(this.holdingSharesQuantity - this.processingQuantity.sell);
+      
+      if (availableToSell > 0) {
+        this.processingQuantity.sell += availableToSell;
+        
+        yield this.makeSellOrder(candle.high, availableToSell);
+      }
+    }
+    
     return;
   }
 
   async onChangeOrder(order: OrderState): Promise<void> {
+    try {
+      const latestStage = order.stages[order.stages.length - 1];
+      console.log('106 example', order);
+      if (!latestStage) return;
+      // Выходим, если уже учли эту сделку
+      if (latestStage.tradeId === this.lastProcessedOrderStage) {
+        return;
+      }
+
+      const { price, quantity } = latestStage;
+      const isSell = order.direction === OrderDirection.ORDER_DIRECTION_SELL;
+      const isBuy = order.direction === OrderDirection.ORDER_DIRECTION_BUY;
+      
+      this.lastProcessedOrderStage = latestStage.tradeId;
+      if (isBuy) {
+        logger.info(`[Example] ${this.instrumentInfo.ticker} Покупка завершена. Цена: ${price}, кол-во: ${quantity}`);
+        this.holdingSharesQuantity += quantity;
+        this.leftAvailableBalance -= toNum(price);
+      } else if (isSell) {
+        logger.info(`[Example] ${this.instrumentInfo.ticker} Продажа завершена. Цена: ${price}, кол-во: ${quantity}`);
+        this.holdingSharesQuantity -= quantity;
+        this.leftAvailableBalance += toNum(price);
+        this.processingMoney -= toNum(price);
+      } else {
+        logger.warning(`[Example] Неизвестное направление заявки: ${JSON.stringify(order)}`);
+      }
+
+      logger.info(`[Example] ${this.instrumentInfo.ticker} Осталось денег: ${this.leftAvailableBalance}\n`
+        + `Держим лотов: ${this.holdingSharesQuantity}\n`
+        + `В обработке: ${this.processingQuantity.buy} покупка, ${this.processingQuantity.sell} продажа`);
+    } catch (e) {
+      logger.error(`Ошибка при обработке изменения заявки: ${e.message}`);
+    }
+  }
+
+  private makeBuyOrder(price: Quotation, quantity: number): Partial<PostOrderRequest> {
+    return {
+      figi: this.instrumentInfo.figi,
+      quantity,
+      price,
+      direction: OrderDirection.ORDER_DIRECTION_BUY,
+      orderType: OrderType.ORDER_TYPE_LIMIT,
+      orderId: randomUUID(),
+    };
+  }
+
+  private makeSellOrder(price: Quotation, quantity: number): Partial<PostOrderRequest> {
+    return {
+      figi: this.instrumentInfo.figi,
+      quantity,
+      price,
+      direction: OrderDirection.ORDER_DIRECTION_SELL,
+      orderType: OrderType.ORDER_TYPE_LIMIT,
+      orderId: randomUUID(),
+    };
   }
 }
 

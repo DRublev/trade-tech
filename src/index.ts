@@ -3,13 +3,14 @@ import { EventEmitter } from 'events';
 import { createSdk } from 'invest-nodejs-grpc-sdk';
 import { Share } from 'invest-nodejs-grpc-sdk/dist/generated/instruments';
 import { AccessLevel, AccountStatus, AccountType } from 'invest-nodejs-grpc-sdk/dist/generated/users';
+import { PostOrderRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
 import {
   MarketDataRequest,
   SubscriptionAction,
   SubscriptionInterval,
 } from 'invest-nodejs-grpc-sdk/dist/generated/marketdata';
 
-import TradeShare from './tradeShare';
+import ShareTradeConfig from './tradeShare';
 import { Strategies } from './strategies';
 import * as strategies from './strategies';
 import AccountService from './accountService';
@@ -17,8 +18,10 @@ import { chooseFromConsole } from './consoleReader';
 import { NoAccessException } from './exceptions';
 import InstrumentsService from './instrumentsService';
 import ExchangeService from './exchangeService';
-import { PostOrderRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
 import OrdersService from './ordersService';
+import logger from './logger';
+import BacktestingReader from './backtestingReader';
+import { sleep } from './helpers';
 
 /** TODO
   ** ✅ get all accounts
@@ -33,32 +36,32 @@ import OrdersService from './ordersService';
 */
 
 if (!process.env.TOKEN) {
-  console.error('Необходимо подставить токен с полным доступ в переменную окружения TOKEN');
+  logger.error('Необходимо подставить токен с полным доступ в переменную окружения TOKEN');
   process.exit(1);
 }
 
 // При значении true все заявки будут выставляться в режиме песочницы
-const isSandbox = true;
+let isSandbox = true;
+
+// Если указан путь к файту, то будет использован контент файла, а не данные из рынка
+// Также, автоматически будет выставлен режим песочницы
+const backtestingFilePath = './veon_2022-04-25_1min.json';
 
 const client = createSdk(process.env.TOKEN, 'DRublev');
-const shares: { [ticker: string]: TradeShare } = {
+const shares: { [ticker: string]: ShareTradeConfig } = {
   VEON: {
     candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
+    maxBalance: 50,
     maxToTradeAmount: 10,
     priceStep: 0.01,
+    commission: 0.01,
     strategy: Strategies.Example,
   },
-  // SPCE: { 
-  //   candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE, 
-  //   maxToTradeAmount: 10, 
-  //   priceStep: 0.01, 
-  //   strategy: Strategies.Example,
-  // },
 };
 const instrumentsService = new InstrumentsService(client);
 const exchangeService = new ExchangeService(client);
 const ordersService = new OrdersService(client, isSandbox);
-let accountId = null;
+let accountId = '197184a3-2055-40a9-9dbc-afe37a598771';
 let tradableShares: Share[] = [];
 
 const killSwitch = new AbortController();
@@ -101,15 +104,11 @@ const start = async () => {
     // await chooseAccount();
     await prepareSharesList();
 
-
     // Обновляем статус работы бирж с переодичностью в 1 час
     /* В качестве улучшения можно использовать механизм Pub/Sub
-     * и подписываться на события изменения статуса работы биржи из сервиса ExchangeService
+       и подписываться на события изменения статуса работы биржи из сервиса ExchangeService
      */
     await watchForExchangeTimetable();
-    // setTimeout(() => {
-    //   exchangesStatuses['SPB'] = true;
-    // }, 5000);
     watchIntervalId = setInterval(watchForExchangeTimetable, 1000 * 60); // 1 час
 
     // Код для подчитски мусора и остановки бота в непредвиденных ситуациях
@@ -120,21 +119,23 @@ const start = async () => {
       }
     });
 
-    const candlesStream = await client.marketDataStream.marketDataStream(getSubscribeCandlesRequest());
+    let candlesStream;
+    if (!backtestingFilePath) {
+      candlesStream = await client.marketDataStream.marketDataStream(getSubscribeCandlesRequest());
+    } else {
+      logger.info('Запускаем бектестинг...');
+      isSandbox = true;
+      const backtestingReader = new BacktestingReader(backtestingFilePath);
+      candlesStream = await backtestingReader.readAsStream(1000, killSwitch.signal);
+    }
     const tradingPromises = tradableShares.map(startTrading);
-
     for await (const response of candlesStream) {
       // При получении новой свечи уведомляем всех подписчиков (коими являются стратегии) об этом
       if (response.candle) {
-        console.log('128 index', response.candle);
         candlesEventEmitter.emit(events.receive(response.candle.figi), response.candle);
       }
-      // } else {
-      //   const o = Math.random();
-      //   console.log('135 index', o);
-      //   candlesEventEmitter.emit(events.receive('BBG000QCW561'), { figi: 'BBG000QCW561', open: o });
-      // }
     }
+
 
     /*
     * Запуск псевдо-параллельной торговли по всем инструментов
@@ -142,8 +143,7 @@ const start = async () => {
     */
     await Promise.allSettled(tradingPromises);
   } catch (e) {
-    console.error(e);
-
+    logger.emerg(e);
     // Если какая-либо операция была в процессе выполнения (например, цикл торговли) - она будет отменена
     killSwitch.abort();
   }
@@ -159,7 +159,8 @@ const chooseAccount = async () => {
     const allAccounts = await accountService.getList();
 
     const withTradeAccess = allAccounts
-      .filter((account) => account.accessLevel === AccessLevel.ACCOUNT_ACCESS_LEVEL_FULL_ACCESS);
+      .filter((account) => account.accessLevel === AccessLevel.ACCOUNT_ACCESS_LEVEL_FULL_ACCESS
+        && account.type !== AccountType.ACCOUNT_TYPE_INVEST_BOX);
 
     const options = withTradeAccess.map((account) => ({
       name: `${account.name} | Статус: ${AccountStatus[account.status]} | Тип: ${AccountType[account.type]}`
@@ -177,11 +178,11 @@ const chooseAccount = async () => {
     return chosen;
   } catch (e) {
     if (e.name === 'NoAccessException') {
-      console.error(e.message);
+      logger.error(e.message);
       return process.exit(1);
     }
 
-    console.warn(`Ошибка при выборе аккаунта: ${e.message} \n Попробуйте снова`);
+    logger.warning(`Ошибка при выборе аккаунта: ${e.message} \n Попробуйте снова`);
     return chooseAccount();
   }
 };
@@ -191,24 +192,24 @@ const chooseAccount = async () => {
  */
 const prepareSharesList = async () => {
   try {
-    console.info('Подготавливаю список инструментов...');
+    logger.info('Подготавливаю список инструментов...');
     const [availableShares, notFoundShares] = await instrumentsService.filterByAvailable(Object.keys(shares));
     if (notFoundShares.length) {
       const tickers = notFoundShares.map(s => s.ticker).join(', \n');
-      console.warn(`Не найдены инструменты: ${tickers} \n Они будут проигнорированы`);
+      logger.warning(`Не найдены инструменты: ${tickers} \n Они будут проигнорированы`);
     }
 
     tradableShares = availableShares.filter((share) => {
       if (!share.apiTradeAvailableFlag) {
-        console.warn(`${share.ticker} недоступен для торговли`);
+        logger.warning(`${share.ticker} недоступен для торговли`);
         return false;
       }
       if (!share.buyAvailableFlag) {
-        console.warn(`${share.ticker} недоступен для покупки`);
+        logger.warning(`${share.ticker} недоступен для покупки`);
         return false;
       }
       if (!share.sellAvailableFlag) {
-        console.warn(`${share.ticker} недоступен для продажи`);
+        logger.warning(`${share.ticker} недоступен для продажи`);
         return false;
       }
 
@@ -216,12 +217,12 @@ const prepareSharesList = async () => {
     });
 
     if (!tradableShares.length) {
-      console.log('Нет доступных инструментов для торговли');
+      logger.warning('Нет доступных инструментов для торговли');
       process.exit(0);
     }
-    console.info(`Запускаюсь на ${tradableShares.length} инструментах...`);
+    logger.info(`Запускаюсь на ${tradableShares.length} инструментах...`);
   } catch (e) {
-    console.error('Ошибка при получении списка активов', e.message);
+    logger.error('Ошибка при получении списка активов', e.message);
     process.exit(1);
   }
 };
@@ -240,68 +241,73 @@ const watchForExchangeTimetable = async () => {
     // Обновляем текущий статус для каждой из интересующих нас бирж
     for (const exchange of exchanges) {
       try {
+        if (isSandbox) {
+          exchangesStatuses[exchange] = true;
+          continue;
+        }
         const isWorking = await exchangeService.isWorking(exchange);
-        console.info(`Обновляю статус биржи ${exchange} - ${isWorking ? 'работает' : 'не работает'}`);
+        logger.info(`Обновляю статус биржи ${exchange} - ${isWorking ? 'работает' : 'не работает'}`);
         exchangesStatuses[exchange] = isWorking;
       } catch (e) {
-        console.warn(`Ошибка при проверке работы биржи ${exchange}: ${e.message}`);
+        logger.warning(`Ошибка при проверке работы биржи ${exchange}: ${e.message}`);
       }
     }
   } catch (e) {
-    console.error('Ошибка при получении расписания работы биржи', e.message);
+    logger.error('Ошибка при получении расписания работы биржи', e.message);
   }
 };
 
 const startTrading = async (share: Share) => {
   try {
-    const shareTradeConfig: TradeShare = shares[share.ticker];
+    const shareTradeConfig: ShareTradeConfig = shares[share.ticker];
     if (!shareTradeConfig) {
       throw new ReferenceError(`Не найден конфиг для инструмента ${share.ticker}`);
     }
-
     const strategyKey = Strategies[shareTradeConfig.strategy];
     if (!strategies[strategyKey]) {
       throw new ReferenceError(` Не найдена стратегия для торговли ${shareTradeConfig.strategy}`);
     }
 
-    console.info(`Запускаю стратегию ${strategyKey} для ${share.ticker}`);
+    logger.info(`Запускаю стратегию ${strategyKey} для ${share.ticker}`);
     const strategy: strategies.IStrategy = new strategies[strategyKey](share, shareTradeConfig);
 
     if (!exchangesStatuses[share.exchange]) {
-      console.warn(share.ticker, share.exchange, 'не работает, ожидаем изменения статуса работы биржи');
+      logger.warning(share.ticker, share.exchange, 'не работает, ожидаем изменения статуса работы биржи');
       while (!exchangesStatuses[share.exchange] && !killSwitch.signal.aborted) {
         await sleep(300);
       }
-      console.info(share.ticker, share.exchange, ' снова работает, продолжаем торговлю');
+      logger.info(share.ticker, share.exchange, ' снова работает, продолжаем торговлю');
     }
 
     candlesEventEmitter.on(events.receive(share.figi), async function (candle) {
       try {
         if (killSwitch.signal.aborted) return;
-        console.debug('262 index', candle);
-  
+
         const orders = strategy.onCandle(candle);
-        console.debug('275 index', orders);
         if (orders) {
           for await (const order of orders) {
-            const orderId = await ordersService.postOrder(order);
-            if (orderId) {
-              console.info(`Отправлена заявка ${orderId} на инструмент ${share.ticker}`);
-              const orderTrades = await ordersService.watchForOrder(orderId, killSwitch.signal);
-              if (orderTrades) {
-                for await (const trade of orderTrades) {
-                  await strategy.onChangeOrder(trade);
-                }
+            try {
+              order.accountId = accountId;
+              const orderId = await ordersService.postOrder(order as PostOrderRequest);
+              if (orderId) {
+                logger.deal(share.ticker, order as PostOrderRequest, strategyKey,);
+                logger.info(`Отправлена заявка ${orderId} на инструмент ${share.ticker}`);
+
+                setInterval(async () => {
+                  checkOrder(strategy, orderId);
+                }, 1000);
               }
+            } catch (e) {
+              logger.error('Ошибка при выставлении заявки', candle, order, e.message);
             }
           }
         }
       } catch (e) {
-        console.error(share.ticker, `Ошибка при обработке свечи: ${e.message}`);
+        logger.error(share.ticker, `Ошибка при обработке свечи: ${e.message}`);
       }
     });
   } catch (e) {
-    console.error(share.ticker, ' Ошибка при торговле', e.message);
+    logger.error(share.ticker, ' Ошибка при торговле', e.message);
     if (!(e instanceof ReferenceError)) {
       console.info(share.ticker, ' Пытаемся снова');
       return startTrading(share);
@@ -309,6 +315,15 @@ const startTrading = async (share: Share) => {
   }
 };
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const checkOrder = async (strategy: strategies.IStrategy, orderId: string) => {
+  try {
+    const trade = await ordersService.checkOrderState(accountId, orderId);
+    if (trade) {
+        await strategy.onChangeOrder(trade);
+    }
+  } catch (e) {
+    logger.error('Ошибка при отслеживании заявки', e.message);
+  }
+}
 
 start();

@@ -22,12 +22,13 @@ class OrdersService {
     let posted;
     if (this.isSandbox) {
       posted = await this.client.sandbox.postSandboxOrder(order);
+    } else {
+      posted = await this.client.orders.postOrder(order);
     }
-    posted = await this.client.orders.postOrder(order);
     return posted.orderId;
   }
 
-  public async *watchForOrder(orderId: string, abortSignal: AbortSignal): AsyncIterable<OrderState> {
+  public async *watchForOrder(accountId: string, orderId: string, abortSignal: AbortSignal): AsyncIterable<OrderState> {
     if (!orderId) return;
 
     let canWork = true;
@@ -37,15 +38,15 @@ class OrdersService {
     abortSignal.onabort = () => {
       canWork = false;
       clearInterval(timer);
-    }
+    };
 
     while (!abortSignal.aborted) {
       if (!canWork) continue;
       let order: OrderState;
       if (this.isSandbox) {
-        order = await this.client.sandbox.getSandboxOrderState({ orderId });
+        order = await this.client.sandbox.getSandboxOrderState({ accountId, orderId });
       } else {
-        order = await this.client.orders.getOrderState({ orderId });
+        order = await this.client.orders.getOrderState({ accountId, orderId });
       }
       if (!order) {
         console.warn(`Заявка ${orderId} не найдена`);
@@ -53,13 +54,35 @@ class OrdersService {
       }
        canWork = false;
       const latestStage = order.stages[order.stages.length - 1];
-      if (latestStage.tradeId !== this.lastWatchedStages[orderId]) {
-        this.lastWatchedStages[orderId] = latestStage.tradeId;
-        yield order;
-      } 
+      if (latestStage) {
+        if (latestStage.tradeId !== this.lastWatchedStages[orderId]) {
+          this.lastWatchedStages[orderId] = latestStage.tradeId;
+          yield order;
+        } 
+      }
     }
 
     return;
+  }
+
+  public async checkOrderState (accountId: string, orderId: string): Promise<OrderState> {
+    let order: OrderState;
+      if (this.isSandbox) {
+        order = await this.client.sandbox.getSandboxOrderState({ accountId, orderId });
+      } else {
+        order = await this.client.orders.getOrderState({ accountId, orderId });
+      }
+      if (!order) {
+        console.warn(`Заявка ${orderId} не найдена`);
+        return;
+      }
+      const latestStage = order.stages[order.stages.length - 1];
+      if (latestStage) {
+        if (latestStage.tradeId !== this.lastWatchedStages[orderId]) {
+          this.lastWatchedStages[orderId] = latestStage.tradeId;
+          return order;
+        } 
+      }
   }
 }
 

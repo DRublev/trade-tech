@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "target": "es5",
+    "target": "es6",
+    "moduleResolution": "node",
     "outDir": "./built",
     "baseUrl": "./src",
     "paths": {

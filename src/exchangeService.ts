@@ -1,3 +1,4 @@
+import logger from "./logger";
 import { InvestSdk } from "./types";
 
 
@@ -27,7 +28,7 @@ class ExchangeService {
 
       return today > startTime && today < endTime;
     } catch (e) {
-      console.error(`Ошибка при проверке работы биржи: ${e.message}`);
+      logger.error(`Ошибка при проверке работы биржи: ${e.message}`);
       return false;
     }
   }

@@ -1,5 +1,6 @@
 
 import { InstrumentStatus, Share } from "invest-nodejs-grpc-sdk/dist/generated/instruments";
+import logger from "./logger";
 import { InvestSdk } from "./types";
 
 
@@ -29,8 +30,7 @@ class InstrumentsService {
 
       return [available, notAvailable];
     } catch (e) {
-      console.log(typeof e, Object.entries(e))
-      console.error(`Ошибка при фильтрации инструментов: ${e.message}`);
+      logger.error(`Ошибка при фильтрации инструментов: ${e.message}`);
       return [[], candidates.map((ticker) => ({ ticker })) as Share[]];
     }
   }

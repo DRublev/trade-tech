@@ -1,4 +1,5 @@
 import { Account } from "invest-nodejs-grpc-sdk/dist/generated/users";
+import logger from "./logger";
 import { InvestSdk } from "./types";
 
 export default class AccountService {
@@ -16,11 +17,12 @@ export default class AccountService {
       let response;
       if (this.isSandbox) {
         response = await this.client.sandbox.getSandboxAccounts({});
+      } else {
+        response = await this.client.users.getAccounts({});
       }
-      response = await this.client.users.getAccounts({});
       return response.accounts;
     } catch (e) {
-      console.warn(`Ошибка при получении списка аккаунтов: ${e.message}`);
+      logger.warning(`Ошибка при получении списка аккаунтов: ${e.message}`);
       return [];
     }
   }

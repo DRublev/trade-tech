@@ -2,20 +2,29 @@ import { SubscriptionInterval } from 'invest-nodejs-grpc-sdk/dist/generated/mark
 import { Strategies } from './strategies';
 
 
-type TradeShare = {
+type ShareTradeConfig = {
   candleInterval: SubscriptionInterval,
+  /**
+   * Максимальное количество денег, которое может быть использовано
+   */
+  maxBalance: number,
   /**
    * Максимальное количество лотов для торговли
    */
   maxToTradeAmount: number;
   /**
-   * Минимальная разница цен (High и Low), при которой будет выставлен ордер
+   * Минимальная разница цен (High и Low), при которой будет выставлена заявка
+   * Комиссия учитывается автоматически, нет нужды включать ее в это значение
    */
   priceStep: number;
+  /**
+   * Размер комиссии при покупке/продаже 1 лота
+   */
+  commission: number;
   /**
    * Каким алгоритмом торговать
    */
   strategy: Strategies,
 }
 
-export default TradeShare;
+export default ShareTradeConfig;
