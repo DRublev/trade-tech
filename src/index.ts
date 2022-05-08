@@ -290,7 +290,7 @@ const startTrading = async (share: Share) => {
               order.accountId = accountId;
               const orderId = await ordersService.postOrder(order as PostOrderRequest);
               if (orderId) {
-                logger.deal(share.ticker, order as PostOrderRequest, strategyKey,);
+                logger.deal(share.ticker, order as PostOrderRequest, strategyKey);
                 logger.info(`Отправлена заявка ${orderId} на инструмент ${share.ticker}`);
 
                 setInterval(async () => {
