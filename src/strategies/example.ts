@@ -28,7 +28,16 @@ class ExampleStrategy implements IStrategy {
   private holdingSharesQuantity = 0;
   private leftAvailableBalance = 0;
 
-  private lastProcessedOrderStage: string = null;
+  // ID выставленных заявок
+  private processingOrders = {
+    buy: null,
+    sell: null,
+  };
+  // ID последних обработанных сделок
+  private lastProcessedStages = {
+    buy: null,
+    sell: null,
+  };
 
 
   constructor(share: Share, config: ShareTradeConfig) {
@@ -71,8 +80,9 @@ class ExampleStrategy implements IStrategy {
         this.processingMoney += buyPrice * lotsToBuy;
         // Возвращаем заявку на покупку
         // Мы учитываем комиссию при расчетах, но не учитываем при выставлении заявки, так как это делает брокер
-        yield this.makeBuyOrder(candle.low, lotsToBuy);
-
+        const request = this.makeBuyOrder(candle.low, lotsToBuy);
+        this.processingOrders.buy = request.orderId;
+        yield request;
         /*
           Так как эта стратегия не предусматривает выставление встречной заявки на продажу,
           то после выставления заявки на покупку мы завершаем обработку свечи.
@@ -93,39 +103,80 @@ class ExampleStrategy implements IStrategy {
       if (availableToSell > 0) {
         this.processingQuantity.sell += availableToSell;
         
-        yield this.makeSellOrder(candle.high, availableToSell);
+        const request = this.makeSellOrder(candle.high, availableToSell);
+        this.processingOrders.sell = request.orderId;
+        yield request;
       }
     }
     
     return;
   }
 
+  cancelPreviousOrder(candle: Candle): string {
+    if (this.lastTradesInfo.buy.price > toNum(candle.close)) {
+      const maxDecrease = (this.lastTradesInfo.buy.price / 100) * this.config.cancelBuyOrderIfPriceGoesBelow;
+      const decrease = this.lastTradesInfo.buy.price - toNum(candle.close);
+      if (decrease >= maxDecrease) {
+        return this.processingOrders.buy;
+      }
+    }
+    if (this.lastTradesInfo.sell.price < toNum(candle.close)) {
+      const maxIncrease = (this.lastTradesInfo.sell.price / 100) * this.config.cancelSellOrderIfPriceGoesAbove;
+      const increase = toNum(candle.close) - this.lastTradesInfo.sell.price;
+      if (increase >= maxIncrease) {
+        return this.processingOrders.sell;
+      }
+    }
+  }
+
   async onChangeOrder(order: OrderState): Promise<void> {
     try {
       const latestStage = order.stages[order.stages.length - 1];
-      console.log('106 example', order);
-      if (!latestStage) return;
+      const isSell = order.direction == OrderDirection.ORDER_DIRECTION_SELL
+      || order.orderId === this.processingOrders.sell;
+      const isBuy = order.direction == OrderDirection.ORDER_DIRECTION_BUY
+        || order.orderId === this.processingOrders.buy || order.direction == 0;
+      const isExecuted = order.lotsRequested == order.lotsExecuted;
+
+      if (!latestStage && !isExecuted) return;
+      
+      // Если заявка выполнена полностью, то обнуляем процессинг заявок
+      if (isExecuted) {
+        if (isSell) {
+          this.processingOrders.sell = null;
+        } else if (isBuy) {
+          this.processingOrders.buy = null;
+        }
+      }
+      const lastProcessedStageId = isBuy ? this.lastProcessedStages.buy : this.lastProcessedStages.sell;
+
       // Выходим, если уже учли эту сделку
-      if (latestStage.tradeId === this.lastProcessedOrderStage) {
+      if (latestStage && latestStage.tradeId === lastProcessedStageId) {
         return;
       }
 
-      const { price, quantity } = latestStage;
-      const isSell = order.direction === OrderDirection.ORDER_DIRECTION_SELL;
-      const isBuy = order.direction === OrderDirection.ORDER_DIRECTION_BUY;
+      const { price, quantity } = isExecuted && !latestStage
+        ?  { price: order.executedOrderPrice, quantity: order.lotsExecuted }
+        : latestStage;
       
-      this.lastProcessedOrderStage = latestStage.tradeId;
+      if (isSell) {
+        this.lastProcessedStages.sell = (latestStage || {}).tradeId;
+      } else if (isBuy) {
+        this.lastProcessedStages.buy = (latestStage || {}).tradeId;
+      }
       if (isBuy) {
-        logger.info(`[Example] ${this.instrumentInfo.ticker} Покупка завершена. Цена: ${price}, кол-во: ${quantity}`);
+        logger.info(`[Example] ${this.instrumentInfo.ticker} Покупка завершена. Цена: ${toNum(price)}, кол-во: ${quantity}`);
         this.holdingSharesQuantity += quantity;
         this.leftAvailableBalance -= toNum(price);
+        this.processingQuantity.buy -= quantity;
       } else if (isSell) {
-        logger.info(`[Example] ${this.instrumentInfo.ticker} Продажа завершена. Цена: ${price}, кол-во: ${quantity}`);
+        logger.info(`[Example] ${this.instrumentInfo.ticker} Продажа завершена. Цена: ${toNum(price)}, кол-во: ${quantity}`);
         this.holdingSharesQuantity -= quantity;
         this.leftAvailableBalance += toNum(price);
         this.processingMoney -= toNum(price) * quantity;
+        this.processingQuantity.sell -= quantity;
       } else {
-        logger.warning(`[Example] Неизвестное направление заявки: ${JSON.stringify(order)}`);
+        logger.warning(`[Example] Неизвестное направление заявки: ${order.direction} ${JSON.stringify(this.processingOrders)} \n ${JSON.stringify(order)}`);
       }
 
       logger.info(`[Example] ${this.instrumentInfo.ticker} Осталось денег: ${this.leftAvailableBalance}\n`

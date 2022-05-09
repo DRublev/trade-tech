@@ -21,6 +21,20 @@ type ShareTradeConfig = {
    * Размер комиссии при покупке/продаже 1 лота
    */
   commission: number;
+
+  /**
+   * Отменять заявку на покупку, если цена уменьшилась на
+   * Поцентное значение
+   */
+  cancelBuyOrderIfPriceGoesBelow: number;
+  
+  
+  /**
+   * Отменять заявку на продажу, если цена увеличилась на
+   * Поцентное значение
+   */
+  cancelSellOrderIfPriceGoesAbove: number;
+
   /**
    * Каким алгоритмом торговать
    */

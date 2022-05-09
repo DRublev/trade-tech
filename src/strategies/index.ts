@@ -1,5 +1,5 @@
 import { Candle } from 'invest-nodejs-grpc-sdk/dist/generated/marketdata';
-import { OrderState, PostOrderRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
+import { CancelOrderRequest, OrderState, PostOrderRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
 
 
 export enum Strategies {
@@ -19,6 +19,13 @@ export interface IStrategy {
    * Используется для обновления информации о доступных средствах, количестве акций "в работе" и т.п.
    */ 
   onChangeOrder(order: OrderState): Promise<void>;
+
+  /**
+   * Принимает решение об отмене ранее выставленной заявки
+   * @param candle Свеча для обработки
+   * @returns null если не нужно отменять никакие заявки. Иначе возвращается ID заявки для отмены
+   */
+  cancelPreviousOrder(candle: Candle): string;
 }
 
 export { default as Example } from './example';

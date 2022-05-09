@@ -1,12 +1,13 @@
 import * as winston from "winston";
 import * as util from 'util';
 import * as TelegramLogger from 'winston-telegram';
-import { OrderDirection, OrderType, PostOrderRequest } from "invest-nodejs-grpc-sdk/dist/generated/orders";
+import { OrderDirection, OrderState, OrderType, PostOrderRequest } from "invest-nodejs-grpc-sdk/dist/generated/orders";
 import { toNum } from "./helpers";
 
 
-interface LoggerWithDealsLvl extends winston.Logger {
+interface ExtendedLogger extends winston.Logger {
   deal: (ticker: string, order: PostOrderRequest, ...args: any) => void;
+  cancelOrder: (ticker: string, order: OrderState, ...args: any) => void;
 };
 
 const format = winston.format.combine(
@@ -26,6 +27,7 @@ const format = winston.format.combine(
 const levels: any = {
   ...winston.config.syslog.levels,
   deals: 10,
+  cancelOrder: 11,
 };
 
 const transports = [
@@ -48,20 +50,45 @@ if (process.env.TG_TOKEN && process.env.TG_CHAT_ID) {
       + ' ID заявки: {metadata.orderId} \n'
       + ' Аккаунт: {metadata.accountId}',
   }));
+  logger.add(new TelegramLogger({
+    token: process.env.TG_TOKEN,
+    chatId: Number(process.env.TG_CHAT_ID),
+    level: 'cancelOrder',
+    unique: true,
+    template: 'Отмена заявки по {metadata.ticker} '
+      + '{metadata.quantity} шт. по цене {metadata.price} ({metadata.orderType} заявка) \n'
+      + 'Исполнено {metadata.lotsExecuted} \n'
+      + ' ID заявки: {metadata.orderId} \n'
+      + ' Аккаунт: {metadata.accountId}',
+  }));
 }
 
-(logger as LoggerWithDealsLvl).deal = (ticker: string, order: PostOrderRequest, ...args: any) => {
+(logger as ExtendedLogger).deal = (ticker: string, order: PostOrderRequest, ...args: any) => {
   logger.log({
     level: 'deals',
     message: args.join(' '),
     metadata: {
       ticker,
       ...order,
-      price: toNum(order.price),
+      price: toNum(order.price).toString(),
+      orderType: order.orderType === OrderType.ORDER_TYPE_LIMIT ? 'Лимитная' : 'Рыночная',
+      direction: order.direction === OrderDirection.ORDER_DIRECTION_BUY ? 'ПОКУПКА' : 'ПРОДАЖА',
+    },
+  });
+}
+(logger as ExtendedLogger).cancelOrder = (ticker: string, order: OrderState, ...args: any) => {
+  logger.log({
+    level: 'cancelOrder',
+    message: args.join(' '),
+    metadata: {
+      ticker,
+      ...order,
+      price: toNum(order.initialOrderPrice).toString(),
       orderType: order.orderType === OrderType.ORDER_TYPE_LIMIT ? 'Лимитная' : 'Рыночная',
       direction: order.direction === OrderDirection.ORDER_DIRECTION_BUY ? 'ПОКУПКА' : 'ПРОДАЖА',
     },
   });
 }
 
-export default logger as LoggerWithDealsLvl;
+
+export default logger as ExtendedLogger;

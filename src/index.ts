@@ -34,24 +34,36 @@ let isSandbox = true;
 
 // Если указан путь к файту, то будет использован контент файла, а не данные из рынка
 // Также, автоматически будет выставлен режим песочницы
-const backtestingFilePath = './veon_2022-04-25_1min.json';
+const backtestingFilePath = null; //'./veon_2022-04-25_1min.json';
 
 const client = createSdk(process.env.TOKEN, 'DRublev');
 const shares: { [ticker: string]: ShareTradeConfig } = {
-  VEON: {
+  SPBE: {
     candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
     maxBalance: 50,
     maxToTradeAmount: 10,
     priceStep: 0.01,
     commission: 0.01,
+    cancelBuyOrderIfPriceGoesBelow: 1,
+    cancelSellOrderIfPriceGoesAbove: 1,
     strategy: Strategies.Example,
   },
+  // VEON: {
+  //   candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
+  //   maxBalance: 50,
+  //   maxToTradeAmount: 10,
+  //   priceStep: 0.01,
+  //   commission: 0.01,
+  //   cancelBuyOrderIfPriceGoesBelow: 1,
+  //   cancelSellOrderIfPriceGoesAbove: 1,
+  //   strategy: Strategies.Example,
+  // },
 };
 const instrumentsService = new InstrumentsService(client);
 const exchangeService = new ExchangeService(client);
 const ordersService = new OrdersService(client, isSandbox);
 const accountService = new AccountService(client, isSandbox);
-let accountId = '197184a3-2055-40a9-9dbc-afe37a598771';
+let accountId;
 let tradableShares: Share[] = [];
 
 const killSwitch = new AbortController();
@@ -106,11 +118,13 @@ const start = async () => {
     watchIntervalId = setInterval(watchForExchangeTimetable, 1000 * 60); // 1 час
 
     // Код для подчитски мусора и остановки бота в непредвиденных ситуациях
-    process.on('SIGINT', function () {
+    // Отменяет все невыполненные заявки!
+    process.on('SIGINT', async function () {
       killSwitch.abort();
       if (watchIntervalId) {
         clearInterval(watchIntervalId);
       }
+      await ordersService.cancelAllOrders(accountId);
       watchOrderIntervalIds.forEach((id) => clearInterval(id));
     });
 
@@ -268,7 +282,7 @@ const startTrading = async (share: Share) => {
     if (!exchangesStatuses[share.exchange]) {
       logger.warning(share.ticker, share.exchange, 'не работает, ожидаем изменения статуса работы биржи');
       while (!exchangesStatuses[share.exchange] && !killSwitch.signal.aborted) {
-        await sleep(300);
+        await sleep(1000 * 60);
       }
       logger.info(share.ticker, share.exchange, ' снова работает, продолжаем торговлю');
     }
@@ -277,21 +291,35 @@ const startTrading = async (share: Share) => {
       try {
         if (killSwitch.signal.aborted) return;
 
+        logger.info(`Получена свеча ${candle.figi}`, JSON.stringify(candle));
+
+        try {
+          const cancelOrder = strategy.cancelPreviousOrder(candle);
+          
+          if (cancelOrder) {
+            logger.info(`Отменяю предыдущую заявку на ${share.ticker}`);
+            await ordersService.cancelOrder(accountId, cancelOrder);
+          }
+        } catch (e) {
+          logger.error(`Ошибка при закрытии предыдущей заяки ${share.ticker}: ${e.message}`);
+        }
+
         const orders = strategy.onCandle(candle);
         if (orders) {
           for await (const order of orders) {
             try {
               order.accountId = accountId;
-              const orderId = await ordersService.postOrder(order as PostOrderRequest);
-              if (orderId) {
-                logger.deal(share.ticker, order as PostOrderRequest, strategyKey);
-                logger.info(`Отправлена заявка ${orderId} на инструмент ${share.ticker}`);
+              const placedOrderId = await ordersService.postOrder(order as PostOrderRequest);
+              if (placedOrderId) {
+                logger.deal(share.ticker, (order as PostOrderRequest), strategyKey);
+                logger.info(`Отправлена заявка ${placedOrderId} на инструмент ${share.ticker}`);
 
                 const id = setInterval(async () => {
-                  checkOrder(strategy, orderId);
+                  await checkOrder(strategy, placedOrderId, order);
                 }, 1000);
                 watchOrderIntervalIds.push(id);
               }
+
             } catch (e) {
               logger.error('Ошибка при выставлении заявки', candle, order, e.message);
             }
@@ -310,11 +338,15 @@ const startTrading = async (share: Share) => {
   }
 };
 
-const checkOrder = async (strategy: strategies.IStrategy, orderId: string) => {
+const checkOrder = async (
+  strategy: strategies.IStrategy, 
+  placedOrderId: string,
+  requestedOrder: Partial<PostOrderRequest>,
+) => {
   try {
-    const trade = await ordersService.checkOrderState(accountId, orderId);
+    const trade = await ordersService.checkOrderState(accountId, placedOrderId);
     if (trade) {
-        await strategy.onChangeOrder(trade);
+      await strategy.onChangeOrder({ ...trade, orderId: requestedOrder.orderId, direction: requestedOrder.direction });
     }
   } catch (e) {
     logger.error('Ошибка при отслеживании заявки', e.message, typeof e, Object.entries(e));
