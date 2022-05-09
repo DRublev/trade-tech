@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "outDir": "./built",
     "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@/*": [
         "./*"
@@ -19,4 +20,5 @@
   "include": [
     "./src/**/*"
   ],
+  "exclude": ["node_modules/**/*"]
 }

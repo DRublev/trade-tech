@@ -1,0 +1,1508 @@
+[22-05-09 13:05:71] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Денежные средста: usd 107.1 ,rub -15762  
+
+[22-05-09 13:05:79] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Активы: 
+ share BBG002GHV6L9 
+  Акций 30 
+  Средняя цена 3.89 
+--------
+share BBG00HFWVGN0 
+  Акций 12 
+  Средняя цена 4.47 
+-------- 
+
+[22-05-09 13:05:79] info: Подготавливаю список инструментов...
+[22-05-09 13:05:41] info: Запускаюсь на 1 инструментах...
+[22-05-09 13:05:41] info: Запускаю стратегию Example для SPBE
+[22-05-09 13:05:87] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":880000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":880000000},"close":{"units":3,"nano":890000000},"volume":2,"time":"2022-05-09T10:21:00.000Z","lastTradeTs":"2022-05-09T10:21:22.586Z"}
+[22-05-09 13:05:87] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:21:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 0 (buy), 0 (sell) 
+balance: 50, processing: 0
+[22-05-09 13:05:99] info: Отправлена заявка 5ab66041-ede8-4051-bea8-a3a4f30c74b0 на инструмент SPBE
+[22-05-09 13:05:36] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":1,"time":"2022-05-09T10:22:00.000Z","lastTradeTs":"2022-05-09T10:22:54.471Z"}
+[22-05-09 13:05:36] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:22:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 38.9
+[22-05-09 13:05:94] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":2,"time":"2022-05-09T10:23:00.000Z","lastTradeTs":"2022-05-09T10:23:51.020Z"}
+[22-05-09 13:05:94] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:23:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 38.9
+[22-05-09 13:05:05] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":3,"time":"2022-05-09T10:23:00.000Z","lastTradeTs":"2022-05-09T10:23:52.165Z"}
+[22-05-09 13:05:05] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:23:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 38.9
+[22-05-09 13:05:81] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":880000000},"high":{"units":3,"nano":880000000},"low":{"units":3,"nano":880000000},"close":{"units":3,"nano":880000000},"volume":1,"time":"2022-05-09T10:24:00.000Z","lastTradeTs":"2022-05-09T10:24:27.883Z"}
+[22-05-09 13:05:81] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:24:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 38.9
+[22-05-09 13:05:56] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:56] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:56] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:56] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:57] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:57] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:57] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:57] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:58] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:58] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:58] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:58] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:59] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:59] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:59] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:59] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:62] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:62] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:58] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:58] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:60] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:60] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:60] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:60] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:60] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:60] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:60] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:60] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:60] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:60] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:63] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:62] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:62] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:61] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:61] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:63] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:63] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:63] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:64] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:64] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:63] warning: [Example] Неизвестное направление заявки: 0 
+ {"orderId":"5ab66041-ede8-4051-bea8-a3a4f30c74b0","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":800000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":800000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":800000000},"averagePositionPrice":{"currency":"","units":3,"nano":880000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":880000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:24:27.910Z"}
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:16] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Денежные средста: usd 68.3 ,rub -15762  
+
+[22-05-09 13:05:23] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Активы: 
+ share BBG002GHV6L9 
+  Акций 40 
+  Средняя цена 3.89 
+--------
+share BBG00HFWVGN0 
+  Акций 12 
+  Средняя цена 4.47 
+-------- 
+
+[22-05-09 13:05:23] info: Подготавливаю список инструментов...
+[22-05-09 13:05:70] info: Запускаюсь на 1 инструментах...
+[22-05-09 13:05:70] info: Запускаю стратегию Example для SPBE
+[22-05-09 13:05:91] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":880000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":880000000},"close":{"units":3,"nano":890000000},"volume":22,"time":"2022-05-09T10:25:00.000Z","lastTradeTs":"2022-05-09T10:25:45.485Z"}
+[22-05-09 13:05:91] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:25:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 0 (buy), 0 (sell) 
+balance: 50, processing: 0
+[22-05-09 13:05:02] info: Отправлена заявка 9af6b6c7-f45e-484b-a7e0-0e9c058e61a2 на инструмент SPBE
+[22-05-09 13:05:67] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":1,"time":"2022-05-09T10:26:00.000Z","lastTradeTs":"2022-05-09T10:26:23.732Z"}
+[22-05-09 13:05:67] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:26:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 38.9
+[22-05-09 13:05:49] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":870000000},"high":{"units":3,"nano":870000000},"low":{"units":3,"nano":870000000},"close":{"units":3,"nano":870000000},"volume":1,"time":"2022-05-09T10:27:00.000Z","lastTradeTs":"2022-05-09T10:27:25.578Z"}
+[22-05-09 13:05:49] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:27:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 38.9
+[22-05-09 13:05:36] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:36] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:36] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:36] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:36] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:36] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:36] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:36] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:37] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:37] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:37] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:37] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:39] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:39] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:39] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:39] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:39] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:39] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:40] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:40] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:40] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:40] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:41] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:41] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:41] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:41] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:42] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:42] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:44] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:45] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:42] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:42] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:43] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:43] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:44] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:45] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:44] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:44] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:44] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:44] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:45] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:45] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:46] warning: [Example] Неизвестное направление заявки: 0 [object Object] 
+ {"orderId":"9af6b6c7-f45e-484b-a7e0-0e9c058e61a2","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:27:25.602Z"}
+[22-05-09 13:05:46] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:27] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Денежные средста: usd 129.6 ,rub -15762  
+
+[22-05-09 13:05:33] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Активы: 
+ share BBG002GHV6L9 
+  Акций 50 
+  Средняя цена 3.87 
+--------
+share BBG00HFWVGN0 
+  Акций 12 
+  Средняя цена 4.47 
+-------- 
+
+[22-05-09 13:05:33] info: Подготавливаю список инструментов...
+[22-05-09 13:05:85] info: Запускаюсь на 1 инструментах...
+[22-05-09 13:05:86] info: Запускаю стратегию Example для SPBE
+[22-05-09 13:05:91] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":2,"time":"2022-05-09T10:28:00.000Z","lastTradeTs":"2022-05-09T10:28:51.995Z"}
+[22-05-09 13:05:91] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:28:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 0 (buy), 0 (sell) 
+balance: 50, processing: 0
+[22-05-09 13:05:97] info: Отправлена заявка edc2393e-0d62-46c0-8211-6967e8d97049 на инструмент SPBE
+[22-05-09 13:05:80] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":12,"time":"2022-05-09T10:28:00.000Z","lastTradeTs":"2022-05-09T10:28:52.884Z"}
+[22-05-09 13:05:80] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:28:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:90] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":870000000},"close":{"units":3,"nano":870000000},"volume":13,"time":"2022-05-09T10:28:00.000Z","lastTradeTs":"2022-05-09T10:28:54.970Z"}
+[22-05-09 13:05:90] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:28:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:04] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:04] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:02] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:02] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:04] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:04] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:03] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:03] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:05] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:05] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:05] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:05] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:06] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:06] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:04] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:04] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:05] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:05] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:05] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:05] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:05] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:05] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:06] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:06] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:07] warning: [Example] Неизвестное направление заявки: 0 {"buy":"1a0b96d5-706f-41e4-b627-7268a5f4c412","sell":null} 
+ {"orderId":"edc2393e-0d62-46c0-8211-6967e8d97049","executionReportStatus":1,"lotsRequested":10,"lotsExecuted":10,"initialOrderPrice":{"currency":"usd","units":38,"nano":700000000},"executedOrderPrice":{"currency":"usd","units":38,"nano":700000000},"totalOrderAmount":{"currency":"usd","units":38,"nano":700000000},"averagePositionPrice":{"currency":"","units":3,"nano":870000000},"initialCommission":{"currency":"usd","units":0,"nano":0},"executedCommission":{"currency":"usd","units":0,"nano":0},"figi":"BBG002GHV6L9","direction":0,"initialSecurityPrice":{"currency":"usd","units":3,"nano":870000000},"stages":[],"serviceCommission":{"currency":"usd","units":0,"nano":0},"currency":"usd","orderType":1,"orderDate":"2022-05-09T10:28:55.059Z"}
+[22-05-09 13:05:07] info: [Example] SPBE Осталось денег: 50
+Держим лотов: 0
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:26] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Денежные средста: usd 90.9 ,rub -15762  
+
+[22-05-09 13:05:33] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Активы: 
+ share BBG002GHV6L9 
+  Акций 60 
+  Средняя цена 3.87 
+--------
+share BBG00HFWVGN0 
+  Акций 12 
+  Средняя цена 4.47 
+-------- 
+
+[22-05-09 13:05:33] info: Подготавливаю список инструментов...
+[22-05-09 13:05:89] info: Запускаюсь на 1 инструментах...
+[22-05-09 13:05:89] info: Запускаю стратегию Example для SPBE
+[22-05-09 13:05:49] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Денежные средста: usd 90.9 ,rub -15762  
+
+[22-05-09 13:05:56] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Активы: 
+ share BBG002GHV6L9 
+  Акций 60 
+  Средняя цена 3.87 
+--------
+share BBG00HFWVGN0 
+  Акций 12 
+  Средняя цена 4.47 
+-------- 
+
+[22-05-09 13:05:56] info: Подготавливаю список инструментов...
+[22-05-09 13:05:17] info: Запускаюсь на 1 инструментах...
+[22-05-09 13:05:17] info: Запускаю стратегию Example для SPBE
+[22-05-09 13:05:38] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":1,"time":"2022-05-09T10:32:00.000Z","lastTradeTs":"2022-05-09T10:32:37.463Z"}
+[22-05-09 13:05:38] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:32:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 0 (buy), 0 (sell) 
+balance: 50, processing: 0
+[22-05-09 13:05:46] info: Отправлена заявка 0ef542b4-babb-4872-b64e-78afe5813561 на инструмент SPBE
+[22-05-09 13:05:37] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":900000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":900000000},"volume":293,"time":"2022-05-09T10:32:00.000Z","lastTradeTs":"2022-05-09T10:32:46.457Z"}
+[22-05-09 13:05:37] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:32:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:89] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":900000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":900000000},"volume":724,"time":"2022-05-09T10:32:00.000Z","lastTradeTs":"2022-05-09T10:32:46.457Z"}
+[22-05-09 13:05:89] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:32:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:74] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":1,"time":"2022-05-09T10:33:00.000Z","lastTradeTs":"2022-05-09T10:33:51.837Z"}
+[22-05-09 13:05:74] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:33:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:95] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":13,"time":"2022-05-09T10:33:00.000Z","lastTradeTs":"2022-05-09T10:33:51.837Z"}
+[22-05-09 13:05:95] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:33:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:77] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":1,"time":"2022-05-09T10:34:00.000Z","lastTradeTs":"2022-05-09T10:34:59.865Z"}
+[22-05-09 13:05:77] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:34:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:100] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":880000000},"high":{"units":3,"nano":880000000},"low":{"units":3,"nano":880000000},"close":{"units":3,"nano":880000000},"volume":2,"time":"2022-05-09T10:36:00.000Z","lastTradeTs":"2022-05-09T10:36:41.002Z"}
+[22-05-09 13:05:100] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:36:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39
+[22-05-09 13:05:35] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:35] info: [Example] SPBE Осталось денег: 11.200000000000003
+Держим лотов: 10
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:34] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:34] info: [Example] SPBE Осталось денег: -27.599999999999994
+Держим лотов: 20
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: -66.39999999999999
+Держим лотов: 30
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: -105.19999999999999
+Держим лотов: 40
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:37] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: -144
+Держим лотов: 50
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:37] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: -182.8
+Держим лотов: 60
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:43] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: -221.60000000000002
+Держим лотов: 70
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: -260.40000000000003
+Держим лотов: 80
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: -299.20000000000005
+Держим лотов: 90
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:40] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:40] info: [Example] SPBE Осталось денег: -338.00000000000006
+Держим лотов: 100
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:38] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:38] info: [Example] SPBE Осталось денег: -376.80000000000007
+Держим лотов: 110
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:40] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:40] info: [Example] SPBE Осталось денег: -415.6000000000001
+Держим лотов: 120
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:39] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:39] info: [Example] SPBE Осталось денег: -454.4000000000001
+Держим лотов: 130
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:40] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:40] info: [Example] SPBE Осталось денег: -493.2000000000001
+Держим лотов: 140
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:40] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:40] info: [Example] SPBE Осталось денег: -532.0000000000001
+Держим лотов: 150
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:40] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:40] info: [Example] SPBE Осталось денег: -570.8000000000001
+Держим лотов: 160
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:41] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: -609.6
+Держим лотов: 170
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:41] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: -648.4
+Держим лотов: 180
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:41] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: -687.1999999999999
+Держим лотов: 190
+В обработке: 10 покупка, 0 продажа
+[22-05-09 13:05:88] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":880000000},"high":{"units":3,"nano":880000000},"low":{"units":3,"nano":880000000},"close":{"units":3,"nano":880000000},"volume":11,"time":"2022-05-09T10:36:00.000Z","lastTradeTs":"2022-05-09T10:36:41.002Z"}
+[22-05-09 13:05:88] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:36:00 GMT+0300 (Москва, стандартное время)
+Держим 190 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: -687.1999999999999, processing: 39
+[22-05-09 13:05:96] info: Отправлена заявка 911d2851-b807-432b-bdf8-3761ddbfe0c0 на инструмент SPBE
+[22-05-09 13:05:41] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:41] info: [Example] SPBE Осталось денег: -725.9999999999999
+Держим лотов: 200
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:42] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:42] info: [Example] SPBE Осталось денег: -764.7999999999998
+Держим лотов: 210
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:42] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:42] info: [Example] SPBE Осталось денег: -803.5999999999998
+Держим лотов: 220
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:45] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: -842.3999999999997
+Держим лотов: 230
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:43] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:43] info: [Example] SPBE Осталось денег: -881.1999999999997
+Держим лотов: 240
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:44] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: -919.9999999999997
+Держим лотов: 250
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:43] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:43] info: [Example] SPBE Осталось денег: -958.7999999999996
+Держим лотов: 260
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:44] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: -997.5999999999996
+Держим лотов: 270
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:44] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: -1036.3999999999996
+Держим лотов: 280
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:44] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:44] info: [Example] SPBE Осталось денег: -1075.1999999999996
+Держим лотов: 290
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:45] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: -1113.9999999999995
+Держим лотов: 300
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:47] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:47] info: [Example] SPBE Осталось денег: -1152.7999999999995
+Держим лотов: 310
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:45] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: -1191.5999999999995
+Держим лотов: 320
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:45] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: -1230.3999999999994
+Держим лотов: 330
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:46] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:46] info: [Example] SPBE Осталось денег: -1269.1999999999994
+Держим лотов: 340
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:46] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:46] info: [Example] SPBE Осталось денег: -1307.9999999999993
+Держим лотов: 350
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:45] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: -1346.7999999999993
+Держим лотов: 360
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:45] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:45] info: [Example] SPBE Осталось денег: -1385.5999999999992
+Держим лотов: 370
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:46] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:46] info: [Example] SPBE Осталось денег: -1424.3999999999992
+Держим лотов: 380
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:54] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:54] info: [Example] SPBE Осталось денег: -1463.1999999999991
+Держим лотов: 390
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:47] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:47] info: [Example] SPBE Осталось денег: -1501.999999999999
+Держим лотов: 400
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:49] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:49] info: [Example] SPBE Осталось денег: -1540.799999999999
+Держим лотов: 410
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:49] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:49] info: [Example] SPBE Осталось денег: -1579.599999999999
+Держим лотов: 420
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:61] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:61] info: [Example] SPBE Осталось денег: -1618.399999999999
+Держим лотов: 430
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:49] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:49] info: [Example] SPBE Осталось денег: -1657.199999999999
+Держим лотов: 440
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:49] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:49] info: [Example] SPBE Осталось денег: -1695.9999999999989
+Держим лотов: 450
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:50] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:50] info: [Example] SPBE Осталось денег: -1734.7999999999988
+Держим лотов: 460
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:54] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:54] info: [Example] SPBE Осталось денег: -1773.5999999999988
+Держим лотов: 470
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:50] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:50] info: [Example] SPBE Осталось денег: -1812.3999999999987
+Держим лотов: 480
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:51] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:51] info: [Example] SPBE Осталось денег: -1851.1999999999987
+Держим лотов: 490
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:50] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:50] info: [Example] SPBE Осталось денег: -1889.9999999999986
+Держим лотов: 500
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:58] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:58] info: [Example] SPBE Осталось денег: -1928.7999999999986
+Держим лотов: 510
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:51] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:51] info: [Example] SPBE Осталось денег: -1967.5999999999985
+Держим лотов: 520
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:51] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:51] info: [Example] SPBE Осталось денег: -2006.3999999999985
+Держим лотов: 530
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:51] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:51] info: [Example] SPBE Осталось денег: -2045.1999999999985
+Держим лотов: 540
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:53] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:53] info: [Example] SPBE Осталось денег: -2083.9999999999986
+Держим лотов: 550
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:52] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:52] info: [Example] SPBE Осталось денег: -2122.799999999999
+Держим лотов: 560
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:53] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:53] info: [Example] SPBE Осталось денег: -2161.599999999999
+Держим лотов: 570
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:53] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:53] info: [Example] SPBE Осталось денег: -2200.399999999999
+Держим лотов: 580
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:65] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:65] info: [Example] SPBE Осталось денег: -2239.1999999999994
+Держим лотов: 590
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:53] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:53] info: [Example] SPBE Осталось денег: -2277.9999999999995
+Держим лотов: 600
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:54] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:54] info: [Example] SPBE Осталось денег: -2316.7999999999997
+Держим лотов: 610
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:56] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:56] info: [Example] SPBE Осталось денег: -2355.6
+Держим лотов: 620
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:54] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:54] info: [Example] SPBE Осталось денег: -2394.4
+Держим лотов: 630
+В обработке: 10 покупка, 190 продажа
+[22-05-09 13:05:24] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":1,"time":"2022-05-09T10:37:00.000Z","lastTradeTs":"2022-05-09T10:37:44.352Z"}
+[22-05-09 13:05:24] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:37:00 GMT+0300 (Москва, стандартное время)
+Держим 630 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 190 (sell) 
+balance: -2394.4, processing: 39
+[22-05-09 13:05:32] info: Отправлена заявка 024373b6-13c6-4016-97b0-67d7a4acbcc3 на инструмент SPBE
+[22-05-09 13:05:54] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:54] info: [Example] SPBE Осталось денег: -2433.2000000000003
+Держим лотов: 640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:17] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -3176.1000000000004
+Держим лотов: 830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:55] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:55] info: [Example] SPBE Осталось денег: -3214.9000000000005
+Держим лотов: 840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:16] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -3957.8000000000006
+Держим лотов: 1030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:55] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:55] info: [Example] SPBE Осталось денег: -3996.600000000001
+Держим лотов: 1040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:17] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -4739.500000000001
+Держим лотов: 1230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:57] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: -4778.300000000001
+Держим лотов: 1240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:16] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:16] info: [Example] SPBE Осталось денег: -5521.200000000001
+Держим лотов: 1430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:56] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:56] info: [Example] SPBE Осталось денег: -5560.000000000001
+Держим лотов: 1440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:17] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -6302.900000000001
+Держим лотов: 1630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:56] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:56] info: [Example] SPBE Осталось денег: -6341.700000000001
+Держим лотов: 1640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:17] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -7084.6
+Держим лотов: 1830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:56] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:56] info: [Example] SPBE Осталось денег: -7123.400000000001
+Держим лотов: 1840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:17] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -7866.3
+Держим лотов: 2030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:58] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:58] info: [Example] SPBE Осталось денег: -7905.1
+Держим лотов: 2040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:17] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -8648
+Держим лотов: 2230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:57] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: -8686.8
+Держим лотов: 2240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:17] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:17] info: [Example] SPBE Осталось денег: -9429.699999999999
+Держим лотов: 2430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:57] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: -9468.499999999998
+Держим лотов: 2440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:19] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:19] info: [Example] SPBE Осталось денег: -10211.399999999998
+Держим лотов: 2630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:57] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:57] info: [Example] SPBE Осталось денег: -10250.199999999997
+Держим лотов: 2640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:19] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:19] info: [Example] SPBE Осталось денег: -10993.099999999997
+Держим лотов: 2830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:58] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:58] info: [Example] SPBE Осталось денег: -11031.899999999996
+Держим лотов: 2840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:19] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:19] info: [Example] SPBE Осталось денег: -11774.799999999996
+Держим лотов: 3030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:58] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:58] info: [Example] SPBE Осталось денег: -11813.599999999995
+Держим лотов: 3040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:20] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:20] info: [Example] SPBE Осталось денег: -12556.499999999995
+Держим лотов: 3230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:59] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:59] info: [Example] SPBE Осталось денег: -12595.299999999994
+Держим лотов: 3240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:20] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:20] info: [Example] SPBE Осталось денег: -13338.199999999993
+Держим лотов: 3430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:59] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:59] info: [Example] SPBE Осталось денег: -13376.999999999993
+Держим лотов: 3440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:21] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:21] info: [Example] SPBE Осталось денег: -14119.899999999992
+Держим лотов: 3630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:60] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:60] info: [Example] SPBE Осталось денег: -14158.699999999992
+Держим лотов: 3640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:20] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:20] info: [Example] SPBE Осталось денег: -14901.599999999991
+Держим лотов: 3830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:59] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:59] info: [Example] SPBE Осталось денег: -14940.39999999999
+Держим лотов: 3840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:22] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:22] info: [Example] SPBE Осталось денег: -15683.29999999999
+Держим лотов: 4030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:60] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:60] info: [Example] SPBE Осталось денег: -15722.09999999999
+Держим лотов: 4040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:22] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:22] info: [Example] SPBE Осталось денег: -16464.99999999999
+Держим лотов: 4230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:61] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:61] info: [Example] SPBE Осталось денег: -16503.79999999999
+Держим лотов: 4240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:22] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:22] info: [Example] SPBE Осталось денег: -17246.69999999999
+Держим лотов: 4430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:63] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: -17285.49999999999
+Держим лотов: 4440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:23] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:23] info: [Example] SPBE Осталось денег: -18028.39999999999
+Держим лотов: 4630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:61] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:61] info: [Example] SPBE Осталось денег: -18067.19999999999
+Держим лотов: 4640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:22] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:22] info: [Example] SPBE Осталось денег: -18810.09999999999
+Держим лотов: 4830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:62] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:62] info: [Example] SPBE Осталось денег: -18848.89999999999
+Держим лотов: 4840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:24] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:24] info: [Example] SPBE Осталось денег: -19591.799999999992
+Держим лотов: 5030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:62] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:62] info: [Example] SPBE Осталось денег: -19630.59999999999
+Держим лотов: 5040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:23] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:23] info: [Example] SPBE Осталось денег: -20373.499999999993
+Держим лотов: 5230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:63] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: -20412.299999999992
+Держим лотов: 5240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:22] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:22] info: [Example] SPBE Осталось денег: -21155.199999999993
+Держим лотов: 5430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:63] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: -21193.999999999993
+Держим лотов: 5440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:23] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:23] info: [Example] SPBE Осталось денег: -21936.899999999994
+Держим лотов: 5630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:63] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: -21975.699999999993
+Держим лотов: 5640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:23] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:23] info: [Example] SPBE Осталось денег: -22718.599999999995
+Держим лотов: 5830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:63] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:63] info: [Example] SPBE Осталось денег: -22757.399999999994
+Держим лотов: 5840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:28] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:28] info: [Example] SPBE Осталось денег: -23500.299999999996
+Держим лотов: 6030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:65] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:65] info: [Example] SPBE Осталось денег: -23539.099999999995
+Держим лотов: 6040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:23] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:23] info: [Example] SPBE Осталось денег: -24281.999999999996
+Держим лотов: 6230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:64] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:64] info: [Example] SPBE Осталось денег: -24320.799999999996
+Держим лотов: 6240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:24] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:24] info: [Example] SPBE Осталось денег: -25063.699999999997
+Держим лотов: 6430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:64] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:64] info: [Example] SPBE Осталось денег: -25102.499999999996
+Держим лотов: 6440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:25] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:25] info: [Example] SPBE Осталось денег: -25845.399999999998
+Держим лотов: 6630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:65] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:65] info: [Example] SPBE Осталось денег: -25884.199999999997
+Держим лотов: 6640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:27] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:27] info: [Example] SPBE Осталось денег: -26627.1
+Держим лотов: 6830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:70] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:70] info: [Example] SPBE Осталось денег: -26665.899999999998
+Держим лотов: 6840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:25] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:25] info: [Example] SPBE Осталось денег: -27408.8
+Держим лотов: 7030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:65] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:65] info: [Example] SPBE Осталось денег: -27447.6
+Держим лотов: 7040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:27] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:27] info: [Example] SPBE Осталось денег: -28190.5
+Держим лотов: 7230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:65] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:65] info: [Example] SPBE Осталось денег: -28229.3
+Держим лотов: 7240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:26] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:26] info: [Example] SPBE Осталось денег: -28972.2
+Держим лотов: 7430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:65] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:65] info: [Example] SPBE Осталось денег: -29011
+Держим лотов: 7440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:25] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:25] info: [Example] SPBE Осталось денег: -29753.9
+Держим лотов: 7630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:69] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:69] info: [Example] SPBE Осталось денег: -29792.7
+Держим лотов: 7640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:26] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:26] info: [Example] SPBE Осталось денег: -30535.600000000002
+Держим лотов: 7830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:66] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:66] info: [Example] SPBE Осталось денег: -30574.4
+Держим лотов: 7840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:27] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:27] info: [Example] SPBE Осталось денег: -31317.300000000003
+Держим лотов: 8030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:66] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:66] info: [Example] SPBE Осталось денег: -31356.100000000002
+Держим лотов: 8040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:26] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:26] info: [Example] SPBE Осталось денег: -32099.000000000004
+Держим лотов: 8230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:67] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:67] info: [Example] SPBE Осталось денег: -32137.800000000003
+Держим лотов: 8240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:27] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:27] info: [Example] SPBE Осталось денег: -32880.700000000004
+Держим лотов: 8430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:67] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:67] info: [Example] SPBE Осталось денег: -32919.50000000001
+Держим лотов: 8440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:28] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:28] info: [Example] SPBE Осталось денег: -33662.40000000001
+Держим лотов: 8630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:67] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:67] info: [Example] SPBE Осталось денег: -33701.20000000001
+Держим лотов: 8640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:28] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:28] info: [Example] SPBE Осталось денег: -34444.10000000001
+Держим лотов: 8830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:67] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:67] info: [Example] SPBE Осталось денег: -34482.900000000016
+Держим лотов: 8840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:28] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:28] info: [Example] SPBE Осталось денег: -35225.80000000002
+Держим лотов: 9030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:69] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:69] info: [Example] SPBE Осталось денег: -35264.60000000002
+Держим лотов: 9040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:28] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:28] info: [Example] SPBE Осталось денег: -36007.50000000002
+Держим лотов: 9230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:68] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:68] info: [Example] SPBE Осталось денег: -36046.300000000025
+Держим лотов: 9240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:29] info: [Example] SPBE Осталось денег: -36789.200000000026
+Держим лотов: 9430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:72] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:72] info: [Example] SPBE Осталось денег: -36828.00000000003
+Держим лотов: 9440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:29] info: [Example] SPBE Осталось денег: -37570.90000000003
+Держим лотов: 9630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:68] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:68] info: [Example] SPBE Осталось денег: -37609.70000000003
+Держим лотов: 9640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:29] info: [Example] SPBE Осталось денег: -38352.600000000035
+Держим лотов: 9830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:69] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:69] info: [Example] SPBE Осталось денег: -38391.40000000004
+Держим лотов: 9840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:29] info: [Example] SPBE Осталось денег: -39134.30000000004
+Держим лотов: 10030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:70] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:70] info: [Example] SPBE Осталось денег: -39173.10000000004
+Держим лотов: 10040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:29] info: [Example] SPBE Осталось денег: -39916.000000000044
+Держим лотов: 10230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:70] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:70] info: [Example] SPBE Осталось денег: -39954.80000000005
+Держим лотов: 10240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:29] info: [Example] SPBE Осталось денег: -40697.70000000005
+Держим лотов: 10430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:69] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:69] info: [Example] SPBE Осталось денег: -40736.50000000005
+Держим лотов: 10440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:30] info: [Example] SPBE Осталось денег: -41479.40000000005
+Держим лотов: 10630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:70] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:70] info: [Example] SPBE Осталось денег: -41518.200000000055
+Держим лотов: 10640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:29] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:29] info: [Example] SPBE Осталось денег: -42261.10000000006
+Держим лотов: 10830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:71] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:71] info: [Example] SPBE Осталось денег: -42299.90000000006
+Держим лотов: 10840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:30] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:30] info: [Example] SPBE Осталось денег: -43042.80000000006
+Держим лотов: 11030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:70] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:70] info: [Example] SPBE Осталось денег: -43081.600000000064
+Держим лотов: 11040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:30] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:30] info: [Example] SPBE Осталось денег: -43824.500000000065
+Держим лотов: 11230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:70] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:70] info: [Example] SPBE Осталось денег: -43863.30000000007
+Держим лотов: 11240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:31] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:31] info: [Example] SPBE Осталось денег: -44606.20000000007
+Держим лотов: 11430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:70] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:70] info: [Example] SPBE Осталось денег: -44645.00000000007
+Держим лотов: 11440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:32] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:32] info: [Example] SPBE Осталось денег: -45387.900000000074
+Держим лотов: 11630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:72] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:72] info: [Example] SPBE Осталось денег: -45426.70000000008
+Держим лотов: 11640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:31] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:31] info: [Example] SPBE Осталось денег: -46169.60000000008
+Держим лотов: 11830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:71] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:71] info: [Example] SPBE Осталось денег: -46208.40000000008
+Держим лотов: 11840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:32] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:32] info: [Example] SPBE Осталось денег: -46951.30000000008
+Держим лотов: 12030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:73] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:73] info: [Example] SPBE Осталось денег: -46990.100000000086
+Держим лотов: 12040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:31] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:31] info: [Example] SPBE Осталось денег: -47733.00000000009
+Держим лотов: 12230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:72] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:72] info: [Example] SPBE Осталось денег: -47771.80000000009
+Держим лотов: 12240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:33] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:33] info: [Example] SPBE Осталось денег: -48514.70000000009
+Держим лотов: 12430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:72] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:72] info: [Example] SPBE Осталось денег: -48553.500000000095
+Держим лотов: 12440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:33] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:33] info: [Example] SPBE Осталось денег: -49296.400000000096
+Держим лотов: 12630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:72] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:72] info: [Example] SPBE Осталось денег: -49335.2000000001
+Держим лотов: 12640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:33] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:33] info: [Example] SPBE Осталось денег: -50078.1000000001
+Держим лотов: 12830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:72] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:72] info: [Example] SPBE Осталось денег: -50116.9000000001
+Держим лотов: 12840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:35] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:35] info: [Example] SPBE Осталось денег: -50859.800000000105
+Держим лотов: 13030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:73] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:73] info: [Example] SPBE Осталось денег: -50898.60000000011
+Держим лотов: 13040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:53] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:53] info: [Example] SPBE Осталось денег: -51641.50000000011
+Держим лотов: 13230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:77] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:77] info: [Example] SPBE Осталось денег: -51680.30000000011
+Держим лотов: 13240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:35] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:35] info: [Example] SPBE Осталось денег: -52423.20000000011
+Держим лотов: 13430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:75] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:75] info: [Example] SPBE Осталось денег: -52462.00000000012
+Держим лотов: 13440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:35] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:35] info: [Example] SPBE Осталось денег: -53204.90000000012
+Держим лотов: 13630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:73] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:73] info: [Example] SPBE Осталось денег: -53243.70000000012
+Держим лотов: 13640
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:35] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:35] info: [Example] SPBE Осталось денег: -53986.60000000012
+Держим лотов: 13830
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:74] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:74] info: [Example] SPBE Осталось денег: -54025.400000000125
+Держим лотов: 13840
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:47] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:47] info: [Example] SPBE Осталось денег: -54768.30000000013
+Держим лотов: 14030
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:75] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:75] info: [Example] SPBE Осталось денег: -54807.10000000013
+Держим лотов: 14040
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:37] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: -55550.00000000013
+Держим лотов: 14230
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:74] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:74] info: [Example] SPBE Осталось денег: -55588.800000000134
+Держим лотов: 14240
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:37] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: -56331.700000000135
+Держим лотов: 14430
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:74] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 10
+[22-05-09 13:05:74] info: [Example] SPBE Осталось денег: -56370.50000000014
+Держим лотов: 14440
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:37] info: [Example] SPBE Покупка завершена. Цена: [object Object], кол-во: 190
+[22-05-09 13:05:37] info: [Example] SPBE Осталось денег: -57113.40000000014
+Держим лотов: 14630
+В обработке: 10 покупка, 630 продажа
+[22-05-09 13:05:43] info: Отмена заявки 024373b6-13c6-4016-97b0-67d7a4acbcc3
+[22-05-09 13:05:46] info: Отмена заявки 024373b6-13c6-4016-97b0-67d7a4acbcc3
+[22-05-09 13:05:79] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Денежные средста: usd 327 ,rub -15762  
+
+[22-05-09 13:05:89] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Активы: 
+ share BBG00HFWVGN0 
+  Акций 12 
+  Средняя цена 4.47 
+-------- 
+
+[22-05-09 13:05:89] info: Подготавливаю список инструментов...
+[22-05-09 13:05:53] info: Запускаюсь на 1 инструментах...
+[22-05-09 13:05:53] info: Запускаю стратегию Example для SPBE
+[22-05-09 13:05:67] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":1,"time":"2022-05-09T10:53:00.000Z","lastTradeTs":"2022-05-09T10:53:11.739Z"}
+[22-05-09 13:05:67] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:53:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 0 (buy), 0 (sell) 
+balance: 50, processing: 0
+[22-05-09 13:05:78] info: Отправлена заявка 2ded5705-319a-4ce9-bd14-45c10a8e7f85 на инструмент SPBE
+[22-05-09 13:05:07] info: Отмена заявки 2ded5705-319a-4ce9-bd14-45c10a8e7f85
+[22-05-09 13:05:09] info: Отмена заявки 2ded5705-319a-4ce9-bd14-45c10a8e7f85
+[22-05-09 13:05:73] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Денежные средста: usd 327 ,rub -15762  
+
+[22-05-09 13:05:82] info: Позиции аккаунта 197184a3-2055-40a9-9dbc-afe37a598771 
+Активы: 
+ share BBG00HFWVGN0 
+  Акций 12 
+  Средняя цена 4.47 
+-------- 
+
+[22-05-09 13:05:82] info: Подготавливаю список инструментов...
+[22-05-09 13:05:30] info: Запускаюсь на 1 инструментах...
+[22-05-09 13:05:30] info: Запускаю стратегию Example для SPBE
+[22-05-09 13:05:03] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":1,"time":"2022-05-09T10:56:00.000Z","lastTradeTs":"2022-05-09T10:56:54.073Z"}
+[22-05-09 13:05:03] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:56:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 0 (buy), 0 (sell) 
+balance: 50, processing: 0
+[22-05-09 13:05:11] info: Отправлена заявка e22ff578-4f8b-438a-ae1a-7e55c5311d2e на инструмент SPBE
+[22-05-09 13:05:94] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":7,"time":"2022-05-09T10:56:00.000Z","lastTradeTs":"2022-05-09T10:56:54.073Z"}
+[22-05-09 13:05:94] info: [Example] SPBE Получена новая свеча Mon May 09 2022 13:56:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39.2
+[22-05-09 14:05:22] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":1,"time":"2022-05-09T11:01:00.000Z","lastTradeTs":"2022-05-09T11:01:51.264Z"}
+[22-05-09 14:05:22] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:01:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39.2
+[22-05-09 14:05:94] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":50,"time":"2022-05-09T11:01:00.000Z","lastTradeTs":"2022-05-09T11:01:51.264Z"}
+[22-05-09 14:05:94] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:01:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39.2
+[22-05-09 14:05:77] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":890000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":6,"time":"2022-05-09T11:03:00.000Z","lastTradeTs":"2022-05-09T11:03:17.828Z"}
+[22-05-09 14:05:77] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:03:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 50, processing: 39.2
+[22-05-09 14:05:37] info: [Example] SPBE Покупка завершена. Цена: 38.9, кол-во: 10
+[22-05-09 14:05:38] info: [Example] SPBE Осталось денег: 11.100000000000001
+Держим лотов: 10
+В обработке: 10 покупка, 0 продажа
+[22-05-09 14:05:14] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":890000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":910000000},"volume":191,"time":"2022-05-09T11:03:00.000Z","lastTradeTs":"2022-05-09T11:03:44.212Z"}
+[22-05-09 14:05:14] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:03:00 GMT+0300 (Москва, стандартное время)
+Держим 10 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 0 (sell) 
+balance: 11.100000000000001, processing: 39.2
+[22-05-09 14:05:21] info: Отправлена заявка f48ed0d6-3f93-44aa-825e-6c17e6fc3618 на инструмент SPBE
+[22-05-09 14:05:74] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":1,"time":"2022-05-09T11:05:00.000Z","lastTradeTs":"2022-05-09T11:05:14.816Z"}
+[22-05-09 14:05:74] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:05:00 GMT+0300 (Москва, стандартное время)
+Держим 10 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 10 (sell) 
+balance: 11.100000000000001, processing: 39.2
+[22-05-09 14:05:62] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":2,"time":"2022-05-09T11:05:00.000Z","lastTradeTs":"2022-05-09T11:05:16.686Z"}
+[22-05-09 14:05:62] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:05:00 GMT+0300 (Москва, стандартное время)
+Держим 10 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 10 (sell) 
+balance: 11.100000000000001, processing: 39.2
+[22-05-09 14:05:94] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":33,"time":"2022-05-09T11:05:00.000Z","lastTradeTs":"2022-05-09T11:05:16.686Z"}
+[22-05-09 14:05:94] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:05:00 GMT+0300 (Москва, стандартное время)
+Держим 10 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 10 (sell) 
+balance: 11.100000000000001, processing: 39.2
+[22-05-09 14:05:56] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":910000000},"close":{"units":3,"nano":910000000},"volume":2,"time":"2022-05-09T11:07:00.000Z","lastTradeTs":"2022-05-09T11:07:28.608Z"}
+[22-05-09 14:05:56] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:07:00 GMT+0300 (Москва, стандартное время)
+Держим 10 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 10 (sell) 
+balance: 11.100000000000001, processing: 39.2
+[22-05-09 14:05:05] info: [Example] SPBE Продажа завершена. Цена: 39.1, кол-во: 10
+[22-05-09 14:05:05] info: [Example] SPBE Осталось денег: 50.2
+Держим лотов: 0
+В обработке: 10 покупка, 10 продажа
+[22-05-09 14:05:67] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":900000000},"close":{"units":3,"nano":900000000},"volume":21,"time":"2022-05-09T11:07:00.000Z","lastTradeTs":"2022-05-09T11:07:46.739Z"}
+[22-05-09 14:05:67] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:07:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 10 (sell) 
+balance: 50.2, processing: -351.8
+[22-05-09 14:05:21] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":910000000},"high":{"units":3,"nano":910000000},"low":{"units":3,"nano":890000000},"close":{"units":3,"nano":890000000},"volume":22,"time":"2022-05-09T11:07:00.000Z","lastTradeTs":"2022-05-09T11:07:52.280Z"}
+[22-05-09 14:05:21] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:07:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 10 (sell) 
+balance: 50.2, processing: -351.8
+[22-05-09 14:05:28] info: Получена свеча BBG002GHV6L9 {"figi":"BBG002GHV6L9","interval":1,"open":{"units":3,"nano":900000000},"high":{"units":3,"nano":900000000},"low":{"units":3,"nano":900000000},"close":{"units":3,"nano":900000000},"volume":3,"time":"2022-05-09T11:08:00.000Z","lastTradeTs":"2022-05-09T11:08:32.345Z"}
+[22-05-09 14:05:28] info: [Example] SPBE Получена новая свеча Mon May 09 2022 14:08:00 GMT+0300 (Москва, стандартное время)
+Держим 0 last buy -Infinity 0 
+last sell Infinity 0 
+processing: 10 (buy), 10 (sell) 
+balance: 50.2, processing: -351.8

@@ -1,5 +1,5 @@
 import { Candle } from 'invest-nodejs-grpc-sdk/dist/generated/marketdata';
-import { CancelOrderRequest, OrderState, PostOrderRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
+import { OrderState, PostOrderRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
 
 
 export enum Strategies {

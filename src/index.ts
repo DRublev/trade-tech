@@ -48,16 +48,6 @@ const shares: { [ticker: string]: ShareTradeConfig } = {
     cancelSellOrderIfPriceGoesAbove: 1,
     strategy: Strategies.Example,
   },
-  // VEON: {
-  //   candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
-  //   maxBalance: 50,
-  //   maxToTradeAmount: 10,
-  //   priceStep: 0.01,
-  //   commission: 0.01,
-  //   cancelBuyOrderIfPriceGoesBelow: 1,
-  //   cancelSellOrderIfPriceGoesAbove: 1,
-  //   strategy: Strategies.Example,
-  // },
 };
 const instrumentsService = new InstrumentsService(client);
 const exchangeService = new ExchangeService(client);
@@ -134,8 +124,9 @@ const start = async () => {
     } else {
       logger.info('Запускаем бектестинг...');
       isSandbox = true;
+      const simulateInterval = 1000;
       const backtestingReader = new BacktestingReader(backtestingFilePath);
-      candlesStream = await backtestingReader.readAsStream(1000, killSwitch.signal);
+      candlesStream = await backtestingReader.readAsStream(simulateInterval, killSwitch.signal);
     }
     const tradingPromises = tradableShares.map(startTrading);
     for await (const response of candlesStream) {

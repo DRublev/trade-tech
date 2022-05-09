@@ -8,6 +8,8 @@
   },
   "scripts": {
     "dev": "nodemon -e ts,js --exec 'ts-node -r tsconfig-paths/register' ./src/index.ts",
+    "build": "tsc",
+    "start": "node ./built/index.js",
     "postinstall": "cd ./node_modules/invest-nodejs-grpc-sdk && tsc && cd ../.."
   },
   "author": "",
