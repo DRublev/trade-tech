@@ -23,17 +23,6 @@ import logger from './logger';
 import BacktestingReader from './backtestingReader';
 import { sleep } from './helpers';
 
-/** TODO
-  ** ✅ get all accounts
-  ** ✅ choose account from console
-  ** ✅ read tickers list from hardcode
-  ** ✅ check if tickers from config are tradable
-  ** ✅ check if exchange is open, if not wait till open
-  ** ✅ subscribe for candles stream
-  ** -- implement Example strategy
-  ** -- post orders
-  ** -- subscribe for order changes from strategy
-*/
 
 if (!process.env.TOKEN) {
   logger.error('Необходимо подставить токен с полным доступ в переменную окружения TOKEN');
@@ -61,6 +50,7 @@ const shares: { [ticker: string]: ShareTradeConfig } = {
 const instrumentsService = new InstrumentsService(client);
 const exchangeService = new ExchangeService(client);
 const ordersService = new OrdersService(client, isSandbox);
+const accountService = new AccountService(client, isSandbox);
 let accountId = '197184a3-2055-40a9-9dbc-afe37a598771';
 let tradableShares: Share[] = [];
 
@@ -72,6 +62,7 @@ const killSwitch = new AbortController();
  */
 let exchangesStatuses = {};
 let watchIntervalId = null;
+let watchOrderIntervalIds = [];
 
 
 /**
@@ -101,7 +92,10 @@ async function* getSubscribeCandlesRequest() {
 
 const start = async () => {
   try {
-    // await chooseAccount();
+    await chooseAccount();
+    await accountService.printAccountPositions(accountId);
+    await accountService.printAccountPortfolio(accountId);
+
     await prepareSharesList();
 
     // Обновляем статус работы бирж с переодичностью в 1 час
@@ -117,6 +111,7 @@ const start = async () => {
       if (watchIntervalId) {
         clearInterval(watchIntervalId);
       }
+      watchOrderIntervalIds.forEach((id) => clearInterval(id));
     });
 
     let candlesStream;
@@ -155,7 +150,6 @@ const start = async () => {
  */
 const chooseAccount = async () => {
   try {
-    const accountService = new AccountService(client, isSandbox);
     const allAccounts = await accountService.getList();
 
     const withTradeAccess = allAccounts
@@ -293,9 +287,10 @@ const startTrading = async (share: Share) => {
                 logger.deal(share.ticker, order as PostOrderRequest, strategyKey);
                 logger.info(`Отправлена заявка ${orderId} на инструмент ${share.ticker}`);
 
-                setInterval(async () => {
+                const id = setInterval(async () => {
                   checkOrder(strategy, orderId);
                 }, 1000);
+                watchOrderIntervalIds.push(id);
               }
             } catch (e) {
               logger.error('Ошибка при выставлении заявки', candle, order, e.message);
@@ -322,7 +317,7 @@ const checkOrder = async (strategy: strategies.IStrategy, orderId: string) => {
         await strategy.onChangeOrder(trade);
     }
   } catch (e) {
-    logger.error('Ошибка при отслеживании заявки', e.message);
+    logger.error('Ошибка при отслеживании заявки', e.message, typeof e, Object.entries(e));
   }
 }
 

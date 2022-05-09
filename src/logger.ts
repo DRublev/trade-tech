@@ -13,6 +13,7 @@ const format = winston.format.combine(
   winston.format.timestamp({
     format: "YY-MM-DD HH:MM:SS",
   }),
+
   winston.format.printf(
     info => {
       const args = info[Symbol.for('splat') as any];
@@ -29,6 +30,9 @@ const levels: any = {
 
 const transports = [
   new winston.transports.Console({}),
+  new winston.transports.File({
+    filename: 'logs/logs.txt',
+  }),
 ];
 
 const logger = winston.createLogger({ format, levels, transports });

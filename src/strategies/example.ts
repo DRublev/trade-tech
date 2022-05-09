@@ -46,7 +46,7 @@ class ExampleStrategy implements IStrategy {
     + `Держим ${this.holdingSharesQuantity} last buy ${this.lastTradesInfo.buy.price} ${this.lastTradesInfo.buy.quantity} \n`
     + `last sell ${this.lastTradesInfo.sell.price} ${this.lastTradesInfo.sell.quantity} \n`
     + `processing: ${this.processingQuantity.buy} (buy), ${this.processingQuantity.sell} (sell) \n`
-    + `balance: ${this.leftAvailableBalance}`
+    + `balance: ${this.leftAvailableBalance}, processing: ${this.processingMoney}`
     );
     const high = toNum(candle.high);
     const low = toNum(candle.low);
@@ -68,7 +68,7 @@ class ExampleStrategy implements IStrategy {
       }
       if (lotsToBuy > 0) {
         this.processingQuantity.buy += lotsToBuy;
-        this.processingMoney += buyPrice;
+        this.processingMoney += buyPrice * lotsToBuy;
         // Возвращаем заявку на покупку
         // Мы учитываем комиссию при расчетах, но не учитываем при выставлении заявки, так как это делает брокер
         yield this.makeBuyOrder(candle.low, lotsToBuy);
@@ -123,7 +123,7 @@ class ExampleStrategy implements IStrategy {
         logger.info(`[Example] ${this.instrumentInfo.ticker} Продажа завершена. Цена: ${price}, кол-во: ${quantity}`);
         this.holdingSharesQuantity -= quantity;
         this.leftAvailableBalance += toNum(price);
-        this.processingMoney -= toNum(price);
+        this.processingMoney -= toNum(price) * quantity;
       } else {
         logger.warning(`[Example] Неизвестное направление заявки: ${JSON.stringify(order)}`);
       }
