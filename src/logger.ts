@@ -45,6 +45,7 @@ if (process.env.TG_TOKEN && process.env.TG_CHAT_ID) {
     chatId: Number(process.env.TG_CHAT_ID),
     level: 'deals',
     unique: true,
+    silent: false,
     template: 'Стратегия {message} \n {metadata.direction} {metadata.ticker} '
       + '{metadata.quantity} шт. по цене {metadata.price} ({metadata.orderType} заявка) \n'
       + ' ID заявки: {metadata.orderId} \n'
@@ -55,6 +56,7 @@ if (process.env.TG_TOKEN && process.env.TG_CHAT_ID) {
     chatId: Number(process.env.TG_CHAT_ID),
     level: 'cancelOrder',
     unique: true,
+    silent: false,
     template: 'Отмена заявки по {metadata.ticker} '
       + '{metadata.quantity} шт. по цене {metadata.price} ({metadata.orderType} заявка) \n'
       + 'Исполнено {metadata.lotsExecuted} \n'

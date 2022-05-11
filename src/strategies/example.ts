@@ -76,11 +76,11 @@ class ExampleStrategy implements IStrategy {
         lotsToBuy--;
       }
       if (lotsToBuy > 0) {
-        this.processingQuantity.buy += lotsToBuy;
-        this.processingMoney += buyPrice * lotsToBuy;
         // Возвращаем заявку на покупку
         // Мы учитываем комиссию при расчетах, но не учитываем при выставлении заявки, так как это делает брокер
         const request = this.makeBuyOrder(candle.low, lotsToBuy);
+        this.processingQuantity.buy += lotsToBuy;
+        this.processingMoney += buyPrice * lotsToBuy;
         this.processingOrders.buy = request.orderId;
         yield request;
         /*
@@ -94,10 +94,10 @@ class ExampleStrategy implements IStrategy {
 
     // Логика расчета продажи обратна логике покупки
     const sellPrice = roundToNearestStep(
-      Number(high) + this.config.commission,
+      Number(high) - this.config.commission,
       toNum(this.instrumentInfo.minPriceIncrement),
     );
-    if (sellPrice - this.config.priceStep > this.lastTradesInfo.buy.price) {
+    if (sellPrice - this.config.priceStep - this.config.commission > this.lastTradesInfo.buy.price) {
       const availableToSell = Math.floor(this.holdingSharesQuantity - this.processingQuantity.sell);
       
       if (availableToSell > 0) {
@@ -144,8 +144,12 @@ class ExampleStrategy implements IStrategy {
       if (isExecuted) {
         if (isSell) {
           this.processingOrders.sell = null;
+          this.lastTradesInfo.sell.price = toNum(order.executedOrderPrice) / order.lotsExecuted;
+          this.lastTradesInfo.sell.quantity = order.lotsExecuted;
         } else if (isBuy) {
           this.processingOrders.buy = null;
+          this.lastTradesInfo.buy.price = toNum(order.executedOrderPrice) / order.lotsExecuted;
+          this.lastTradesInfo.buy.quantity = order.lotsExecuted;
         }
       }
       const lastProcessedStageId = isBuy ? this.lastProcessedStages.buy : this.lastProcessedStages.sell;
@@ -164,16 +168,17 @@ class ExampleStrategy implements IStrategy {
       } else if (isBuy) {
         this.lastProcessedStages.buy = (latestStage || {}).tradeId;
       }
+
       if (isBuy) {
         logger.info(`[Example] ${this.instrumentInfo.ticker} Покупка завершена. Цена: ${toNum(price)}, кол-во: ${quantity}`);
         this.holdingSharesQuantity += quantity;
         this.leftAvailableBalance -= toNum(price);
         this.processingQuantity.buy -= quantity;
+        this.processingMoney -= toNum(price);
       } else if (isSell) {
         logger.info(`[Example] ${this.instrumentInfo.ticker} Продажа завершена. Цена: ${toNum(price)}, кол-во: ${quantity}`);
         this.holdingSharesQuantity -= quantity;
         this.leftAvailableBalance += toNum(price);
-        this.processingMoney -= toNum(price) * quantity;
         this.processingQuantity.sell -= quantity;
       } else {
         logger.warning(`[Example] Неизвестное направление заявки: ${order.direction} ${JSON.stringify(this.processingOrders)} \n ${JSON.stringify(order)}`);

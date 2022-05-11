@@ -30,7 +30,7 @@ if (!process.env.TOKEN) {
 }
 
 // При значении true все заявки будут выставляться в режиме песочницы
-let isSandbox = true;
+let isSandbox = false;
 
 // Если указан путь к файту, то будет использован контент файла, а не данные из рынка
 // Также, автоматически будет выставлен режим песочницы
@@ -38,16 +38,26 @@ const backtestingFilePath = null; //'./veon_2022-04-25_1min.json';
 
 const client = createSdk(process.env.TOKEN, 'DRublev');
 const shares: { [ticker: string]: ShareTradeConfig } = {
-  SPBE: {
+  UWGN: {
     candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
-    maxBalance: 50,
-    maxToTradeAmount: 10,
+    maxBalance: 130,
+    maxToTradeAmount: 2,
     priceStep: 0.01,
     commission: 0.01,
-    cancelBuyOrderIfPriceGoesBelow: 1,
-    cancelSellOrderIfPriceGoesAbove: 1,
+    cancelBuyOrderIfPriceGoesBelow: 3,
+    cancelSellOrderIfPriceGoesAbove: 3,
     strategy: Strategies.Example,
   },
+  // VEON: {
+  //   candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
+  //   maxBalance: 4.2,
+  //   maxToTradeAmount: 8,
+  //   priceStep: 0.01,
+  //   commission: 0.01,
+  //   cancelBuyOrderIfPriceGoesBelow: 1,
+  //   cancelSellOrderIfPriceGoesAbove: 1,
+  //   strategy: Strategies.Example,
+  // },
 };
 const instrumentsService = new InstrumentsService(client);
 const exchangeService = new ExchangeService(client);
@@ -64,7 +74,7 @@ const killSwitch = new AbortController();
  */
 let exchangesStatuses = {};
 let watchIntervalId = null;
-let watchOrderIntervalIds = [];
+let watchOrderIntervalIds: Record<string, any> = {};
 
 
 /**
@@ -95,6 +105,7 @@ async function* getSubscribeCandlesRequest() {
 const start = async () => {
   try {
     await chooseAccount();
+    console.log('98 index', accountId);
     await accountService.printAccountPositions(accountId);
     await accountService.printAccountPortfolio(accountId);
 
@@ -115,7 +126,7 @@ const start = async () => {
         clearInterval(watchIntervalId);
       }
       await ordersService.cancelAllOrders(accountId);
-      watchOrderIntervalIds.forEach((id) => clearInterval(id));
+      Object.values(watchOrderIntervalIds).forEach((id) => clearInterval(id));
     });
 
     let candlesStream;
@@ -290,6 +301,9 @@ const startTrading = async (share: Share) => {
           if (cancelOrder) {
             logger.info(`Отменяю предыдущую заявку на ${share.ticker}`);
             await ordersService.cancelOrder(accountId, cancelOrder);
+            if (watchOrderIntervalIds[cancelOrder]) {
+              clearInterval(watchOrderIntervalIds[cancelOrder]);
+            }
           }
         } catch (e) {
           logger.error(`Ошибка при закрытии предыдущей заяки ${share.ticker}: ${e.message}`);
@@ -308,7 +322,7 @@ const startTrading = async (share: Share) => {
                 const id = setInterval(async () => {
                   await checkOrder(strategy, placedOrderId, order);
                 }, 1000);
-                watchOrderIntervalIds.push(id);
+                watchOrderIntervalIds[placedOrderId] = id;
               }
 
             } catch (e) {
@@ -338,6 +352,9 @@ const checkOrder = async (
     const trade = await ordersService.checkOrderState(accountId, placedOrderId);
     if (trade) {
       await strategy.onChangeOrder({ ...trade, orderId: requestedOrder.orderId, direction: requestedOrder.direction });
+      if (trade.lotsExecuted === trade.lotsRequested && watchOrderIntervalIds[placedOrderId]) {
+        clearInterval(watchOrderIntervalIds[placedOrderId]);
+      }
     }
   } catch (e) {
     logger.error('Ошибка при отслеживании заявки', e.message, typeof e, Object.entries(e));
