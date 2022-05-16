@@ -116,6 +116,7 @@ class ExampleStrategy implements IStrategy {
     if (this.lastTradesInfo.buy.price > toNum(candle.close)) {
       const maxDecrease = (this.lastTradesInfo.buy.price / 100) * this.config.cancelBuyOrderIfPriceGoesBelow;
       const decrease = this.lastTradesInfo.buy.price - toNum(candle.close);
+      logger.info(`[Example] ${this.instrumentInfo.ticker} Предупреждение: Цена понизилась на ${decrease} (макс ${maxDecrease})`);
       if (decrease >= maxDecrease) {
         return this.processingOrders.buy;
       }
@@ -123,6 +124,7 @@ class ExampleStrategy implements IStrategy {
     if (this.lastTradesInfo.sell.price < toNum(candle.close)) {
       const maxIncrease = (this.lastTradesInfo.sell.price / 100) * this.config.cancelSellOrderIfPriceGoesAbove;
       const increase = toNum(candle.close) - this.lastTradesInfo.sell.price;
+      logger.info(`[Example] ${this.instrumentInfo.ticker} Предупреждение: Цена повысилась на ${increase} (макс ${maxIncrease})`);
       if (increase >= maxIncrease) {
         return this.processingOrders.sell;
       }
@@ -172,13 +174,13 @@ class ExampleStrategy implements IStrategy {
       if (isBuy) {
         logger.info(`[Example] ${this.instrumentInfo.ticker} Покупка завершена. Цена: ${toNum(price)}, кол-во: ${quantity}`);
         this.holdingSharesQuantity += quantity;
-        this.leftAvailableBalance -= toNum(price);
+        this.leftAvailableBalance -= toNum(price) * quantity;
         this.processingQuantity.buy -= quantity;
-        this.processingMoney -= toNum(price);
+        this.processingMoney -= toNum(price) * quantity;
       } else if (isSell) {
         logger.info(`[Example] ${this.instrumentInfo.ticker} Продажа завершена. Цена: ${toNum(price)}, кол-во: ${quantity}`);
         this.holdingSharesQuantity -= quantity;
-        this.leftAvailableBalance += toNum(price);
+        this.leftAvailableBalance += toNum(price) * quantity;
         this.processingQuantity.sell -= quantity;
       } else {
         logger.warning(`[Example] Неизвестное направление заявки: ${order.direction} ${JSON.stringify(this.processingOrders)} \n ${JSON.stringify(order)}`);
@@ -189,6 +191,15 @@ class ExampleStrategy implements IStrategy {
         + `В обработке: ${this.processingQuantity.buy} покупка, ${this.processingQuantity.sell} продажа`);
     } catch (e) {
       logger.error(`Ошибка при обработке изменения заявки: ${e.message}`);
+    }
+  }
+
+  onPlaceOrder(placedOrderId: string, createdOrderId: string) {
+    logger.info(`[Example] Выставили заявку ${placedOrderId}. Обновляем ${createdOrderId}`);
+    if (createdOrderId === this.processingOrders.buy) {
+      this.processingOrders.buy = placedOrderId;
+    } else if (createdOrderId === this.processingOrders.sell) {
+      this.processingOrders.sell = placedOrderId;
     }
   }
 

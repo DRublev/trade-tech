@@ -1,9 +1,9 @@
-import { SubscriptionInterval } from 'invest-nodejs-grpc-sdk/dist/generated/marketdata';
+import { CandleInterval, SubscriptionInterval } from 'invest-nodejs-grpc-sdk/dist/generated/marketdata';
 import { Strategies } from './strategies';
 
 
 type ShareTradeConfig = {
-  candleInterval: SubscriptionInterval,
+  candleInterval: SubscriptionInterval | CandleInterval,
   /**
    * Максимальное количество денег, которое может быть использовано
    */

@@ -30,7 +30,7 @@ if (!process.env.TOKEN) {
 }
 
 // При значении true все заявки будут выставляться в режиме песочницы
-let isSandbox = false;
+let isSandbox = true;
 
 // Если указан путь к файту, то будет использован контент файла, а не данные из рынка
 // Также, автоматически будет выставлен режим песочницы
@@ -40,12 +40,12 @@ const client = createSdk(process.env.TOKEN, 'DRublev');
 const shares: { [ticker: string]: ShareTradeConfig } = {
   UWGN: {
     candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
-    maxBalance: 130,
-    maxToTradeAmount: 2,
+    maxBalance: 127,
+    maxToTradeAmount: 5,
     priceStep: 0.01,
-    commission: 0.01,
-    cancelBuyOrderIfPriceGoesBelow: 3,
-    cancelSellOrderIfPriceGoesAbove: 3,
+    commission: 0.02,
+    cancelBuyOrderIfPriceGoesBelow: 0.5,
+    cancelSellOrderIfPriceGoesAbove: 0.5,
     strategy: Strategies.Example,
   },
   // VEON: {
@@ -93,9 +93,11 @@ async function* getSubscribeCandlesRequest() {
       subscribeCandlesRequest: {
         subscriptionAction: SubscriptionAction.SUBSCRIPTION_ACTION_SUBSCRIBE,
         instruments: tradableShares
+          .filter((share) => shares[share.ticker].candleInterval === SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE
+            || shares[share.ticker].candleInterval === SubscriptionInterval.SUBSCRIPTION_INTERVAL_FIVE_MINUTES)
           .map((share) => ({
             figi: share.figi,
-            interval: shares[share.ticker].candleInterval,
+            interval: shares[share.ticker].candleInterval as SubscriptionInterval,
           })),
       },
     });
@@ -105,7 +107,6 @@ async function* getSubscribeCandlesRequest() {
 const start = async () => {
   try {
     await chooseAccount();
-    console.log('98 index', accountId);
     await accountService.printAccountPositions(accountId);
     await accountService.printAccountPortfolio(accountId);
 
@@ -146,7 +147,6 @@ const start = async () => {
         candlesEventEmitter.emit(events.receive(response.candle.figi), response.candle);
       }
     }
-
 
     /*
     * Запуск псевдо-параллельной торговли по всем инструментов
@@ -292,12 +292,12 @@ const startTrading = async (share: Share) => {
     candlesEventEmitter.on(events.receive(share.figi), async function (candle) {
       try {
         if (killSwitch.signal.aborted) return;
+        candle.interval = shares[share.ticker].candleInterval;
 
         logger.info(`Получена свеча ${candle.figi}`, JSON.stringify(candle));
-
         try {
           const cancelOrder = strategy.cancelPreviousOrder(candle);
-          
+
           if (cancelOrder) {
             logger.info(`Отменяю предыдущую заявку на ${share.ticker}`);
             await ordersService.cancelOrder(accountId, cancelOrder);
@@ -323,8 +323,8 @@ const startTrading = async (share: Share) => {
                   await checkOrder(strategy, placedOrderId, order);
                 }, 1000);
                 watchOrderIntervalIds[placedOrderId] = id;
+                strategy.onPlaceOrder(placedOrderId, order.orderId);
               }
-
             } catch (e) {
               logger.error('Ошибка при выставлении заявки', candle, order, e.message);
             }
@@ -344,7 +344,7 @@ const startTrading = async (share: Share) => {
 };
 
 const checkOrder = async (
-  strategy: strategies.IStrategy, 
+  strategy: strategies.IStrategy,
   placedOrderId: string,
   requestedOrder: Partial<PostOrderRequest>,
 ) => {

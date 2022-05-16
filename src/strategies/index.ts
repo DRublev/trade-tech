@@ -26,6 +26,13 @@ export interface IStrategy {
    * @returns null если не нужно отменять никакие заявки. Иначе возвращается ID заявки для отмены
    */
   cancelPreviousOrder(candle: Candle): string;
+
+  /**
+   * Служит для маппинга созданных на бирже заявок на заявки созданные стратегией
+   * @param placedOrderId ID заявки на бирже
+   * @param createdOrderId ID заявки стратегии
+   */
+  onPlaceOrder(placedOrderId: string, createdOrderId: string): void;
 }
 
 export { default as Example } from './example';
