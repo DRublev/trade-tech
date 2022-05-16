@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
+    "outDir": "./built",
+    "baseUrl": "./src",
     "allowJs": true,
     "target": "es6",
     "moduleResolution": "node",
-    "outDir": "./built",
-    "baseUrl": "./src",
+    "types": ["reflect-metadata"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@/*": [
