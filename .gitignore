@@ -2,3 +2,5 @@
 **/node_modules
 **/built
 logs/**/*
+#Electron-builder output
+/dist_electron

@@ -1,4 +1,4 @@
-# desktop-app
+# app
 
 ## Project setup
 ```
