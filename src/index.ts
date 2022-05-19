@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { EventEmitter } from 'events';
+import EventEmitter from "@foxify/events";
 import { createSdk } from 'invest-nodejs-grpc-sdk';
 import { Share } from 'invest-nodejs-grpc-sdk/dist/generated/instruments';
 import { AccessLevel, AccountStatus, AccountType } from 'invest-nodejs-grpc-sdk/dist/generated/users';
@@ -23,6 +23,9 @@ import logger from './logger';
 import BacktestingReader from './backtestingReader';
 import { sleep } from './helpers';
 
+import { CONSTANTS } from "./identifiers";
+import Container from './ioc';
+import { SharesTradeConfig } from './tradeConfig';
 
 if (!process.env.TOKEN) {
   logger.error('Необходимо подставить токен с полным доступ в переменную окружения TOKEN');
@@ -37,28 +40,7 @@ let isSandbox = true;
 const backtestingFilePath = null; //'./veon_2022-04-25_1min.json';
 
 const client = createSdk(process.env.TOKEN, 'DRublev');
-const shares: { [ticker: string]: ShareTradeConfig } = {
-  UWGN: {
-    candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
-    maxBalance: 127,
-    maxToTradeAmount: 5,
-    priceStep: 0.01,
-    commission: 0.02,
-    cancelBuyOrderIfPriceGoesBelow: 0.5,
-    cancelSellOrderIfPriceGoesAbove: 0.5,
-    strategy: Strategies.Example,
-  },
-  // VEON: {
-  //   candleInterval: SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
-  //   maxBalance: 4.2,
-  //   maxToTradeAmount: 8,
-  //   priceStep: 0.01,
-  //   commission: 0.01,
-  //   cancelBuyOrderIfPriceGoesBelow: 1,
-  //   cancelSellOrderIfPriceGoesAbove: 1,
-  //   strategy: Strategies.Example,
-  // },
-};
+const shares = Container.get<SharesTradeConfig>(CONSTANTS.SharesTradeConfig);
 const instrumentsService = new InstrumentsService(client);
 const exchangeService = new ExchangeService(client);
 const ordersService = new OrdersService(client, isSandbox);
@@ -66,7 +48,7 @@ const accountService = new AccountService(client, isSandbox);
 let accountId;
 let tradableShares: Share[] = [];
 
-const killSwitch = new AbortController();
+const killSwitch = Container.get<AbortController>(CONSTANTS.KillSwitch);
 
 /**
  * Статус работы бирж

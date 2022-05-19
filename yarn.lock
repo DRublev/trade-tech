@@ -16,6 +16,11 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@foxify/events@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@foxify/events/-/events-2.1.0.tgz#ac0ce6a744c6236cbe70131c19a76d950af26092"
+  integrity sha512-aMLFeeQgzAH/ft9VNGwQasr2lAXLIxk1VAYIUDM9G8HQX0yow6b7z/wm42e4s6JHU8zGu940sLj5FeglkFnEFQ==
+
 "@grpc/grpc-js@^1.5.10", "@grpc/grpc-js@^1.6.1":
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.6.7.tgz#4c4fa998ff719fe859ac19fe977fdef097bb99aa"

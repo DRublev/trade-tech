@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@foxify/events": "^2.1.0",
     "dotenv": "^16.0.0",
     "inversify": "^6.0.1",
     "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",

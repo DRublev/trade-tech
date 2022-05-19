@@ -28,7 +28,6 @@ type ShareTradeConfig = {
    */
   cancelBuyOrderIfPriceGoesBelow: number;
   
-  
   /**
    * Отменять заявку на продажу, если цена увеличилась на
    * Поцентное значение
@@ -39,6 +38,9 @@ type ShareTradeConfig = {
    * Каким алгоритмом торговать
    */
   strategy: Strategies,
+
+  stopLoss?: number;
+  takeProfit?: number;
 }
 
 export default ShareTradeConfig;

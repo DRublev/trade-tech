@@ -22,8 +22,12 @@ class InstrumentsService {
       const allShares = await this.client.instruments.shares({
         instrumentStatus: InstrumentStatus.INSTRUMENT_STATUS_BASE,
       });
-      const available = allShares.instruments
-        .filter((share) => candidates.includes(share.ticker));
+      const allEtfs = await this.client.instruments.etfs({
+        instrumentStatus: InstrumentStatus.INSTRUMENT_STATUS_BASE,
+      });
+      let available = allShares.instruments
+      .filter((share) => candidates.includes(share.ticker));
+      available = available.concat(allEtfs.instruments.filter(etf => candidates.includes(etf.ticker)) as any as Share[]);
       const notAvailable = candidates
         .filter((ticker) => !available.some((c) => c.ticker === ticker))
         .map((ticker) => ({ ticker })) as Share[];
