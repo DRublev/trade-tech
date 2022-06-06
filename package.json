@@ -1,0 +1,9 @@
+{
+  "private": "true",
+  "workspaces": [
+    "shared-kernel",
+    "console-app",
+    "desktop-app",
+    "workers"
+  ]
+}

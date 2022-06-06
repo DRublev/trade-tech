@@ -1,9 +1,10 @@
 import 'dotenv/config';
+import * as fs from 'fs';
 import EventEmitter from "@foxify/events";
 import { createSdk } from 'invest-nodejs-grpc-sdk';
 import { Share } from 'invest-nodejs-grpc-sdk/dist/generated/instruments';
 import { AccessLevel, AccountStatus, AccountType } from 'invest-nodejs-grpc-sdk/dist/generated/users';
-import { PostOrderRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
+import { PostOrderRequest, TradesStreamRequest } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
 import {
   MarketDataRequest,
   SubscriptionAction,
@@ -33,7 +34,7 @@ if (!process.env.TOKEN) {
 }
 
 // При значении true все заявки будут выставляться в режиме песочницы
-let isSandbox = true;
+let isSandbox = false;
 
 // Если указан путь к файту, то будет использован контент файла, а не данные из рынка
 // Также, автоматически будет выставлен режим песочницы
@@ -86,20 +87,37 @@ async function* getSubscribeCandlesRequest() {
   }
 };
 
+async function* getSubscribeOrdersRequest() {
+  while(!killSwitch.signal.aborted) {
+    await sleep(1000);
+    yield MarketDataRequest.fromPartial({
+      subscribeOrderBookRequest: {
+        subscriptionAction: SubscriptionAction.SUBSCRIPTION_ACTION_SUBSCRIBE,
+        instruments: [
+          {
+            figi: 'BBG00SDJ8M78', // NRIX,
+            depth: 20,
+          }
+        ]
+      }
+    });
+  }
+}
+
 const start = async () => {
   try {
     await chooseAccount();
-    await accountService.printAccountPositions(accountId);
-    await accountService.printAccountPortfolio(accountId);
+    // await accountService.printAccountPositions(accountId);
+    // await accountService.printAccountPortfolio(accountId);
 
-    await prepareSharesList();
+    // await prepareSharesList();
 
     // Обновляем статус работы бирж с переодичностью в 1 час
     /* В качестве улучшения можно использовать механизм Pub/Sub
        и подписываться на события изменения статуса работы биржи из сервиса ExchangeService
      */
-    await watchForExchangeTimetable();
-    watchIntervalId = setInterval(watchForExchangeTimetable, 1000 * 60); // 1 час
+    // await watchForExchangeTimetable();
+    // watchIntervalId = setInterval(watchForExchangeTimetable, 1000 * 60); // 1 час
 
     // Код для подчитски мусора и остановки бота в непредвиденных ситуациях
     // Отменяет все невыполненные заявки!
@@ -114,7 +132,7 @@ const start = async () => {
 
     let candlesStream;
     if (!backtestingFilePath) {
-      candlesStream = await client.marketDataStream.marketDataStream(getSubscribeCandlesRequest());
+      // candlesStream = await client.marketDataStream.marketDataStream(getSubscribeCandlesRequest());
     } else {
       logger.info('Запускаем бектестинг...');
       isSandbox = true;
@@ -122,19 +140,29 @@ const start = async () => {
       const backtestingReader = new BacktestingReader(backtestingFilePath);
       candlesStream = await backtestingReader.readAsStream(simulateInterval, killSwitch.signal);
     }
-    const tradingPromises = tradableShares.map(startTrading);
-    for await (const response of candlesStream) {
-      // При получении новой свечи уведомляем всех подписчиков (коими являются стратегии) об этом
-      if (response.candle) {
-        candlesEventEmitter.emit(events.receive(response.candle.figi), response.candle);
+
+
+    const ordersStream = await client.marketDataStream.marketDataStream(getSubscribeOrdersRequest());
+    for await (const orderboook of ordersStream) {
+      if (orderboook.orderbook) {
+        console.log('148 index', orderboook.orderbook);
+        fs.appendFileSync('./nrix.csv', JSON.stringify(orderboook.orderbook) + '\n');
       }
     }
+
+    const tradingPromises = tradableShares.map(startTrading);
+    // for await (const response of candlesStream) {
+    //   // При получении новой свечи уведомляем всех подписчиков (коими являются стратегии) об этом
+    //   if (response.candle) {
+    //     candlesEventEmitter.emit(events.receive(response.candle.figi), response.candle);
+    //   }
+    // }
 
     /*
     * Запуск псевдо-параллельной торговли по всем инструментов
     * В целях упрощения сделано на базе Promise.allSettled, эффективнее было бы использовать workerfarm или аналог
     */
-    await Promise.allSettled(tradingPromises);
+    // await Promise.allSettled(tradingPromises);
   } catch (e) {
     logger.emerg(e);
     // Если какая-либо операция была в процессе выполнения (например, цикл торговли) - она будет отменена
