@@ -1,6 +1,6 @@
 **/.env
 **/node_modules
 **/built
-logs/**/*
+**/logs/**/*
 #Electron-builder output
 /dist_electron

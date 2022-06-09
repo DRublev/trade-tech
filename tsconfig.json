@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es5",
+    "lib": ["es6"],
+    "moduleResolution": "node",
+    "types": ["reflect-metadata"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths",
+      }
+    ],
+  },
+}
