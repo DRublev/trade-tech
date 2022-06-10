@@ -1,6 +1,4 @@
-import { Candle, OrderBook } from "invest-nodejs-grpc-sdk/dist/generated/marketdata";
-
-export type Orderbook = OrderBook;
+import { Orderbook } from "./types/orderbook";
 
 export type OrderbookStream = AsyncGenerator<Orderbook>;
 

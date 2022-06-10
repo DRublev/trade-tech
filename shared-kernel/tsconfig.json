@@ -1,13 +1,30 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./built",
     "baseUrl": "./src",
-    "moduleResolution": "node",
-    "types": ["reflect-metadata"],
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@constants/*": [
+        "./constants/*"
+      ],
+      "@utils/*": [
+        "./utils/*"
+      ],
+      "@types/*": [
+        "./types/*"
+      ],
+      "@tinkoff/*": [
+        "./tinkoff/*"
+      ],
+      "@emitters/*": [
+        "./emitters/*"
+      ],
+      "@strategies/*": [
+        "./strategies/*"
       ],
     },
   },
@@ -16,5 +33,7 @@
     "./index.ts",
     "./jest.config.ts",
   ],
-  "exclude": ["node_modules/**/*"]
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }

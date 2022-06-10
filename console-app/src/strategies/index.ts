@@ -35,4 +35,3 @@ export interface IStrategy {
   onPlaceOrder(placedOrderId: string, createdOrderId: string): void;
 }
 
-export { default as Example } from './example';

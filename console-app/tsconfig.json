@@ -1,16 +1,18 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./built",
     "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
+      "@shared-kernel/*": ["../shared-kernel/*"],
+      "@/*": ["./*"],
     },
   },
   "include": [
     "./src/**/*"
   ],
-  "exclude": ["node_modules/**/*"]
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }

@@ -1,8 +1,8 @@
 import { MarketDataRequest, SubscriptionAction } from "invest-nodejs-grpc-sdk/dist/generated/marketdata";
 
-import { IOrderbookSubscriber, OrderbookStream, SubscribeOrderbookReq } from "@/Sdk";
-import identifiers from "@/constants/identifiers";
-import { sleep } from "@/helpers";
+import { IOrderbookSubscriber, OrderbookStream, SubscribeOrderbookReq } from "../Sdk";
+import identifiers from "../constants/identifiers";
+import { sleep } from "../utils/helpers";
 import Container from './ioc';
 import client from "./client";
 
@@ -23,7 +23,7 @@ class OrderbookSubscriber implements IOrderbookSubscriber {
   }
 
   private async *getSubscribeOrdersRequest(instruments) {
-    while(!this.killSwitch.signal.aborted) {
+    while (!this.killSwitch.signal.aborted) {
       await sleep(1000);
       yield MarketDataRequest.fromPartial({
         subscribeOrderBookRequest: {

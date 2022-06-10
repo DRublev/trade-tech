@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "target": "es5",
+    "target": "es6",
     "lib": ["es6"],
     "moduleResolution": "node",
     "types": ["reflect-metadata"],
@@ -12,6 +12,20 @@
       {
         "transform": "@zerollup/ts-transform-paths",
       }
-    ],
+    ]
   },
+  "references": [
+    {
+      "path": "./console-app",
+    },
+    {
+      "path": "./shared-kernel",
+    },
+    {
+      "path": "./desktop-app",
+    },
+    {
+      "path": "./workers",
+    },
+  ]
 }
