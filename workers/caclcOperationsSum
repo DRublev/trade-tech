@@ -1,0 +1,15 @@
+ops.operations.reduce((acc, op) => {
+    if (op.state !== "OPERATION_STATE_EXECUTED") {
+        console.log('not executed', op);
+        return acc;
+    }
+    const paid = Number(toNumber(op.payment));
+    console.log(paid, op.payment);
+    if (op.operationType === "OPERATION_TYPE_BROKER_FEE") {
+        return acc + paid;
+    }
+    if (op.operationType === "OPERATION_TYPE_BUY") return acc + paid;
+    if (op.operationType === "OPERATION_TYPE_SELL") return acc + paid;
+    console.log('not fee, buy or sell', op);
+    return acc;
+}, 0)
