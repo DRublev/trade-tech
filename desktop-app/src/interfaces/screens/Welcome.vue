@@ -13,7 +13,7 @@
 import { Options, Vue } from 'vue-class-component';
 
 import Store from '@/domain/Store';
-import Onboarding from '@/app/screens/onboarding/index.vue';
+import Onboarding from './onboarding/index.vue';
 
 
 @Options({

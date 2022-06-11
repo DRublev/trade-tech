@@ -31,6 +31,7 @@ class SafeIpcRenderer {
     this.send = protect(ipcRenderer.send);
     this.sendSync = protect(ipcRenderer.sendSync);
     this.sendToHost = protect(ipcRenderer.sendToHost);
+    this.invoke = protect(ipcRenderer.invoke);
   }
 }
 

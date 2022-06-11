@@ -3,11 +3,22 @@ import { TinkoffClient } from "shared-kernel/src/infra/tinkoff/client";
 class TinkoffSdk {
   private static instance: TinkoffSdk;
   private sdk: TinkoffClient = null as any;
+  private isSandbox = true;
 
   private constructor() { }
 
-  public bindSdk(sdk: TinkoffClient) {
+  public bindSdk(sdk: TinkoffClient, isSandbox: boolean) {
     this.sdk = sdk;
+    this.isSandbox = isSandbox;
+  }
+
+  public get Sdk() {
+    if (!this.sdk) throw new ReferenceError('Tinkoff SDK is not initialized');
+    return this.sdk;
+  }
+
+  public get IsSandbox() {
+    return this.isSandbox;
   }
 
   public static get Instance() {

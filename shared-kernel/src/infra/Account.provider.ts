@@ -1,7 +1,7 @@
 import { AccountId, IAccountProvider } from "../app/types/account";
 
 class AccountProvider implements IAccountProvider {
-  private accountId: AccountId = null;
+  private accountId: AccountId = null as any;
 
   setId(id: string): void {
     this.accountId = id;

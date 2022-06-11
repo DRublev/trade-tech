@@ -10,10 +10,9 @@ module.exports = defineConfig({
       chainWebpackMainProcess: config => {
         config.module
           .rule('babel')
-          .test(/CacheAccessor|ipcHandlers\.ts$/)
+          .test(/(infra|app|shared-kernel\/*)|background\.ts$/)
           .use('babel')
           .loader('babel-loader')
-
           .options({
             presets: [
               ['@babel/preset-env', { modules: false }],

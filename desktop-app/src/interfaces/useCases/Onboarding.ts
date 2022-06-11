@@ -6,12 +6,8 @@ export default class OnboardingUseCase {
   private mode: any;
   private isTokenEntered = false;
   private account = null;
+  private accounts = [];
 
-  public setMode(isSandbox: boolean) {
-    // TODO: Add analytics
-    this.mode = isSandbox ? 'sandbox' : 'production';
-    Store.IsSandbox = isSandbox;
-  }
 
   public get Mode() {
     return this.mode;
@@ -28,7 +24,28 @@ export default class OnboardingUseCase {
   }
 
   public get AccountsList() {
-    return [];
+    return this.accounts;
+  }
+
+  public async buildSdk() {
+    await (window as any).ipc.invoke(ipcEvents.TINKOFF_CREATE_SDK, { isSandbox: true });
+  }
+
+  public async fetchAccounts() {
+    try {
+      const accounts = await (window as any).ipc.invoke(ipcEvents.TINKOFF_GET_ACCOUNTS, {});
+      console.log('32 Onboarding', accounts);
+      this.accounts = accounts;
+    } catch (e) {
+      console.error(e);
+      throw e;
+   }
+  }
+
+  public setMode(isSandbox: boolean) {
+    // TODO: Add analytics
+    this.mode = isSandbox ? 'sandbox' : 'production';
+    Store.IsSandbox = isSandbox;
   }
 
   public setSandboxToken(token: string) {
