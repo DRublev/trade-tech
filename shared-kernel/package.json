@@ -1,13 +1,13 @@
 {
   "name": "shared-kernel",
   "main": "./index.ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "engines": {
     "node": ">=14.0.0"
   },
   "scripts": {
-    "build": "tsc -p ./tsconfig.json && tsconfig-replace-paths -p tsconfig.json",
+    "build": "tsc -p ./tsconfig.build.json && tsconfig-replace-paths -p tsconfig.build.json",
     "dev": "nodemon -e ts,js --exec 'ts-node -r tsconfig-paths/register' ./index.ts",
     "test": "jest",
     "postinstall": "cd ../node_modules/invest-nodejs-grpc-sdk && tsc && cd ../../shared-kernel"

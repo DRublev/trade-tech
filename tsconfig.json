@@ -1,31 +1,16 @@
 {
+  "extends": "./tsconfig.build.json",
+
   "compilerOptions": {
-    "allowJs": true,
-    "target": "es6",
-    "lib": ["es6"],
-    "moduleResolution": "node",
-    "types": ["reflect-metadata"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
-    "plugins": [
-      {
-        "transform": "@zerollup/ts-transform-paths",
-      }
-    ]
-  },
-  "references": [
-    {
-      "path": "./console-app",
+    "baseUrl": ".",
+    "paths": {
+      "shared-kernel/*": ["shared-kernel/src/*"],
+      "console-app/*": ["console-app/src/*"],
+      "desktop-app/*": ["desktop-app/src/*"],
+      "workers/*": ["workers/*"],
     },
-    {
-      "path": "./shared-kernel",
-    },
-    {
-      "path": "./desktop-app",
-    },
-    {
-      "path": "./workers",
-    },
-  ]
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  }
 }

@@ -1,0 +1,43 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+
+    "target": "es6",
+    "lib": ["es6"],
+
+    "outDir": "./built",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@constants/*": [
+        "./constants/*"
+      ],
+      "@utils/*": [
+        "./utils/*"
+      ],
+      "@types/*": [
+        "./types/*"
+      ],
+      "@tinkoff/*": [
+        "./tinkoff/*"
+      ],
+      "@emitters/*": [
+        "./emitters/*"
+      ],
+      "@strategies/*": [
+        "./strategies/*"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*",
+    "./index.ts",
+    "./jest.config.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
+}

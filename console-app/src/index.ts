@@ -36,7 +36,7 @@ if (!process.env.TINKOFF_TOKEN) {
 
 let isSandbox = false;
 
-const client: any = IOC.get(Identifiers.TinkoffClient);
+// const client: any = IOC.get(Identifiers.TinkoffClient);
 // const client = createSdk(process.env.TINKOFF_TOKEN, 'asd');
 // const shares = Container.get<SharesTradeConfig>(CONSTANTS.SharesTradeConfig);
 // const instrumentsService = new InstrumentsService(client);
@@ -109,7 +109,6 @@ const start = async () => {
       // await ordersService.cancelAllOrders(accountId);
       Object.values(watchOrderIntervalIds).forEach((id) => clearInterval(id));
     });
-
 
     // const ordersStream = await TinkoffSdk.OrderbookStreamProvider.subscribe([
     //   {
