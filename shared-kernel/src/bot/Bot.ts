@@ -8,9 +8,6 @@ export default class Bot {
   private isPaused = false;
   private OrderbookEmitter: OrderbookEmitter;
 
-// processingOrders - id | idempodentId | state
-// 
-
   constructor(private sdk: Sdk, private ioc: Container, ) {
     this.OrderbookEmitter = this.ioc.get<OrderbookEmitter>(identifiers.OrderbookEmitter);
 
