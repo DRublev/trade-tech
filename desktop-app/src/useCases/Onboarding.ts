@@ -1,4 +1,5 @@
 import Store from '@/modules/Store';
+import ipcEvents from '@/ipcEvents';
 
 export default class OnboardingUseCase {
   private mode: any;
@@ -17,9 +18,13 @@ export default class OnboardingUseCase {
   }
 
   public setSandboxToken(token: string) {
-    console.log('16 Onboarding', 'Token entered');
-    console.log('18 Onboarding', token);
-    this.isTokenEntered = true;
-  }
+    try {
+      const res = (window as any).ipc.sendSync(ipcEvents.SAVE_SANDBOX_TOKEN, token);
+      if (res instanceof Error) throw res;
 
+      this.isTokenEntered = !!res;
+    } catch(e) {
+      console.error(e);
+    }
+  }
 }

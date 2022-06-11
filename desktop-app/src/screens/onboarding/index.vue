@@ -22,18 +22,18 @@ import EnterSandboxToken from '@/components/onboarding/EnterSandboxToken.vue';
   },
 })
 export default class Onboarding extends Vue {
-  private onboarding = new OnboardingUseCase();
+  private onboardingUC = new OnboardingUseCase();
 
   get isModeChosen() {
-    return !!this.onboarding.Mode;
+    return !!this.onboardingUC.Mode;
   }
 
   chooseMode(isSandbox: boolean) {
-    this.onboarding.setMode(isSandbox);
+    this.onboardingUC.setMode(isSandbox);
   }
 
   onSandboxTokenEntered(token: string) {
-    this.onboarding.setSandboxToken(token);
+    this.onboardingUC.setSandboxToken(token);
   }
 }
 </script>

@@ -1,8 +1,10 @@
 'use strict'
 
+import path from 'path';
 import { app, protocol, BrowserWindow, shell } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
+import './ipcHandlers';
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
@@ -20,7 +22,7 @@ async function createWindow() {
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: !!process.env.ELECTRON_NODE_INTEGRATION,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
-      preload: `${__dirname}/src/preload.js`,
+      preload: path.join(__dirname, './preload.js'),
     }
   })
 
@@ -28,6 +30,7 @@ async function createWindow() {
     event.preventDefault();
     shell.openExternal(url);
   });
+
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode

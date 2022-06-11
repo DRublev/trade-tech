@@ -1,0 +1,3 @@
+export default {
+  SAVE_SANDBOX_TOKEN: 'SAVE_SANDBOX_TOKEN',
+}
