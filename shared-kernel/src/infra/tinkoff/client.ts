@@ -1,5 +1,9 @@
 import { createSdk } from 'invest-nodejs-grpc-sdk';
 
-const client = createSdk(process.env.TINKOFF_TOKEN, 'drublev');
+export const createClient = (token: string) => createSdk(token, 'drublev');
+
+export type TinkoffClient = ReturnType<typeof createClient>;
+
+const client = createClient(process.env.TINKOFF_TOKEN);
 
 export default client;

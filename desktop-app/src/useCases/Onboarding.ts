@@ -8,6 +8,7 @@ export default class OnboardingUseCase {
   public setMode(isSandbox: boolean) {
     // TODO: Add analytics
     this.mode = isSandbox ? 'sandbox' : 'production';
+    Store.IsSandbox = isSandbox;
   }
 
   public get Mode() {
@@ -19,9 +20,9 @@ export default class OnboardingUseCase {
 
   public setSandboxToken(token: string) {
     try {
-      const res = (window as any).ipc.sendSync(ipcEvents.SAVE_SANDBOX_TOKEN, token);
+      const res = (window as any).ipc.sendSync(ipcEvents.ENCRYPT_STRING, token);
       if (res instanceof Error) throw res;
-
+      Store.Token = res;
       this.isTokenEntered = !!res;
     } catch(e) {
       console.error(e);

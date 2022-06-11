@@ -7,6 +7,21 @@ module.exports = defineConfig({
   pluginOptions: {
     electronBuilder: {
       preload: './src/preload.ts',
+      chainWebpackMainProcess: config => {
+        config.module
+          .rule('babel')
+          .test(/CacheAccessor|ipcHandlers\.ts$/)
+          .use('babel')
+          .loader('babel-loader')
+
+          .options({
+            presets: [
+              ['@babel/preset-env', { modules: false }],
+              '@babel/preset-typescript'
+            ],
+            plugins: ['@babel/plugin-proposal-class-properties']
+          })
+      }
     }
   },
 
@@ -16,6 +31,7 @@ module.exports = defineConfig({
       fs: require.resolve('browserify-fs'),
       constants: require.resolve('constants-browserify'),
       stream: require.resolve('stream-browserify'),
+      crypto: require.resolve('crypto-browserify'),
     }
   }
 })

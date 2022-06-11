@@ -15,6 +15,7 @@
   "dependencies": {
     "autoprefixer": "^10",
     "core-js": "^3.8.3",
+    "file-system-cache": "^2.0.0",
     "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",
     "postcss": "^8",
     "tailwindcss": "^3.1.2",
@@ -25,6 +26,9 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/plugin-transform-typescript": "^7.18.4",
+    "@babel/preset-typescript": "^7.17.12",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",
@@ -34,6 +38,7 @@
     "@vue/eslint-config-typescript": "^9.1.0",
     "browserify-fs": "^1.0.0",
     "constants-browserify": "^1.0.0",
+    "crypto-browserify": "^3.12.0",
     "electron": "19.0.3",
     "electron-devtools-installer": "3.2.0",
     "eslint": "^7.32.0",

@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    SAVE_SANDBOX_TOKEN: 'SAVE_SANDBOX_TOKEN',\n});\n\n\n//# sourceURL=webpack:///./src/ipcEvents.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    ENCRYPT_STRING: 'ENCRYPT_STRING',\n    SAVE_TO_STORE: 'SAVE_TO_STORE',\n    GET_FROM_STORE: 'GET_FROM_STORE',\n});\n\n\n//# sourceURL=webpack:///./src/ipcEvents.ts?");
 
 /***/ }),
 
