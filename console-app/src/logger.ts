@@ -1,6 +1,6 @@
-import * as winston from "winston";
-import * as util from 'util';
-import * as TelegramLogger from 'winston-telegram';
+import winston from "winston";
+import util from 'util';
+import TelegramLogger from 'winston-telegram';
 import { OrderDirection, OrderState, OrderType, PostOrderRequest } from "invest-nodejs-grpc-sdk/dist/generated/orders";
 import { toNum } from "./helpers";
 

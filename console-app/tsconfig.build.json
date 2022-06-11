@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.build.json",
+
+  "compilerOptions": {
+    "outDir": "./built",
+    "baseUrl": "./src",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+  },
+
+  "include": [
+    "src/**/*"
+  ]
+}
