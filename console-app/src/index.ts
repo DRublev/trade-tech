@@ -8,12 +8,11 @@ if (!process.env.TINKOFF_TOKEN) {
   process.exit(1);
 }
 
-// const client: any = IOC.get(Identifiers.TinkoffClient);
+const client: any = IOC.get(Identifiers.TinkoffClient);
 const killSwitch = new AbortController();;
 
 let watchIntervalId = null;
 let watchOrderIntervalIds: Record<string, any> = {};
-
 
 
 const start = async () => {

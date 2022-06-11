@@ -1,7 +1,7 @@
 import { Container } from "inversify";
 
 import killSwitch from "./KillSwitch";
-import identifiers from "./constants/identifiers";
+import identifiers from "@/constants/identifiers";
 import OrderbookEmitter from "./emitters/Orderbook.emitter";
 
 import tinkoffClient from './tinkoff/client';
