@@ -1,5 +1,4 @@
 import EventEmitter from "@foxify/events";
-
 import { Orderbook } from "../types/orderbook";
 
 

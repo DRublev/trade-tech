@@ -1,13 +1,14 @@
 import { MarketDataRequest, SubscriptionAction } from "invest-nodejs-grpc-sdk/dist/generated/marketdata";
 
-import { IOrderbookSubscriber, OrderbookStream, SubscribeOrderbookReq } from "../Sdk";
-import identifiers from "../constants/identifiers";
-import { sleep } from "../utils/helpers";
+import identifiers from "../../constants/identifiers";
+import { sleep } from "../../utils/helpers";
 import Container from './ioc';
 import client from "./client";
+import { IOrderbookSubscriber, SubscribeOrderbookReq, OrderbookStream } from "../../app/types/orderbook";
 
 class OrderbookSubscriber implements IOrderbookSubscriber {
-  private killSwitch = Container.get<AbortController>(identifiers.KillSwitch);
+  private isWorking = true;
+  // private killSwitch = Container.get<AbortController>(identifiers.KillSwitch);
   async *subscribe(req: SubscribeOrderbookReq): OrderbookStream {
     try {
       const stream = await client.marketDataStream.marketDataStream(this.getSubscribeOrdersRequest(req));
@@ -23,7 +24,8 @@ class OrderbookSubscriber implements IOrderbookSubscriber {
   }
 
   private async *getSubscribeOrdersRequest(instruments) {
-    while (!this.killSwitch.signal.aborted) {
+    // while (!this.killSwitch.signal.aborted) {
+    while (this.isWorking) {
       await sleep(1000);
       yield MarketDataRequest.fromPartial({
         subscribeOrderBookRequest: {

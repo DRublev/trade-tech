@@ -1,6 +1,6 @@
 import { Container } from "inversify";
 
-import baseContainer from "../ioc";
+import baseContainer from "../../ioc";
 
 
 const container = new Container();
