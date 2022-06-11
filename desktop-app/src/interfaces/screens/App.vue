@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Welcome from './screens/Welcome.vue';
+import Welcome from '@/app/screens/Welcome.vue';
 
 @Options({
   components: {
@@ -15,5 +15,5 @@ export default class App extends Vue {}
 </script>
 
 <style>
-@import './style.css';
+@import '../assets/style.css';
 </style>

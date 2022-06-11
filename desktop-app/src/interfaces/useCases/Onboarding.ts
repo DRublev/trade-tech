@@ -1,9 +1,11 @@
-import Store from '@/modules/Store';
-import ipcEvents from '@/ipcEvents';
+import Store from '@/domain/Store';
+// TODO: Restrict import from 'interfaces' level from here
+import ipcEvents from '@/infra/ipc/ipcEvents';
 
 export default class OnboardingUseCase {
   private mode: any;
   private isTokenEntered = false;
+  private account = null;
 
   public setMode(isSandbox: boolean) {
     // TODO: Add analytics
@@ -17,6 +19,17 @@ export default class OnboardingUseCase {
   public get HasToken() {
     return this.isTokenEntered;
   }
+  public get Account() {
+    return this.account;
+  }
+
+  public set Account(value: any) {
+    console.log('27 Onboarding', value);
+  }
+
+  public get AccountsList() {
+    return [];
+  }
 
   public setSandboxToken(token: string) {
     try {
@@ -28,4 +41,5 @@ export default class OnboardingUseCase {
       console.error(e);
     }
   }
+
 }

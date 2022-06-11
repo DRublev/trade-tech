@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import ipcEvents from './ipcEvents';
+import ipcEvents from './infra/ipc/ipcEvents';
 /*
   Experimental security feature:
         We set the global "require" variable to null after importing what we need.
@@ -37,20 +37,3 @@ class SafeIpcRenderer {
 contextBridge.exposeInMainWorld(
   'ipc', new SafeIpcRenderer(validChannels),
 );
-// contextBridge.exposeInMainWorld(
-//   'ipc', {
-//     send: (channel: any, data: any) => {
-//       console.log('9 preload', channel);
-//       if (validChannels.includes(channel)) {
-//         ipcRenderer.send(channel, data);
-//       }
-//     },
-//     on: (channel: any, func: any) => {
-//       console.log('14 preload', channel);
-//       if (validChannels.includes(channel)) {
-//         // Strip event as it includes `sender` and is a security risk
-//         ipcRenderer.on(channel, (event, ...args) => func(...args));
-//       }
-//     },
-//   },
-// );

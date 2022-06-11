@@ -1,4 +1,4 @@
-import ipcEvents from "@/ipcEvents";
+import ipcEvents from "@/infra/ipc/ipcEvents";
 
 class Store {
   private isSandbox = true;
@@ -7,7 +7,6 @@ class Store {
   constructor() {
     if ((window as any).ipc) {
       const storedIsSandbox = (window as any).ipc.sendSync(ipcEvents.GET_FROM_STORE, { key: 'isSandbox' });
-      console.log('10 Store', storedIsSandbox);
       this.isSandbox = !storedIsSandbox || storedIsSandbox instanceof Error ? true : Boolean(storedIsSandbox);
 
       const storedToken = (window as any).ipc
@@ -29,7 +28,6 @@ class Store {
     try {
       if (this.isSandbox) {
         (window as any).ipc.sendSync(ipcEvents.SAVE_TO_STORE, { key: 'sandboxToken', value });
-        (window as any).ipc.sendSync(ipcEvents.GET_FROM_STORE, { key: 'sandboxToken' });
       } else {
         (window as any).ipc.sendSync(ipcEvents.SAVE_TO_STORE, { key: 'fullAccessToken', value });
       }

@@ -18,6 +18,7 @@
     "file-system-cache": "^2.0.0",
     "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",
     "postcss": "^8",
+    "shared-kernel": "./shared-kernel/built",
     "tailwindcss": "^3.1.2",
     "ts-loader": "~8.2.0",
     "vue": "^3.2.13",
