@@ -1,17 +1,17 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <Welcome msg="Welcome to Your Vue.js App"/>
+  <Welcome />
 </template>
 
-<script>
-import Welcome from './use-cases/welcome/Welcome.vue'
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import Welcome from './screens/Welcome.vue';
 
-export default {
-  name: 'App',
+@Options({
   components: {
-    Welcome
-  }
-}
+    Welcome,
+  },
+})
+export default class App extends Vue {}
 </script>
 
 <style>
