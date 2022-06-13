@@ -17,7 +17,6 @@ const storage = new CacheAccessor('dev', 'store');
   storage.clear();
 // }
 
-const createTinkoffSdk: (token: string) => TinkoffClient = tinkoffIOC.get('BuildTinkoffClient');
 
 ipcMain.on(events.ENCRYPT_STRING, (event, data) => {
   try {
@@ -75,6 +74,7 @@ ipcMain.handle(events.TINKOFF_CREATE_SDK, (event, options: { isSandbox: boolean 
     }
     const token = safeStorage.decryptString(Buffer.from(Object.values(storedToken) as any));
     console.log('77 ipcHandlers', token, storedToken);
+    const createTinkoffSdk: (token: string) => TinkoffClient = tinkoffIOC.get('BuildTinkoffClient');
     TinkoffSdk.bindSdk(createTinkoffSdk(token), options.isSandbox);
 
     event.returnValue = true;

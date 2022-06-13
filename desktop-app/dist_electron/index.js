@@ -3312,87 +3312,87 @@ eval("\nmodule.exports = Yallist\n\nYallist.Node = Node\nYallist.create = Yallis
 
 /***/ }),
 
-/***/ "../shared-kernel/src/KillSwitch.ts":
-/*!******************************************!*\
-  !*** ../shared-kernel/src/KillSwitch.ts ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/shared-kernel/src/KillSwitch.js":
+/*!******************************************************!*\
+  !*** ./node_modules/shared-kernel/src/KillSwitch.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst killSwitch = new AbortController();\n/* harmony default export */ __webpack_exports__[\"default\"] = (killSwitch);\n\n\n//# sourceURL=webpack:///../shared-kernel/src/KillSwitch.ts?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nconst killSwitch = new AbortController();\nexports.default = killSwitch;\n\n//# sourceURL=webpack:///./node_modules/shared-kernel/src/KillSwitch.js?");
 
 /***/ }),
 
-/***/ "../shared-kernel/src/app/emitters/Orderbook.emitter.ts":
-/*!**************************************************************!*\
-  !*** ../shared-kernel/src/app/emitters/Orderbook.emitter.ts ***!
-  \**************************************************************/
-/*! exports provided: OrderbookEmitter, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/shared-kernel/src/app/emitters/Orderbook.emitter.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/shared-kernel/src/app/emitters/Orderbook.emitter.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"OrderbookEmitter\", function() { return OrderbookEmitter; });\n/* harmony import */ var _foxify_events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @foxify/events */ \"../node_modules/@foxify/events/dist/index.js\");\n/* harmony import */ var _foxify_events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_foxify_events__WEBPACK_IMPORTED_MODULE_0__);\n\nclass OrderbookEmitter extends _foxify_events__WEBPACK_IMPORTED_MODULE_0___default.a {\n}\nconst emitter = new _foxify_events__WEBPACK_IMPORTED_MODULE_0___default.a();\n/* harmony default export */ __webpack_exports__[\"default\"] = (emitter);\n\n\n//# sourceURL=webpack:///../shared-kernel/src/app/emitters/Orderbook.emitter.ts?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.OrderbookEmitter = void 0;\n\nconst events_1 = __webpack_require__(/*! @foxify/events */ \"../node_modules/@foxify/events/dist/index.js\");\n\nclass OrderbookEmitter extends events_1.default {}\n\nexports.OrderbookEmitter = OrderbookEmitter;\nconst emitter = new events_1.default();\nexports.default = emitter;\n\n//# sourceURL=webpack:///./node_modules/shared-kernel/src/app/emitters/Orderbook.emitter.js?");
 
 /***/ }),
 
-/***/ "../shared-kernel/src/app/types/mode.ts":
-/*!**********************************************!*\
-  !*** ../shared-kernel/src/app/types/mode.ts ***!
-  \**********************************************/
-/*! exports provided: Modes, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/shared-kernel/src/app/types/mode.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/shared-kernel/src/app/types/mode.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Modes\", function() { return Modes; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return ModeController; });\nlet Modes;\n(function (Modes) {\n    Modes[Modes[\"Sandbox\"] = 0] = \"Sandbox\";\n    Modes[Modes[\"Real\"] = 1] = \"Real\";\n})(Modes || (Modes = {}));\nclass ModeController {\n    constructor() {\n        let mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Modes.Sandbox;\n        this.mode = mode;\n    }\n    get Mode() {\n        return this.mode;\n    }\n    set Mode(mode) {\n        this.mode = mode;\n    }\n    get IsSandbox() {\n        return this.mode === Modes.Sandbox;\n    }\n}\n\n\n//# sourceURL=webpack:///../shared-kernel/src/app/types/mode.ts?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.Modes = void 0;\nvar Modes;\n\n(function (Modes) {\n  Modes[Modes[\"Sandbox\"] = 0] = \"Sandbox\";\n  Modes[Modes[\"Real\"] = 1] = \"Real\";\n})(Modes = exports.Modes || (exports.Modes = {}));\n\nclass ModeController {\n  constructor() {\n    let mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Modes.Sandbox;\n    this.mode = mode;\n  }\n\n  get Mode() {\n    return this.mode;\n  }\n\n  set Mode(mode) {\n    this.mode = mode;\n  }\n\n  get IsSandbox() {\n    return this.mode === Modes.Sandbox;\n  }\n\n}\n\nexports.default = ModeController;\n\n//# sourceURL=webpack:///./node_modules/shared-kernel/src/app/types/mode.js?");
 
 /***/ }),
 
-/***/ "../shared-kernel/src/constants/identifiers.ts":
-/*!*****************************************************!*\
-  !*** ../shared-kernel/src/constants/identifiers.ts ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/shared-kernel/src/constants/identifiers.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/shared-kernel/src/constants/identifiers.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    KillSwitch: Symbol.for(\"KillSwitch\"),\n    ModeController: Symbol.for(\"ModeController\"),\n    SharesTradeConfig: Symbol.for(\"SharesTradeConfig\"),\n    OrdersEmitter: Symbol.for(\"OrdersEmitter\"),\n    OrderbookEmitter: Symbol.for(\"OrderbookEmitter\"),\n    TinkoffSdk: Symbol.for(\"TinkoffSdk\"),\n    TinkoffClient: Symbol.for(\"TinkoffClient\")\n});\n\n\n//# sourceURL=webpack:///../shared-kernel/src/constants/identifiers.ts?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = {\n  KillSwitch: Symbol.for(\"KillSwitch\"),\n  ModeController: Symbol.for(\"ModeController\"),\n  SharesTradeConfig: Symbol.for(\"SharesTradeConfig\"),\n  OrdersEmitter: Symbol.for(\"OrdersEmitter\"),\n  OrderbookEmitter: Symbol.for(\"OrderbookEmitter\"),\n  TinkoffSdk: Symbol.for(\"TinkoffSdk\"),\n  TinkoffClient: Symbol.for(\"TinkoffClient\")\n};\n\n//# sourceURL=webpack:///./node_modules/shared-kernel/src/constants/identifiers.js?");
 
 /***/ }),
 
-/***/ "../shared-kernel/src/infra/tinkoff/client.ts":
-/*!****************************************************!*\
-  !*** ../shared-kernel/src/infra/tinkoff/client.ts ***!
-  \****************************************************/
-/*! exports provided: createClient, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/shared-kernel/src/infra/tinkoff/client.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/shared-kernel/src/infra/tinkoff/client.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"createClient\", function() { return createClient; });\n/* harmony import */ var invest_nodejs_grpc_sdk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! invest-nodejs-grpc-sdk */ \"invest-nodejs-grpc-sdk\");\n/* harmony import */ var invest_nodejs_grpc_sdk__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(invest_nodejs_grpc_sdk__WEBPACK_IMPORTED_MODULE_0__);\n\nconst createClient = token => Object(invest_nodejs_grpc_sdk__WEBPACK_IMPORTED_MODULE_0__[\"createSdk\"])(token, 'drublev');\nconst client = createClient(process.env.TINKOFF_TOKEN);\n/* harmony default export */ __webpack_exports__[\"default\"] = (client);\n\n\n//# sourceURL=webpack:///../shared-kernel/src/infra/tinkoff/client.ts?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nconst invest_nodejs_grpc_sdk_1 = __webpack_require__(/*! invest-nodejs-grpc-sdk */ \"invest-nodejs-grpc-sdk\");\n\nconst client = (0, invest_nodejs_grpc_sdk_1.createSdk)(process.env.TINKOFF_TOKEN, 'drublev');\nexports.default = client;\n\n//# sourceURL=webpack:///./node_modules/shared-kernel/src/infra/tinkoff/client.js?");
 
 /***/ }),
 
-/***/ "../shared-kernel/src/infra/tinkoff/ioc.ts":
-/*!*************************************************!*\
-  !*** ../shared-kernel/src/infra/tinkoff/ioc.ts ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/shared-kernel/src/infra/tinkoff/ioc.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/shared-kernel/src/infra/tinkoff/ioc.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var inversify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! inversify */ \"../node_modules/inversify/es/inversify.js\");\n/* harmony import */ var _ioc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ioc */ \"../shared-kernel/src/ioc.ts\");\n/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./client */ \"../shared-kernel/src/infra/tinkoff/client.ts\");\n\n\n\nconst container = new inversify__WEBPACK_IMPORTED_MODULE_0__[\"Container\"]();\ncontainer.parent = _ioc__WEBPACK_IMPORTED_MODULE_1__[\"default\"];\ncontainer.bind('BuildTinkoffClient').toFunction(_client__WEBPACK_IMPORTED_MODULE_2__[\"createClient\"]);\n/* harmony default export */ __webpack_exports__[\"default\"] = (container);\n\n\n//# sourceURL=webpack:///../shared-kernel/src/infra/tinkoff/ioc.ts?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nconst inversify_1 = __webpack_require__(/*! inversify */ \"../node_modules/inversify/es/inversify.js\");\n\nconst ioc_1 = __webpack_require__(/*! ../../ioc */ \"./node_modules/shared-kernel/src/ioc.js\");\n\nconst container = new inversify_1.Container();\ncontainer.parent = ioc_1.default;\nexports.default = container;\n\n//# sourceURL=webpack:///./node_modules/shared-kernel/src/infra/tinkoff/ioc.js?");
 
 /***/ }),
 
-/***/ "../shared-kernel/src/ioc.ts":
-/*!***********************************!*\
-  !*** ../shared-kernel/src/ioc.ts ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/shared-kernel/src/ioc.js":
+/*!***********************************************!*\
+  !*** ./node_modules/shared-kernel/src/ioc.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var inversify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! inversify */ \"../node_modules/inversify/es/inversify.js\");\n/* harmony import */ var _KillSwitch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./KillSwitch */ \"../shared-kernel/src/KillSwitch.ts\");\n/* harmony import */ var _constants_identifiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants/identifiers */ \"../shared-kernel/src/constants/identifiers.ts\");\n/* harmony import */ var _app_emitters_Orderbook_emitter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app/emitters/Orderbook.emitter */ \"../shared-kernel/src/app/emitters/Orderbook.emitter.ts\");\n/* harmony import */ var _infra_tinkoff_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./infra/tinkoff/client */ \"../shared-kernel/src/infra/tinkoff/client.ts\");\n/* harmony import */ var _app_types_mode__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app/types/mode */ \"../shared-kernel/src/app/types/mode.ts\");\n\n\n\n\n\n\nconst baseContainer = new inversify__WEBPACK_IMPORTED_MODULE_0__[\"Container\"]();\nbaseContainer.bind(_constants_identifiers__WEBPACK_IMPORTED_MODULE_2__[\"default\"].KillSwitch).toConstantValue(_KillSwitch__WEBPACK_IMPORTED_MODULE_1__[\"default\"]);\nbaseContainer.bind(_constants_identifiers__WEBPACK_IMPORTED_MODULE_2__[\"default\"].ModeController).toConstantValue(new _app_types_mode__WEBPACK_IMPORTED_MODULE_5__[\"default\"]());\nbaseContainer.bind(_constants_identifiers__WEBPACK_IMPORTED_MODULE_2__[\"default\"].OrderbookEmitter).toConstantValue(_app_emitters_Orderbook_emitter__WEBPACK_IMPORTED_MODULE_3__[\"default\"]);\nbaseContainer.bind(_constants_identifiers__WEBPACK_IMPORTED_MODULE_2__[\"default\"].TinkoffClient).toConstantValue(_infra_tinkoff_client__WEBPACK_IMPORTED_MODULE_4__[\"default\"]);\n/* harmony default export */ __webpack_exports__[\"default\"] = (baseContainer);\n\n\n//# sourceURL=webpack:///../shared-kernel/src/ioc.ts?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nconst inversify_1 = __webpack_require__(/*! inversify */ \"../node_modules/inversify/es/inversify.js\");\n\nconst KillSwitch_1 = __webpack_require__(/*! ./KillSwitch */ \"./node_modules/shared-kernel/src/KillSwitch.js\");\n\nconst identifiers_1 = __webpack_require__(/*! ./constants/identifiers */ \"./node_modules/shared-kernel/src/constants/identifiers.js\");\n\nconst Orderbook_emitter_1 = __webpack_require__(/*! ./app/emitters/Orderbook.emitter */ \"./node_modules/shared-kernel/src/app/emitters/Orderbook.emitter.js\");\n\nconst client_1 = __webpack_require__(/*! ./infra/tinkoff/client */ \"./node_modules/shared-kernel/src/infra/tinkoff/client.js\");\n\nconst mode_1 = __webpack_require__(/*! ./app/types/mode */ \"./node_modules/shared-kernel/src/app/types/mode.js\");\n\nconst baseContainer = new inversify_1.Container();\nbaseContainer.bind(identifiers_1.default.KillSwitch).toConstantValue(KillSwitch_1.default);\nbaseContainer.bind(identifiers_1.default.ModeController).toConstantValue(new mode_1.default());\nbaseContainer.bind(identifiers_1.default.OrderbookEmitter).toConstantValue(Orderbook_emitter_1.default);\nbaseContainer.bind(identifiers_1.default.TinkoffClient).toConstantValue(client_1.default);\nexports.default = baseContainer;\n\n//# sourceURL=webpack:///./node_modules/shared-kernel/src/ioc.js?");
 
 /***/ }),
 
@@ -3476,7 +3476,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js_modules_es_error_cause_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.error.cause.js */ \"../node_modules/core-js/modules/es.error.cause.js\");\n/* harmony import */ var core_js_modules_es_error_cause_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_error_cause_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! electron */ \"electron\");\n/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var shared_kernel_src_infra_tinkoff_ioc__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! shared-kernel/src/infra/tinkoff/ioc */ \"../shared-kernel/src/infra/tinkoff/ioc.ts\");\n/* harmony import */ var _CacheAccessor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../CacheAccessor */ \"./src/infra/CacheAccessor.ts\");\n/* harmony import */ var _ipcEvents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ipcEvents */ \"./src/infra/ipc/ipcEvents.ts\");\n/* harmony import */ var _app_tinkoff__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/app/tinkoff */ \"./src/app/tinkoff/index.ts\");\n\n\n\n\n\n\nconst storage = new _CacheAccessor__WEBPACK_IMPORTED_MODULE_3__[\"default\"]('dev', 'store'); // if (process.env.CLEAR_STORE) {\nstorage.clear(); // }\nconst createTinkoffSdk = shared_kernel_src_infra_tinkoff_ioc__WEBPACK_IMPORTED_MODULE_2__[\"default\"].get('BuildTinkoffClient');\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].ENCRYPT_STRING, (event, data) => {\n    try {\n        if (!electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].isEncryptionAvailable()) {\n            throw new Error('Encryption is not available');\n        }\n        event.returnValue = electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].encryptString(data);\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].DECRYPT_STRING, (event, data) => {\n    try {\n        if (!(data instanceof Buffer))\n            throw new TypeError('Data is not a buffer');\n        if (!electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].isEncryptionAvailable()) {\n            throw new Error('Encryption is not available');\n        }\n        event.returnValue = electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].decryptString(data);\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].SAVE_TO_STORE, (event, command) => {\n    try {\n        storage.save(command.key, command.value);\n        event.returnValue = true;\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].GET_FROM_STORE, (event, command) => {\n    try {\n        const storedValue = storage.get(command.key);\n        event.returnValue = storedValue;\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].handle(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].TINKOFF_CREATE_SDK, (event, options) => {\n    try {\n        const storedToken = storage.get(options.isSandbox ? 'sandboxToken' : 'fullAccessToken');\n        if (!storedToken)\n            throw new Error('No stored token');\n        if (!electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].isEncryptionAvailable()) {\n            throw new Error('Encryption is not available');\n        }\n        const token = electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].decryptString(Buffer.from(Object.values(storedToken)));\n        console.log('77 ipcHandlers', token, storedToken);\n        _app_tinkoff__WEBPACK_IMPORTED_MODULE_5__[\"TinkoffSdk\"].bindSdk(createTinkoffSdk(token), options.isSandbox);\n        event.returnValue = true;\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].handle(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].TINKOFF_GET_ACCOUNTS, async (event, options) => {\n    try {\n        const accounts = await _app_tinkoff__WEBPACK_IMPORTED_MODULE_5__[\"TinkoffAccountsService\"].getList();\n        return accounts;\n    }\n    catch (e) {\n        console.error(e);\n        throw e;\n    }\n});\n\n\n//# sourceURL=webpack:///./src/infra/ipc/ipcHandlers.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js_modules_es_error_cause_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.error.cause.js */ \"../node_modules/core-js/modules/es.error.cause.js\");\n/* harmony import */ var core_js_modules_es_error_cause_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_error_cause_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! electron */ \"electron\");\n/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var shared_kernel_src_infra_tinkoff_ioc__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! shared-kernel/src/infra/tinkoff/ioc */ \"./node_modules/shared-kernel/src/infra/tinkoff/ioc.js\");\n/* harmony import */ var shared_kernel_src_infra_tinkoff_ioc__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(shared_kernel_src_infra_tinkoff_ioc__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _CacheAccessor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../CacheAccessor */ \"./src/infra/CacheAccessor.ts\");\n/* harmony import */ var _ipcEvents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ipcEvents */ \"./src/infra/ipc/ipcEvents.ts\");\n/* harmony import */ var _app_tinkoff__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/app/tinkoff */ \"./src/app/tinkoff/index.ts\");\n\n\n\n\n\n\nconst storage = new _CacheAccessor__WEBPACK_IMPORTED_MODULE_3__[\"default\"]('dev', 'store'); // if (process.env.CLEAR_STORE) {\nstorage.clear(); // }\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].ENCRYPT_STRING, (event, data) => {\n    try {\n        if (!electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].isEncryptionAvailable()) {\n            throw new Error('Encryption is not available');\n        }\n        event.returnValue = electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].encryptString(data);\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].DECRYPT_STRING, (event, data) => {\n    try {\n        if (!(data instanceof Buffer))\n            throw new TypeError('Data is not a buffer');\n        if (!electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].isEncryptionAvailable()) {\n            throw new Error('Encryption is not available');\n        }\n        event.returnValue = electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].decryptString(data);\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].SAVE_TO_STORE, (event, command) => {\n    try {\n        storage.save(command.key, command.value);\n        event.returnValue = true;\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].on(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].GET_FROM_STORE, (event, command) => {\n    try {\n        const storedValue = storage.get(command.key);\n        event.returnValue = storedValue;\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].handle(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].TINKOFF_CREATE_SDK, (event, options) => {\n    try {\n        const storedToken = storage.get(options.isSandbox ? 'sandboxToken' : 'fullAccessToken');\n        if (!storedToken)\n            throw new Error('No stored token');\n        if (!electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].isEncryptionAvailable()) {\n            throw new Error('Encryption is not available');\n        }\n        const token = electron__WEBPACK_IMPORTED_MODULE_1__[\"safeStorage\"].decryptString(Buffer.from(Object.values(storedToken)));\n        console.log('77 ipcHandlers', token, storedToken);\n        const createTinkoffSdk = shared_kernel_src_infra_tinkoff_ioc__WEBPACK_IMPORTED_MODULE_2___default.a.get('BuildTinkoffClient');\n        _app_tinkoff__WEBPACK_IMPORTED_MODULE_5__[\"TinkoffSdk\"].bindSdk(createTinkoffSdk(token), options.isSandbox);\n        event.returnValue = true;\n    }\n    catch (e) {\n        console.error(e);\n        event.returnValue = e;\n    }\n});\nelectron__WEBPACK_IMPORTED_MODULE_1__[\"ipcMain\"].handle(_ipcEvents__WEBPACK_IMPORTED_MODULE_4__[\"default\"].TINKOFF_GET_ACCOUNTS, async (event, options) => {\n    try {\n        const accounts = await _app_tinkoff__WEBPACK_IMPORTED_MODULE_5__[\"TinkoffAccountsService\"].getList();\n        return accounts;\n    }\n    catch (e) {\n        console.error(e);\n        throw e;\n    }\n});\n\n\n//# sourceURL=webpack:///./src/infra/ipc/ipcHandlers.ts?");
 
 /***/ }),
 
