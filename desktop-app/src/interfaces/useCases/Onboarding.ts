@@ -1,6 +1,6 @@
 import Store from '@/domain/Store';
 // TODO: Restrict import from 'interfaces' level from here
-import ipcEvents from '@/infra/ipc/ipcEvents';
+import ipcEvents from '@/infra/ipc/events';
 
 export default class OnboardingUseCase {
   private mode: any = Store.Mode;

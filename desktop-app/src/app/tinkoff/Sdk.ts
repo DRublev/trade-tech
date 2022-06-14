@@ -1,15 +1,15 @@
-import { TinkoffClient } from "shared-kernel/src/infra/tinkoff/client";
+import { TinkoffSdk } from "shared-kernel";
 
-class TinkoffSdk {
-  private static instance: TinkoffSdk;
-  private sdk: TinkoffClient = null as any;
+
+class TSdk {
+  private static instance: TSdk;
+  private sdk: TinkoffSdk = null as any;
   private isSandbox = true;
 
   private constructor() { }
 
-  public bindSdk(sdk: TinkoffClient, isSandbox: boolean) {
+  public bindSdk(sdk: TinkoffSdk, isSandbox: boolean) {
     this.sdk = sdk;
-    console.log('12 Sdk', 'building sdk');
     this.isSandbox = isSandbox;
   }
 
@@ -28,4 +28,4 @@ class TinkoffSdk {
   }
 }
 
-export default TinkoffSdk.Instance;
+export default TSdk.Instance;

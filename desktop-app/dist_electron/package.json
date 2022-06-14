@@ -18,12 +18,15 @@
     "file-system-cache": "^2.0.0",
     "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",
     "postcss": "^8",
+    "reflect-metadata": "^0.1.13",
     "shared-kernel": "./shared-kernel/built",
     "tailwindcss": "^3.1.2",
     "ts-loader": "~8.2.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
-    "vue-property-decorator": "^9.1.2"
+    "vue-property-decorator": "^9.1.2",
+    "winston": "^3.7.2",
+    "winston-sentry-log": "^1.0.26"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

@@ -22,7 +22,9 @@ import Onboarding from './onboarding/index.vue';
   },
 })
 export default class Welcome extends Vue {
-  showOnboarding = !Store.HasToken || !Store.HasAccountChosen;
+  get showOnboarding() {
+    return !Store.HasToken || !Store.HasAccountChosen;
+  }
 }
 </script>
 <style scoped>

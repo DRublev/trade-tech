@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import ipcEvents from './infra/ipc/ipcEvents';
+import ipcEvents from './infra/ipc/events';
 /*
   Experimental security feature:
         We set the global "require" variable to null after importing what we need.
