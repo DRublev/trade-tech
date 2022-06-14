@@ -10,6 +10,7 @@ const nanoPrecision = 1_000_000_000;
 const toNum = (qutation: { units: number, nano: number }) => Number(qutation.units + (qutation.nano / nanoPrecision));
 
 const pipelines: { [figi: string]: fs.WriteStream } = {};
+const figiTickerMap: { [figi: string]: string } = {};
 
 const maxInstruments = 300;
 const storagePath = path.resolve(__dirname, '../data-storage');
@@ -20,11 +21,6 @@ const collect = async () => {
     const orderbookStream = await TinkoffSdk.OrderbookStreamProvider.subscribe(toCollect);
     for await (const orderbook of orderbookStream) {
       await createStream(orderbook);
-      // Stream.pipeline(
-        // pipelines[orderbook.figi],
-        // zlib.createGzip(),
-        // fs.createWriteStream(path.join(storagePath, `${orderbook.figi}.json`)),
-      // );
     }
   } catch (e) {
     console.error(e);
@@ -44,17 +40,24 @@ const selectInstruments = async () => {
   
     const isMoexFilter = (share) => share.exchange === 'MOEX';
     const isSpbFilter = (share) => share.exchange === 'SPB';
-    console.log('24 orberbookCollector', allTradable.instruments.length);
+
     const tradableOnMoex = allTradable.instruments.filter(isMoexFilter).filter(isTradableFilter);
   
     figisToCollect = figisToCollect.concat(tradableOnMoex.map(share => share.figi));
   
+    tradableOnMoex.forEach(element => {
+      figiTickerMap[element.figi] = element.ticker;
+    });
+
     if (figisToCollect.length < maxInstruments) {
       const tradableOnSpb = allTradable.instruments
         .filter(isSpbFilter)
         .filter(isTradableFilter)
         .slice(0, maxInstruments - figisToCollect.length);
         figisToCollect = figisToCollect.concat(tradableOnSpb.map(share => share.figi));
+        tradableOnSpb.forEach(element => {
+          figiTickerMap[element.figi] = element.ticker;
+        });
     }
   
   } catch (e) {
@@ -66,9 +69,17 @@ const selectInstruments = async () => {
 
 const createStream = async (orderbook: Orderbook) => {
   try {
-    console.log('orderbook', orderbook);
+    const date = new Date(orderbook.time);
+    const formattedDateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    console.log('orderbook', orderbook.figi, orderbook.time);
+    const ticker = figiTickerMap[orderbook.figi] || orderbook.figi;
+    const folder = `./orderbooks/${ticker}/${formattedDateStr}`;
+    const filepath = `${folder}/${orderbook.figi}.json`;
     if (!pipelines[orderbook.figi]) {
-      pipelines[orderbook.figi] = fs.createWriteStream(path.join(storagePath, `./orderbooks/${orderbook.figi}.json`));
+      if(!fs.existsSync(path.dirname(path.join(storagePath, filepath)))) {
+        fs.mkdirSync(path.dirname(path.join(storagePath, filepath)), { recursive: true });
+      }
+      pipelines[orderbook.figi] = fs.createWriteStream(path.join(storagePath, filepath));
     }
     pipelines[orderbook.figi].write(JSON.stringify({
       ...orderbook,
