@@ -1,7 +1,8 @@
 {
   "name": "shared-kernel",
-  "main": "./index.ts",
-  "version": "1.0.8",
+  "main": "./built/index.js",
+  "types": "./built/index.d.ts",
+  "version": "1.0.10",
   "private": true,
   "engines": {
     "node": ">=14.0.0"

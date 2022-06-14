@@ -9,4 +9,5 @@ export default {
 
   TinkoffSdk: Symbol.for("TinkoffSdk"),
   TinkoffClient: Symbol.for("TinkoffClient"),
+  TinkoffBuildClientFunc: Symbol.for("TinkoffBuildClientFunc"),
 };
