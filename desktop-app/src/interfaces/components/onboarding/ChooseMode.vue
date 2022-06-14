@@ -7,17 +7,11 @@
   </div>
 </template>
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { Vue } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-@Options({
-  props: {
-    chooseMode: {
-      type: Function,
-      required: true,
-    },
-  }
-})
+
 export default class ChooseMode extends Vue {
-  
+  @Prop() chooseMode!: Function;
 }
 </script>

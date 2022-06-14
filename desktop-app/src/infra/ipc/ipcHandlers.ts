@@ -23,7 +23,9 @@ ipcMain.handle(events.ENCRYPT_STRING, (event, data) => {
     if (!safeStorage.isEncryptionAvailable()) {
       throw new Error('Encryption is not available');
     }
-    return safeStorage.encryptString(data);
+    const encrypted = safeStorage.encryptString(data);
+    console.log('27 ipcHandlers', 'encrypt', data, encrypted);
+    return encrypted;
   } catch (e) {
     console.error(e);
     throw e;
@@ -47,7 +49,9 @@ ipcMain.on(events.DECRYPT_STRING, (event, data: Buffer) => {
 
 ipcMain.handle(events.SAVE_TO_STORE, async (event, command: { key: keyof StoreStructure, value: any }) => {
   try {
+    console.log('50 ipcHandlers', command);
     await storage.save(command.key, command.value);
+    console.log('50 ipcHandlers', 'saved', command);
     return storage.get(command.key);
   } catch (e) {
     console.error(e);
@@ -67,6 +71,7 @@ ipcMain.on(events.GET_FROM_STORE, (event, command: { key: keyof StoreStructure }
 
 const createSdk = (isSandbox: boolean) => {
   const storedToken = storage.getAll()[isSandbox ? 'sandboxToken' : 'fullAccessToken'];
+  console.log('70 ipcHandlers', isSandbox, Object.keys(storage.getAll()));
   if (!storedToken) throw new Error('No stored token');
   if (!safeStorage.isEncryptionAvailable()) {
     throw new Error('Encryption is not available');
@@ -91,6 +96,7 @@ async function getAccounts(): Promise<any[]> {
   try {
     if (!TinkoffSdk.IsSdkBinded) {
       const isSandbox = storage.get('isSandbox');
+      console.log('99 ipcHandlers', isSandbox);
       await createSdk(isSandbox);
     }
     const accounts = await TinkoffAccountsService.getList();

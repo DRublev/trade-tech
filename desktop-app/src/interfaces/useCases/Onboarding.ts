@@ -29,7 +29,7 @@ export default class OnboardingUseCase {
 
   public async buildSdk() {
     if (!this.isTokenEntered) throw new Error('No token');
-    await (window as any).ipc.invoke(ipcEvents.TINKOFF_CREATE_SDK, { isSandbox: true });
+    await (window as any).ipc.invoke(ipcEvents.TINKOFF_CREATE_SDK, { isSandbox: this.mode === 'sandbox' });
   }
 
   public async fetchAccounts() {
@@ -39,7 +39,7 @@ export default class OnboardingUseCase {
     } catch (e) {
       console.error(e);
       throw e;
-   }
+    }
   }
 
   public setMode(isSandbox: boolean) {
@@ -52,11 +52,22 @@ export default class OnboardingUseCase {
     try {
       const res = await (window as any).ipc.invoke(ipcEvents.ENCRYPT_STRING, token);
       if (res instanceof Error) throw res;
-      await Store.SetToken(res);
+      await Store.SetSandboxToken(res);
       this.isTokenEntered = true;
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   }
 
+  public async setRealTokens(readOnlyToken: string, fullAccessToken: string) {
+    try {
+      const readOnlyEncrypted = await (window as any).ipc.invoke(ipcEvents.ENCRYPT_STRING, readOnlyToken);
+      const fullAccessEncrypted = await (window as any).ipc.invoke(ipcEvents.ENCRYPT_STRING, fullAccessToken);
+
+      await Store.SetRealTokens(readOnlyEncrypted, fullAccessEncrypted);
+      this.isTokenEntered = true;
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }

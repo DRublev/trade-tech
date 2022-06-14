@@ -8,7 +8,10 @@ class Store {
   constructor() {
     if ((window as any).ipc) {
       const storedIsSandbox = (window as any).ipc.sendSync(ipcEvents.GET_FROM_STORE, { key: 'isSandbox' });
-      this.isSandbox = !storedIsSandbox || storedIsSandbox instanceof Error ? true : Boolean(storedIsSandbox);
+      console.log('11 Store', storedIsSandbox);
+      if (storedIsSandbox !== undefined) {
+        this.isSandbox = storedIsSandbox instanceof Error ? true : Boolean(storedIsSandbox);
+      }
 
       const storedToken = (window as any).ipc
         .sendSync(ipcEvents.GET_FROM_STORE, { key: this.isSandbox ? 'sandboxToken' : 'fullAccessToken' });
@@ -29,8 +32,10 @@ class Store {
     return !!this.token;
   }
 
-  public get Mode(): boolean | undefined {
-    return this.isSandbox;
+  public get Mode(): string | undefined {
+    if (this.isSandbox === undefined) return undefined;
+
+    return this.isSandbox ? 'sandbox' : 'production';
   }
 
   public get HasAccountChosen(): boolean {
@@ -38,22 +43,27 @@ class Store {
   }
 
 
-  public async SetToken(value: string): Promise<void> {
+  public async SetSandboxToken(value: string): Promise<void> {
     try {
-      if (this.isSandbox) {
-        await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, { key: 'sandboxToken', value });
-      } else {
-        await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, { key: 'fullAccessToken', value });
-      }
+      await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, { key: 'sandboxToken', value });
     } catch (e) {
       console.error(e);
     }
   }
 
+  public async SetRealTokens(readOnlyToken: string, fullAccessToken: string): Promise<void> {
+    try {
+      await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, { key: 'readOnlyToken', value: readOnlyToken });
+      await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, { key: 'fullAccessToken', value: fullAccessToken });
+    } catch (e) {
+      console.error('SetRealTokens', e);
+    }
+  } 
+
   public set Account(value: any) {
     this._accountId = value;
-    (async function() {
-      await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, { key: 'accountId', value }); 
+    (async function () {
+      await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, { key: 'accountId', value });
     })();
   }
 

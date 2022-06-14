@@ -9,7 +9,7 @@ class TinkoffSdk {
 
   public bindSdk(sdk: TinkoffClient, isSandbox: boolean) {
     this.sdk = sdk;
-    console.log('12 Sdk', 'uilding sdk');
+    console.log('12 Sdk', 'building sdk');
     this.isSandbox = isSandbox;
   }
 

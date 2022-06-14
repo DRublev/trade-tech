@@ -2,7 +2,8 @@
   <div class="onboarding mt-24">
     <h1 class="mb-8 text-5xl">Trade.Tech</h1>
     <ChooseMode v-if="!isModeChosen" :chooseMode="chooseMode" />
-    <EnterSandboxToken v-if="isModeChosen && !IsTokenEntered" :done="onSandboxTokenEntered" />
+    <EnterSandboxToken v-if="isModeChosen && isSandbox && !IsTokenEntered" :done="onSandboxTokenEntered" />
+    <EnterRealTokens v-if="isModeChosen && !isSandbox && !IsTokenEntered" :done="onRealTokensEntered" />
     <ChooseAccount v-if="IsTokenEntered && !IsAccountChosen" :accountOptions="accountOptions" :done="onChooseAccount"
       :isLoading="isAccountsListLoading" />
   </div>
@@ -15,6 +16,7 @@ import { OnboardingUseCase } from '@/interfaces/useCases';
 
 import ChooseMode from '@/interfaces/components/onboarding/ChooseMode.vue';
 import EnterSandboxToken from '@/interfaces/components/onboarding/EnterSandboxToken.vue';
+import EnterRealTokens from '@/interfaces/components/onboarding/EnterRealTokens.vue';
 import ChooseAccount from '@/interfaces/components/onboarding/ChooseAccount.vue';
 
 
@@ -22,6 +24,7 @@ import ChooseAccount from '@/interfaces/components/onboarding/ChooseAccount.vue'
   components: {
     ChooseMode,
     EnterSandboxToken,
+    EnterRealTokens,
     ChooseAccount,
   },
 })
@@ -30,11 +33,17 @@ export default class Onboarding extends Vue {
   isAccountsListLoading = false;
 
   mounted() {
-    this.fetchAccountsList();
+    if (this.isModeChosen && this.IsTokenEntered) {
+      this.fetchAccountsList();
+    }
   }
 
   get isModeChosen() {
     return this.onboardingUC.Mode !== undefined;
+  }
+
+  get isSandbox() {
+    return this.onboardingUC.Mode === 'sandbox';
   }
 
   get IsAccountChosen() {
@@ -54,6 +63,11 @@ export default class Onboarding extends Vue {
 
   async onSandboxTokenEntered(token: string) {
     await this.onboardingUC.setSandboxToken(token);
+    await this.onboardingUC.buildSdk();
+    this.fetchAccountsList();
+  }
+  async onRealTokensEntered(readOnly: string, fullAccess: string) {
+    await this.onboardingUC.setRealTokens(readOnly, fullAccess);
     await this.onboardingUC.buildSdk();
     this.fetchAccountsList();
   }
