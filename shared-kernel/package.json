@@ -1,17 +1,17 @@
 {
   "name": "shared-kernel",
-  "main": "./built/index.js",
+  "main": "./built/index.ts",
   "types": "./built/index.d.ts",
-  "version": "1.0.10",
+  "version": "1.0.23",
   "private": true,
   "engines": {
     "node": ">=14.0.0"
   },
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json && tsconfig-replace-paths -p tsconfig.build.json",
+    "build": "rm -rf ./built && tsc -p ./tsconfig.build.json && tsconfig-replace-paths -p tsconfig.build.json",
     "dev": "nodemon -e ts,js --exec 'ts-node -r tsconfig-paths/register' ./index.ts",
     "test": "jest",
-    "postinstall": "cd ../node_modules/invest-nodejs-grpc-sdk && tsc && cd ../../shared-kernel"
+    "postinstall": "cd ../node_modules/invest-nodejs-grpc-sdk && tsc && cd ../.."
   },
   "dependencies": {
     "@foxify/events": "^2.1.0",

@@ -1,17 +1,20 @@
 import { MarketDataRequest, SubscriptionAction } from "invest-nodejs-grpc-sdk/dist/generated/marketdata";
 
-import identifiers from "../../constants/identifiers";
-import { sleep } from "../../utils/helpers";
-import Container from './ioc';
-import client from "./client";
-import { IOrderbookSubscriber, SubscribeOrderbookReq, OrderbookStream } from "../../app/types/orderbook";
+import { sleep } from "@/utils/helpers";
+import { IOrderbookSubscriber, SubscribeOrderbookReq, OrderbookStream } from "@/app/types/orderbook";
+import ioc, { ids } from './ioc';
+import type { TinkoffClient } from "./client";
 
 class OrderbookSubscriber implements IOrderbookSubscriber {
   private isWorking = true;
-  // private killSwitch = Container.get<AbortController>(identifiers.KillSwitch);
+  private client: TinkoffClient;
+  constructor() {
+    this.client = ioc.get<TinkoffClient>(ids.Client);
+  }
+
   async *subscribe(req: SubscribeOrderbookReq): OrderbookStream {
     try {
-      const stream = await client.marketDataStream.marketDataStream(this.getSubscribeOrdersRequest(req));
+      const stream = await this.client.marketDataStream.marketDataStream(this.getSubscribeOrdersRequest(req));
       for await (const pckg of stream) {
         if (pckg.orderbook) {
           yield pckg.orderbook;

@@ -6,6 +6,9 @@
     "baseUrl": "./src",
     "target": "es6",
     "lib": ["es6"],
+    "declaration": true,
+    "declarationMap": true,
+    "types": ["reflect-metadata"],
     "paths": {
       "@/*": ["./*"] 
     }

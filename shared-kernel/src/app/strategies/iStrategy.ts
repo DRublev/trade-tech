@@ -1,6 +1,6 @@
 
-import { Order } from "../app/types/order";
-import { Orderbook } from "../app/types/orderbook";
+import { Order } from "../types/order";
+import { Orderbook } from "../types/orderbook";
 import StrategyConfig from "./Config";
 
 

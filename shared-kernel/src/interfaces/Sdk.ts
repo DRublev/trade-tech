@@ -1,20 +1,22 @@
-import { IAccountProvider } from "../app/types/account";
-import ModeController from "../app/types/mode";
-import { IOrderbookSubscriber } from "../app/types/orderbook";
+import { IAccountService } from "@/app/types/account";
+import { IOrdersService } from "@/app/types/order";
+import { IOrderbookSubscriber } from "@/app/types/orderbook";
 
 export default class Sdk {
-  private modeController: ModeController;
-
   constructor(
     private orderbookStreamSubscriber: IOrderbookSubscriber,
-    private accountProvider: IAccountProvider) {
-      this.modeController = new ModeController();
+    private ordersService: IOrdersService,
+    private accountsService: IAccountService) {
   }
 
   public get OrderbookStreamProvider() {
     return this.orderbookStreamSubscriber;
   }
-  public get AccountProvider() {
-    return this.accountProvider;
+
+  public get OrdersService() {
+    return this.ordersService;
+  }
+  public get AccountsService() { 
+    return this.accountsService;
   }
 }
