@@ -9,9 +9,11 @@ class TinkoffSdk {
 
   public bindSdk(sdk: TinkoffClient, isSandbox: boolean) {
     this.sdk = sdk;
+    console.log('12 Sdk', 'uilding sdk');
     this.isSandbox = isSandbox;
   }
 
+  public IsSdkBinded = !!this.sdk;
   public get Sdk() {
     if (!this.sdk) throw new ReferenceError('Tinkoff SDK is not initialized');
     return this.sdk;

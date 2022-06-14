@@ -35,11 +35,11 @@ class CacheAccessor {
 
   public async save(id: string, item: unknown): Promise<void> {
     try {
-      const content = this.cache.getSync(this.accessKey, '{}');
+      const content = await this.cache.get(this.accessKey, '{}');
       const items = JSON.parse(content || '{}');
       items[id] = item;
       await this.cache.clear();
-      this.cache.setSync(this.accessKey, JSON.stringify(items));
+      await this.cache.set(this.accessKey, JSON.stringify(items));
     } catch (e) {
       console.error(this.accessKey, 'Ошибка сохранения в кэш', e);
     }
@@ -50,7 +50,9 @@ class CacheAccessor {
       const content = this.cache.getSync(this.accessKey, '{}');
       const items = JSON.parse(content || '{}');
       items[id] = item;
-      this.cache.setSync(this.accessKey, JSON.stringify(items));
+      this.cache.clear().then(() => {
+        this.cache.setSync(this.accessKey, JSON.stringify(items));
+      });
     } catch (e) {
       console.error(this.accessKey, 'Ошибка сохранения  в кэш', e);
     }

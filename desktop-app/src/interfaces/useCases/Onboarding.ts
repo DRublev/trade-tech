@@ -3,7 +3,7 @@ import Store from '@/domain/Store';
 import ipcEvents from '@/infra/ipc/ipcEvents';
 
 export default class OnboardingUseCase {
-  private mode: any;
+  private mode: any = Store.Mode;
   private isTokenEntered = false;
   private account = null;
   private accounts = [];
@@ -13,14 +13,14 @@ export default class OnboardingUseCase {
     return this.mode;
   }
   public get HasToken() {
-    return this.isTokenEntered;
+    return Store.HasToken || this.isTokenEntered;
   }
   public get Account() {
     return this.account;
   }
 
   public set Account(value: any) {
-    console.log('27 Onboarding', value);
+    Store.Account = value;
   }
 
   public get AccountsList() {
@@ -28,13 +28,13 @@ export default class OnboardingUseCase {
   }
 
   public async buildSdk() {
+    if (!this.isTokenEntered) throw new Error('No token');
     await (window as any).ipc.invoke(ipcEvents.TINKOFF_CREATE_SDK, { isSandbox: true });
   }
 
   public async fetchAccounts() {
     try {
       const accounts = await (window as any).ipc.invoke(ipcEvents.TINKOFF_GET_ACCOUNTS, {});
-      console.log('32 Onboarding', accounts);
       this.accounts = accounts;
     } catch (e) {
       console.error(e);
@@ -48,12 +48,12 @@ export default class OnboardingUseCase {
     Store.IsSandbox = isSandbox;
   }
 
-  public setSandboxToken(token: string) {
+  public async setSandboxToken(token: string) {
     try {
-      const res = (window as any).ipc.sendSync(ipcEvents.ENCRYPT_STRING, token);
+      const res = await (window as any).ipc.invoke(ipcEvents.ENCRYPT_STRING, token);
       if (res instanceof Error) throw res;
-      Store.Token = res;
-      this.isTokenEntered = !!res;
+      await Store.SetToken(res);
+      this.isTokenEntered = true;
     } catch(e) {
       console.error(e);
     }

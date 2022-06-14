@@ -5,10 +5,13 @@
 
     <p class="mt-6">Вот список:</p>
 <ul>
-  <li v-for="account in accountOptions" :key="account.id">{{account.id}}</li>
+  <li v-for="account in accountOptions" :key="account.id">
+    <input type="radio" :id="account.id" :value="account.id" v-model="accountId"/>
+    <label for="{{account.id}}">{{account.name || account.id}}</label>
+  </li>
 </ul>
     <div class="mt-8 space-x-8 px-12">
-      <button @click="done()"
+      <button @click="next()"
         class="border border-purple-600 text-purple-600 rounded-full font-medium px-6 py-2">Далее</button>
     </div>
   </div>
@@ -23,25 +26,19 @@
   </div>
 </template>
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { Vue } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-@Options({
-  props: {
-    accountOptions: {
-      type: Array,
-      default: [],
-    },
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-  }
-})
+
 export default class ChooseAccount extends Vue {
-  isLoading!: boolean;
+  @Prop() accountOptions!: any[];
+  @Prop() isLoading!: boolean;
+  @Prop() done!: Function;
 
-  done() {
+  accountId: string = '';
 
+  next() {
+    this.done(this.accountId);
   }
 }
 </script>

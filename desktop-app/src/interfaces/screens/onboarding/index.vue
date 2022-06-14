@@ -1,9 +1,10 @@
 <template>
   <div class="onboarding mt-24">
     <h1 class="mb-8 text-5xl">Trade.Tech</h1>
-    <ChooseMode v-if="!isModeChosen" :chooseMode="chooseMode"/>
-    <EnterSandboxToken v-if="isModeChosen && !IsTokenEntered" :done="onSandboxTokenEntered"/>
-    <ChooseAccount v-if="IsTokenEntered && !IsAccountChosen" :accountOptions="accountOptions" :done="onChooseAccount" :isLoading="isAccountsListLoading"/>
+    <ChooseMode v-if="!isModeChosen" :chooseMode="chooseMode" />
+    <EnterSandboxToken v-if="isModeChosen && !IsTokenEntered" :done="onSandboxTokenEntered" />
+    <ChooseAccount v-if="IsTokenEntered && !IsAccountChosen" :accountOptions="accountOptions" :done="onChooseAccount"
+      :isLoading="isAccountsListLoading" />
   </div>
 </template>
 
@@ -18,7 +19,7 @@ import ChooseAccount from '@/interfaces/components/onboarding/ChooseAccount.vue'
 
 
 @Options({
-  components: { 
+  components: {
     ChooseMode,
     EnterSandboxToken,
     ChooseAccount,
@@ -28,9 +29,12 @@ export default class Onboarding extends Vue {
   private onboardingUC = new OnboardingUseCase();
   isAccountsListLoading = false;
 
+  mounted() {
+    this.fetchAccountsList();
+  }
 
   get isModeChosen() {
-    return !!this.onboardingUC.Mode;
+    return this.onboardingUC.Mode !== undefined;
   }
 
   get IsAccountChosen() {
@@ -49,7 +53,7 @@ export default class Onboarding extends Vue {
   }
 
   async onSandboxTokenEntered(token: string) {
-    this.onboardingUC.setSandboxToken(token);
+    await this.onboardingUC.setSandboxToken(token);
     await this.onboardingUC.buildSdk();
     this.fetchAccountsList();
   }

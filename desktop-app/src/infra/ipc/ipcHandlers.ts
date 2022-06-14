@@ -1,6 +1,6 @@
 import { ipcMain, safeStorage } from 'electron';
-import tinkoffIOC from 'shared-kernel/src/infra/tinkoff/ioc';
-import { TinkoffClient } from 'shared-kernel/src/infra/tinkoff/client';
+import ioc from 'shared-kernel/src/ioc';
+
 
 import CacheAccessor from '../CacheAccessor';
 import events from './ipcEvents';
@@ -13,20 +13,20 @@ type StoreStructure = {
   isSandbox: boolean;
 }
 const storage = new CacheAccessor('dev', 'store');
-// if (process.env.CLEAR_STORE) {
+if (process.env.CLEAR_STORE) {
   storage.clear();
-// }
+}
 
 
-ipcMain.on(events.ENCRYPT_STRING, (event, data) => {
+ipcMain.handle(events.ENCRYPT_STRING, (event, data) => {
   try {
     if (!safeStorage.isEncryptionAvailable()) {
       throw new Error('Encryption is not available');
     }
-    event.returnValue = safeStorage.encryptString(data);
+    return safeStorage.encryptString(data);
   } catch (e) {
     console.error(e);
-    event.returnValue = e;
+    throw e;
   }
 });
 
@@ -45,13 +45,13 @@ ipcMain.on(events.DECRYPT_STRING, (event, data: Buffer) => {
   }
 });
 
-ipcMain.on(events.SAVE_TO_STORE, (event, command: { key: keyof StoreStructure, value: any }) => {
+ipcMain.handle(events.SAVE_TO_STORE, async (event, command: { key: keyof StoreStructure, value: any }) => {
   try {
-    storage.save(command.key, command.value);
-    event.returnValue = true;
+    await storage.save(command.key, command.value);
+    return storage.get(command.key);
   } catch (e) {
     console.error(e);
-    event.returnValue = e;
+    throw e;
   }
 });
 
@@ -65,32 +65,43 @@ ipcMain.on(events.GET_FROM_STORE, (event, command: { key: keyof StoreStructure }
   }
 });
 
+const createSdk = (isSandbox: boolean) => {
+  const storedToken = storage.getAll()[isSandbox ? 'sandboxToken' : 'fullAccessToken'];
+  if (!storedToken) throw new Error('No stored token');
+  if (!safeStorage.isEncryptionAvailable()) {
+    throw new Error('Encryption is not available');
+  }
+  const token = safeStorage.decryptString(Buffer.from(Object.values(storedToken) as any));
+  const mainBuild: Function = ioc.get(Symbol.for("TinkoffBuildClientFunc"));
+  TinkoffSdk.bindSdk(mainBuild(token), isSandbox);
+
+}
+
 ipcMain.handle(events.TINKOFF_CREATE_SDK, (event, options: { isSandbox: boolean }) => {
   try {
-    const storedToken = storage.get(options.isSandbox ? 'sandboxToken' : 'fullAccessToken');
-    if (!storedToken) throw new Error('No stored token');
-    if (!safeStorage.isEncryptionAvailable()) {
-      throw new Error('Encryption is not available');
-    }
-    const token = safeStorage.decryptString(Buffer.from(Object.values(storedToken) as any));
-    console.log('77 ipcHandlers', token, storedToken);
-    const createTinkoffSdk: (token: string) => TinkoffClient = tinkoffIOC.get('BuildTinkoffClient');
-    TinkoffSdk.bindSdk(createTinkoffSdk(token), options.isSandbox);
-
-    event.returnValue = true;
-  } catch (e) {
-    console.error(e);
-    event.returnValue = e;
-  }
-});
-
-ipcMain.handle(events.TINKOFF_GET_ACCOUNTS, async (event, options: any) => {
-  try {
-    const accounts = await TinkoffAccountsService.getList();
-    return accounts;
+    createSdk(options.isSandbox);
+    return true;
   } catch (e) {
     console.error(e);
     throw e;
   }
+});
+
+async function getAccounts(): Promise<any[]> {
+  try {
+    if (!TinkoffSdk.IsSdkBinded) {
+      const isSandbox = storage.get('isSandbox');
+      await createSdk(isSandbox);
+    }
+    const accounts = await TinkoffAccountsService.getList();
+    return accounts.filter(account => account.accessLevel === 1 && account.type !== 3);
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+ipcMain.handle(events.TINKOFF_GET_ACCOUNTS, async (event, options: any) => {
+  return getAccounts();
 });
 

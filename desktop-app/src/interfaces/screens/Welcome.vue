@@ -17,17 +17,12 @@ import Onboarding from './onboarding/index.vue';
 
 
 @Options({
-  props: { },
   components: { 
     Onboarding,
   },
 })
 export default class Welcome extends Vue {
-  data() {
-    return {
-      showOnboarding: !Store.HasToken,
-    }
-  }
+  showOnboarding = !Store.HasToken || !Store.HasAccountChosen;
 }
 </script>
 <style scoped>
