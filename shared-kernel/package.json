@@ -2,7 +2,7 @@
   "name": "shared-kernel",
   "main": "./built/index.ts",
   "types": "./built/index.d.ts",
-  "version": "1.0.24",
+  "version": "1.0.28",
   "private": true,
   "engines": {
     "node": ">=14.0.0"
@@ -16,6 +16,7 @@
   "dependencies": {
     "@foxify/events": "^2.1.0",
     "dotenv": "^16.0.0",
+    "fast-safe-stringify": "^2.1.1",
     "inversify": "^6.0.1",
     "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",
     "mathjs": "^10.6.1",

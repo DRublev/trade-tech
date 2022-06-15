@@ -4,7 +4,7 @@ import { Orderbook } from "../types/orderbook";
 import StrategyConfig from "./Config";
 
 
-interface IStrategy {
+export interface IStrategy {
   onOrderbook(orderbook: Orderbook): Promise<void>;
   onOrderChanged(order: Order): Promise<void>;
   toggleWorking: ToggleWorkingModeCommand;
@@ -23,8 +23,3 @@ export interface IStrategyConstructor {
     stdOut: NodeJS.WritableStream,
   ): IStrategy;
 }
-
-declare var IStrategy: IStrategyConstructor;
-
-
-export default IStrategy;

@@ -1,10 +1,11 @@
 import { divide } from 'mathjs';
+import stringify from 'fast-safe-stringify';
 
 import { Order } from "@/app/types/order";
 import { Orderbook } from "@/app/types/orderbook";
 import { toNum } from "@/infra/tinkoff/helpers";
 import StrategyConfig from "../Config";
-import IStrategy, { CancelOrderCommand, PostOrderCommand } from "../iStrategy";
+import { IStrategy, CancelOrderCommand, PostOrderCommand } from "../iStrategy";
 import { OrderDirection } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
 
 export type SpreadStrategyConfig = StrategyConfig & {
@@ -38,7 +39,7 @@ export default class SpreadStrategy implements IStrategy {
     private cancelOrder: CancelOrderCommand,
     private stdOut: NodeJS.WritableStream,
   ) {
-    this.leftMoney = config.availableBalance;
+    this.leftMoney = Number(config.availableBalance);
   }
   
   public toggleWorking(): boolean {
@@ -57,7 +58,7 @@ export default class SpreadStrategy implements IStrategy {
 
     if (toBuyInfo && toBuyInfo.length) {
       for await (const buyReq of toBuyInfo) {
-        this.log('calc', `Placing buy order: ${buyReq}`);
+        this.log('calc', `Placing buy order: ${stringify(buyReq)}`);
         const placedId = await this.postOrder(orderbook.figi, buyReq.lots, buyReq.price, true);
         if (!this.bidsOrdersMap[buyReq.price]) {
           this.bidsOrdersMap[buyReq.price] = [];
@@ -68,7 +69,7 @@ export default class SpreadStrategy implements IStrategy {
     }
     if (toSellInfo && toSellInfo.length) {
       for await (const sellReq of toSellInfo) {
-        this.log('calc', `Placing sell order: ${sellReq}`);
+        this.log('calc', `Placing sell order: ${stringify(sellReq)}`);
         const placedId = await this.postOrder(orderbook.figi, sellReq.lots, sellReq.price, false);
         if (!this.asksOrdersMap[sellReq.price]) {
           this.asksOrdersMap[sellReq.price] = [];
@@ -89,14 +90,14 @@ export default class SpreadStrategy implements IStrategy {
         return;
       }
       const minBid = toNum(orderbook.bids[0].price);
-      this.log('calc', `Min bid: ${minBid}; Money left: ${this.leftMoney}`);
+      this.log('calc', `Min bid: ${stringify(minBid)}; Money left: ${this.leftMoney}`);
       if (this.leftMoney < minBid) {
-        this.log('info', `No money left. Left: ${this.leftMoney}; Min bid: ${minBid}`);
+        this.log('info', `No money left. Left: ${this.leftMoney}; Min bid: ${stringify(minBid)}`);
         return;
       }
 
-      const buyLadderStep = Math.round(divide(this.config.maxHolding, this.config.lotsDistribution));
-      const ladderLeft = Math.round(this.config.maxHolding % this.config.lotsDistribution);
+      const buyLadderStep = Math.round(Number(this.config.maxHolding || 0) / Number(this.config.lotsDistribution || 1));
+      const ladderLeft = Math.round(Number(this.config.maxHolding || 0) % Number(this.config.lotsDistribution || 1));
       this.log('calc', `Buy ladder step: ${buyLadderStep}; Remainded: ${ladderLeft}`);
       let toBuyLots = ladderLeft > 0
         ? Array.from({ length: this.config.lotsDistribution - 1 }, () => buyLadderStep).concat([ladderLeft])
@@ -106,17 +107,17 @@ export default class SpreadStrategy implements IStrategy {
       this.log('calc', `To buy more: ${canBuyLotsAmount}; ${this.leftMoney} / ${minBid} = ${this.leftMoney / minBid}`);
       if (canBuyLotsAmount < buyLadderStep) {
         toBuyLots = [canBuyLotsAmount];
-        this.log('calc', `canBuyLotsAmount < buyLadderStep. canBuyLotsAmount: ${canBuyLotsAmount}; buyLadderStep: ${buyLadderStep}`);
+        this.log('calc', `canBuyLotsAmount < buyLadderStep. canBuyLotsAmount: ${canBuyLotsAmount}; buyLadderStep: ${stringify(buyLadderStep)}`);
       }
       const bids = orderbook.bids.slice(0, toBuyLots.length - 1);
-      this.log('calc', `Bids: ${bids}`);
+      this.log('calc', `Bids: ${stringify(bids)}`);
       const toBuyOrders: ToPlaceOrderInfo[] = bids.map((bid, index) => ({
         lots: toBuyLots[index],
         price: toNum(bid.price),
       }));
       return toBuyOrders;
     } catch (e) {
-      this.log('error', e);
+      this.log('error', stringify(e));
       return [];
     }
   }
@@ -129,13 +130,13 @@ export default class SpreadStrategy implements IStrategy {
       }
       const toSell: ToPlaceOrderInfo[] = [];
       const asks = orderbook.asks.slice(0, this.config.moveOrdersOnStep);
-      this.log('calc', `Asks: ${asks}`);
+      this.log('calc', `Asks: ${stringify(asks)}`);
       const holdingPrices = Object.keys(this.holdingBids);
-      this.log('calc', `Holding prices: ${holdingPrices}`);
+      this.log('calc', `Holding prices: ${stringify(holdingPrices)}`);
       for (const ask of asks) {
         const askPrice = toNum(ask.price);
         const profitableHolding = holdingPrices.find((p) => Number(p) - this.config.minSpread < askPrice);
-        this.log('calc', `Ask price: ${askPrice}; Profitable holding: ${profitableHolding}`);
+        this.log('calc', `Ask price: ${askPrice}; Profitable holding: ${stringify(profitableHolding)}`);
         if (profitableHolding) {
           toSell.push({
             price: askPrice,
@@ -145,7 +146,7 @@ export default class SpreadStrategy implements IStrategy {
       }
       return toSell;
     } catch (e) {
-      this.log('error', e);
+      this.log('error', stringify(e));
       return [];
     }
   }
@@ -156,7 +157,7 @@ export default class SpreadStrategy implements IStrategy {
       for (const bid of placedBids) {
         let idx = orderbook.bids.findIndex(b => toNum(b.price) === Number(bid));
         if (idx === -1) {
-          this.log('calc', `Bid ${bid} not found in orderbook`);
+          this.log('calc', `Bid ${stringify(bid)} not found in orderbook`);
           for (let i = 0; i < orderbook.bids.length; i++) {
             const bidPrice = toNum(orderbook.bids[i].price);
             if (bidPrice > Number(bid)) {
@@ -175,7 +176,7 @@ export default class SpreadStrategy implements IStrategy {
         }
       }
     } catch (e) {
-      this.log('error', e);
+      this.log('error', stringify(e));
     }
   }
 
@@ -201,7 +202,7 @@ export default class SpreadStrategy implements IStrategy {
           this.log('calc', `Holding lots: ${this.holdingLots}; Processing sell: ${this.processingSell}; Lots executed: ${order.lotsExecuted};`);
           this.holdingLots -= order.lotsExecuted;
           this.processingSell -= order.lotsExecuted;
-          this.log('calc', `Removing ${order.orderId} from asks map ${this.bidsOrdersMap}`);
+          this.log('calc', `Removing ${order.orderId} from asks map ${stringify(this.bidsOrdersMap)}`);
           this.asksOrdersMap = Object.entries(this.asksOrdersMap).reduce((acc, [key, value]) => {
             if (value.includes(order.orderId)) {
               acc[key] = value.filter(id => id !== order.orderId);
@@ -210,13 +211,13 @@ export default class SpreadStrategy implements IStrategy {
             }
             return acc;
           }, {});
-          this.log('calc', `New asks map: ${this.asksOrdersMap}`);
+          this.log('calc', `New asks map: ${stringify(this.asksOrdersMap)}`);
         } else if (isBuy) {
           this.log('info', `BUY Order ${order.orderId} is executed. Holding lots: ${this.holdingLots}`);
           this.log('calc', `Holding lots: ${this.holdingLots}; Processing buy: ${this.processingBuy}; Lots executed: ${order.lotsExecuted};`);
           this.holdingLots += order.lotsExecuted;
           this.processingBuy -= order.lotsExecuted;
-          this.log('calc', `Removing ${order.orderId} from bids map ${this.bidsOrdersMap}`);
+          this.log('calc', `Removing ${order.orderId} from bids map ${stringify(this.bidsOrdersMap)}`);
           this.bidsOrdersMap = Object.entries(this.bidsOrdersMap).reduce((acc, [key, value]) => {
             if (value.includes(order.orderId)) {
               acc[key] = value.filter(id => id !== order.orderId);
@@ -225,7 +226,7 @@ export default class SpreadStrategy implements IStrategy {
             }
             return acc;
           }, {});
-          this.log('calc', `New bids map: ${this.bidsOrdersMap}`);
+          this.log('calc', `New bids map: ${stringify(this.bidsOrdersMap)}`);
         } else {
           this.log('info', `Order ${order.orderId} is executed and not specified ${order}`);
         }
@@ -273,14 +274,15 @@ export default class SpreadStrategy implements IStrategy {
           leftMoney: ${this.leftMoney}
         `);
       } else {
-        this.log('error', `Order ${order.orderId} is not specified ${order}`);
+        this.log('error', `Order ${order.orderId} is not specified ${stringify(order)}`);
       }
     } catch (e) {
-      this.log('error', e);
+      this.log('error', stringify(e));
     }
   }
 
   private log(level: 'calc' | 'info' | 'error', message: string | any) {
-    this.stdOut.write(`${level}: ${typeof message === 'string' ? message : JSON.stringify(message)}\n`);
+    
+    this.stdOut.write(`${level}: ${typeof message === 'string' ? message : stringify(message)}\n`);
   }
 }
