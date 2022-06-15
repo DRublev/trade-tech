@@ -1,4 +1,4 @@
-import { IOrdersService, OrdersStream, PlaceOrderCmd, SubscribeOrdersReq } from "@/app/types/order";
+import { IOrdersService, OrderTradesStream, PlaceOrderCmd, SubscribeOrdersReq } from "@/app/types/order";
 import AccountProvider from "@/infra/AccountProvider";
 import ioc, { ids } from "../ioc";
 import { TinkoffClient } from "../client";
@@ -22,17 +22,34 @@ export default class OrdersService implements IOrdersService {
     return posted.orderId;
   }
 
-  public cancel(orderId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  public async cancel(orderId: string): Promise<void> {
+    await this.client.orders.cancelOrder({ accountId: this.accountProvider.Id, orderId });
   }
 
-  public subscribe(req: SubscribeOrdersReq): OrdersStream {
-    throw new Error("Method not implemented.");
+  public subscribe(req: SubscribeOrdersReq): void {
+    for (const id of req) {
+      this.subscribedOrdersIds[id] = id;
+    }
   }
 
   public unsubscribe(orderId: string): void {
     if (!this.subscribedOrdersIds[orderId]) return;
     delete this.subscribedOrdersIds[orderId];
+  }
+
+  public async *getOrdersStream(): OrderTradesStream {
+    try {
+      const stream = await this.client.ordersStream.tradesStream({});
+      for await (const pckg of stream) {
+        if (pckg.orderTrades) {
+          if (this.subscribedOrdersIds[pckg.orderTrades.orderId]) {
+            yield pckg.orderTrades;
+          }
+        }
+      }
+    } catch (e) {
+      return this.getOrdersStream();
+    }
   }
 
   private async *getOrdersStateRequest() {

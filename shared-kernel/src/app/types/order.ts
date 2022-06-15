@@ -1,8 +1,10 @@
-import { OrderState, PostOrderRequest } from "invest-nodejs-grpc-sdk/dist/generated/orders";
+import { OrderState, OrderTrades, PostOrderRequest } from "invest-nodejs-grpc-sdk/dist/generated/orders";
 import { TinkoffClient } from "@/infra/tinkoff/client";
 
 
 export type Order = OrderState;
+export type Trades = OrderTrades;
+
 
 export type PlaceOrderCmd = Omit<PostOrderRequest, 'orderType' | 'direction' | 'price'> & {
   orderType: 'MARKET' | 'LIMIT';
@@ -10,15 +12,16 @@ export type PlaceOrderCmd = Omit<PostOrderRequest, 'orderType' | 'direction' | '
   price: number;
 }
 
-export type OrdersStream = AsyncGenerator<Order>;
+export type OrderTradesStream = AsyncGenerator<Trades>;
 export type SubscribeOrdersReq = string[];
 
 
 export interface IOrdersService {
   place(placeCmd: PlaceOrderCmd): Promise<string>;
   cancel(orderId: string): Promise<void>;
-  subscribe(req: SubscribeOrdersReq): OrdersStream;
+  subscribe(req: SubscribeOrdersReq): void;
   unsubscribe(orderId: string): void;
+  getOrdersStream(): OrderTradesStream;
 }
 interface IOrdersServiceConstructor {
   new(client: TinkoffClient): IOrdersService;

@@ -27,7 +27,6 @@ class OrderbookSubscriber implements IOrderbookSubscriber {
   }
 
   private async *getSubscribeOrdersRequest(instruments: any) {
-    // while (!this.killSwitch.signal.aborted) {
     while (this.isWorking) {
       await sleep(1000);
       yield MarketDataRequest.fromPartial({
