@@ -1,12 +1,10 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import Stream, { Readable } from 'stream';
-import zlib from 'zlib';
-import { TinkoffSdk } from 'shared-kernel';
-import { Orderbook } from 'shared-kernel/src/types/orderbook';
+import { Orderbook } from 'shared-kernel/src/app/types/orderbook';
+import { AssembleTinkoffSdk } from 'shared-kernel';
 
 const nanoPrecision = 1_000_000_000;
-
+const TinkoffSdk = AssembleTinkoffSdk(process.env.TINKOFF_TOKEN, false);
 const toNum = (qutation: { units: number, nano: number }) => Number(qutation.units + (qutation.nano / nanoPrecision));
 
 const pipelines: { [figi: string]: fs.WriteStream } = {};
