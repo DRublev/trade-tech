@@ -1,11 +1,10 @@
 import { ipcMain, safeStorage } from 'electron';
 import ioc from 'shared-kernel/src/ioc';
 
-
-import CacheAccessor from '../../CacheAccessor';
-import events from '../events';
 import { TinkoffAccountsService, TinkoffSdk } from '@/app/tinkoff';
 import logger from '@/infra/Logger';
+import storage from '@/infra/Storage';
+import events from '../events';
 
 export * from './trading';
 
@@ -15,7 +14,6 @@ type StoreStructure = {
   fullAccessToken: string | null;
   isSandbox: boolean;
 }
-const storage = new CacheAccessor('dev', 'store');
 if (process.env.CLEAR_STORE) {
   storage.clear();
 }
@@ -71,7 +69,6 @@ ipcMain.on(events.GET_FROM_STORE, (event, command: { key: keyof StoreStructure }
 
 const createSdk = (isSandbox: boolean) => {
   const storedToken = storage.getAll()[isSandbox ? 'sandboxToken' : 'fullAccessToken'];
-  console.log('70 ipcHandlers', isSandbox, Object.keys(storage.getAll()));
   if (!storedToken) throw new Error('No stored token');
   if (!safeStorage.isEncryptionAvailable()) {
     throw new Error('Encryption is not available');
@@ -79,7 +76,6 @@ const createSdk = (isSandbox: boolean) => {
   const token = safeStorage.decryptString(Buffer.from(Object.values(storedToken) as any));
   const mainBuild: Function = ioc.get(Symbol.for("TinkoffBuildClientFunc"));
   TinkoffSdk.bindSdk(mainBuild(token, isSandbox), isSandbox);
-
 }
 
 ipcMain.handle(events.TINKOFF_CREATE_SDK, (event, options: { isSandbox: boolean }) => {
@@ -96,7 +92,6 @@ async function getAccounts(): Promise<any[]> {
   try {
     if (!TinkoffSdk.IsSdkBinded) {
       const isSandbox = storage.get('isSandbox');
-      console.log('99 ipcHandlers', isSandbox);
       await createSdk(isSandbox);
     }
     // TODO: Replace with implementation from shared-kernel

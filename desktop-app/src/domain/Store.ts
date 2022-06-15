@@ -42,6 +42,10 @@ class Store {
     return !!this._accountId;
   }
 
+  public get Account() {
+    return this._accountId;
+  }
+
 
   public async SetSandboxToken(value: string): Promise<void> {
     try {

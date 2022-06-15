@@ -1021,7 +1021,7 @@ eval("/* eslint-disable no-unused-vars -- required for functions `.length` */\nv
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    ENCRYPT_STRING: 'ENCRYPT_STRING',\n    DECRYPT_STRING: 'DECRYPT_STRING',\n    SAVE_TO_STORE: 'SAVE_TO_STORE',\n    GET_FROM_STORE: 'GET_FROM_STORE',\n    TINKOFF_CREATE_SDK: 'TINKOFF_CREATE_SDK',\n    TINKOFF_GET_ACCOUNTS: 'TINKOFF_GET_ACCOUNTS',\n    START_TRADING: 'START_TRADING'\n});\n\n\n//# sourceURL=webpack:///./src/infra/ipc/events.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    ENCRYPT_STRING: 'ENCRYPT_STRING',\n    DECRYPT_STRING: 'DECRYPT_STRING',\n    SAVE_TO_STORE: 'SAVE_TO_STORE',\n    GET_FROM_STORE: 'GET_FROM_STORE',\n    TINKOFF_CREATE_SDK: 'TINKOFF_CREATE_SDK',\n    TINKOFF_GET_ACCOUNTS: 'TINKOFF_GET_ACCOUNTS',\n    START_TRADING: 'START_TRADING',\n    strategylog: 'strategylog'\n});\n\n\n//# sourceURL=webpack:///./src/infra/ipc/events.ts?");
 
 /***/ }),
 

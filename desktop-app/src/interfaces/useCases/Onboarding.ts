@@ -5,7 +5,7 @@ import ipcEvents from '@/infra/ipc/events';
 export default class OnboardingUseCase {
   private mode: any = Store.Mode;
   private isTokenEntered = false;
-  private account = null;
+  private account = Store.Account;
   private accounts = [];
 
 

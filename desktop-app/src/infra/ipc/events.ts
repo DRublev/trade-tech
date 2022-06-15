@@ -8,4 +8,5 @@ export default {
   TINKOFF_GET_ACCOUNTS: 'TINKOFF_GET_ACCOUNTS',
 
   START_TRADING: 'START_TRADING',
+  strategylog: 'strategylog'
 }
