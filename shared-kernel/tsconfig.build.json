@@ -8,7 +8,7 @@
     "lib": ["es6"],
     "declaration": true,
     "declarationMap": true,
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "node"],
     "paths": {
       "@/*": ["./*"] 
     }
