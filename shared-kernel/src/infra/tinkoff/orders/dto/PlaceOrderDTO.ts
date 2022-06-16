@@ -11,6 +11,7 @@ export default class PlaceOrderDTO {
         : OrderDirection.ORDER_DIRECTION_SELL,
       orderType: command.orderType === 'MARKET' ? OrderType.ORDER_TYPE_MARKET : OrderType.ORDER_TYPE_LIMIT,
       price: toQuotation(command.price),
+      quantity: command.quantity,
     }
   }
 }

@@ -21,7 +21,9 @@ type ToPlaceOrderInfo = {
 
 export default class SpreadStrategy implements IStrategy {
   private isWorking = true;
+
   private leftMoney = 0;
+  private processingMoney = 0;
   private holdingLots = 0;
   private processingBuy = 0;
   private processingSell = 0;
@@ -41,7 +43,7 @@ export default class SpreadStrategy implements IStrategy {
   ) {
     this.leftMoney = Number(config.availableBalance);
   }
-  
+
   public toggleWorking(): boolean {
     this.isWorking = !this.isWorking;
     return this.isWorking;
@@ -65,6 +67,8 @@ export default class SpreadStrategy implements IStrategy {
         }
         this.log('calc', `Placed buy order: ${buyReq.price} ${buyReq.lots} ${placedId}`);
         this.bidsOrdersMap[buyReq.price].push(placedId);
+        this.processingBuy += buyReq.lots;
+        this.processingMoney += (buyReq.lots * buyReq.price);
       }
     }
     if (toSellInfo && toSellInfo.length) {
@@ -87,13 +91,13 @@ export default class SpreadStrategy implements IStrategy {
       if (this.holdingLots >= this.config.maxHolding
         || this.processingBuy >= this.config.maxHolding) {
         this.log('info', "Already holding max shares");
-        return;
+        return [];
       }
       const minBid = toNum(orderbook.bids[0].price);
       this.log('calc', `Min bid: ${stringify(minBid)}; Money left: ${this.leftMoney}`);
       if (this.leftMoney < minBid) {
         this.log('info', `No money left. Left: ${this.leftMoney}; Min bid: ${stringify(minBid)}`);
-        return;
+        return [];
       }
 
       const buyLadderStep = Math.round(Number(this.config.maxHolding || 0) / Number(this.config.lotsDistribution || 1));
@@ -103,14 +107,20 @@ export default class SpreadStrategy implements IStrategy {
         ? Array.from({ length: this.config.lotsDistribution - 1 }, () => buyLadderStep).concat([ladderLeft])
         : Array.from({ length: this.config.lotsDistribution }, () => buyLadderStep);
       this.log('calc', `To buy: ${toBuyLots}`);
-      const canBuyLotsAmount = Math.floor(this.leftMoney / minBid);
-      this.log('calc', `To buy more: ${canBuyLotsAmount}; ${this.leftMoney} / ${minBid} = ${this.leftMoney / minBid}`);
+      const canBuyLotsAmount = Math.floor((this.leftMoney - this.processingMoney) / minBid);
+      this.log('calc', `To buy more: ${canBuyLotsAmount}; ${this.leftMoney} - ${this.processingMoney} / ${minBid} = ${this.leftMoney  - this.processingMoney / minBid}`);
       if (canBuyLotsAmount < buyLadderStep) {
         toBuyLots = [canBuyLotsAmount];
         this.log('calc', `canBuyLotsAmount < buyLadderStep. canBuyLotsAmount: ${canBuyLotsAmount}; buyLadderStep: ${stringify(buyLadderStep)}`);
       }
       const bids = orderbook.bids.slice(0, toBuyLots.length - 1);
       this.log('calc', `Bids: ${stringify(bids)}`);
+
+      const dealSum = bids.reduce((acc, bid, idx) => acc + toNum(bid.price) * toBuyLots[idx], 0);
+      this.log('calc', `Expected deal sum: ${dealSum}; Left money: ${this.leftMoney}; Processing money: ${this.processingMoney}`);
+      if (dealSum > (this.leftMoney - this.processingMoney)) {
+        this.log('calc', `Not enough money to buy. Left: ${this.leftMoney}; Processing: ${this.processingMoney}; Deal sum: ${dealSum}`);
+      }
       const toBuyOrders: ToPlaceOrderInfo[] = bids.map((bid, index) => ({
         lots: toBuyLots[index],
         price: toNum(bid.price),
@@ -172,7 +182,9 @@ export default class SpreadStrategy implements IStrategy {
         }
         if ((idx + 1) > this.config.moveOrdersOnStep) {
           this.log('calc', `Bid ${bid} is too far from the top, cancelling orders`);
-          await this.cancelOrder(this.bidsOrdersMap[bid]);
+          for await (const orderId of this.bidsOrdersMap[bid]) {
+            await this.cancelOrder(orderId);
+          }
         }
       }
     } catch (e) {
@@ -180,7 +192,7 @@ export default class SpreadStrategy implements IStrategy {
     }
   }
 
-  public  onOrderChanged(order: Order): Promise<void> {
+  public onOrderChanged(order: Order): Promise<void> {
     try {
       const allAsks = Object.values(this.asksOrdersMap).join();
       const allBids = Object.values(this.bidsOrdersMap).join();
@@ -217,6 +229,8 @@ export default class SpreadStrategy implements IStrategy {
           this.log('calc', `Holding lots: ${this.holdingLots}; Processing buy: ${this.processingBuy}; Lots executed: ${order.lotsExecuted};`);
           this.holdingLots += order.lotsExecuted;
           this.processingBuy -= order.lotsExecuted;
+          this.processingMoney -= toNum(order.totalOrderAmount);
+          this.leftMoney -= toNum(order.totalOrderAmount);
           this.log('calc', `Removing ${order.orderId} from bids map ${stringify(this.bidsOrdersMap)}`);
           this.bidsOrdersMap = Object.entries(this.bidsOrdersMap).reduce((acc, [key, value]) => {
             if (value.includes(order.orderId)) {
@@ -261,14 +275,15 @@ export default class SpreadStrategy implements IStrategy {
         `);
       } else if (isBuy) {
         this.log('calc', `Bought ${quantity} lots at ${price} ${latestStage.tradeId}; Before:
-        holdingLots ${this.holdingLots};
-        processingSell ${this.processingSell};
-        leftMoney: ${this.leftMoney}
-      `);
+          holdingLots ${this.holdingLots};
+          processingSell ${this.processingSell};
+          leftMoney: ${this.leftMoney}
+        `);
         this.holdingLots += quantity;
         this.processingBuy -= quantity;
         this.leftMoney -= toNum(price);
-      this.log('calc', `${latestStage.tradeId} After:
+        this.processingMoney -= toNum(price);
+        this.log('calc', `${latestStage.tradeId} After:
           holdingLots ${this.holdingLots};
           processingSell ${this.processingSell};
           leftMoney: ${this.leftMoney}
@@ -282,7 +297,7 @@ export default class SpreadStrategy implements IStrategy {
   }
 
   private log(level: 'calc' | 'info' | 'error', message: string | any) {
-    
+
     this.stdOut.write(`${level}: ${typeof message === 'string' ? message : stringify(message)}\n`);
   }
 }

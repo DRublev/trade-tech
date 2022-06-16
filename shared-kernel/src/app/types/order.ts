@@ -3,7 +3,6 @@ import { TinkoffClient } from "@/infra/tinkoff/client";
 
 
 export type Order = OrderState;
-export type Trades = OrderTrades;
 
 
 export type PlaceOrderCmd = Omit<PostOrderRequest, 'orderType' | 'direction' | 'price'> & {
@@ -12,16 +11,16 @@ export type PlaceOrderCmd = Omit<PostOrderRequest, 'orderType' | 'direction' | '
   price: number;
 }
 
-export type OrderTradesStream = AsyncGenerator<Trades>;
+export type OrdersStream = AsyncGenerator<Order>;
 export type SubscribeOrdersReq = string[];
 
 
 export interface IOrdersService {
   place(placeCmd: PlaceOrderCmd): Promise<string>;
-  cancel(orderId: string): Promise<void>;
+  cancel(orderId: string, accountId: string): Promise<void>;
   subscribe(req: SubscribeOrdersReq): void;
   unsubscribe(orderId: string): void;
-  getOrdersStream(): OrderTradesStream;
+  getOrdersStream(accountId: string): OrdersStream;
 }
 interface IOrdersServiceConstructor {
   new(client: TinkoffClient): IOrdersService;

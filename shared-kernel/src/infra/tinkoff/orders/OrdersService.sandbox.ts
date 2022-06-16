@@ -1,4 +1,4 @@
-import { IOrdersService, OrderTradesStream, PlaceOrderCmd, SubscribeOrdersReq } from "@/app/types/order";
+import { IOrdersService, OrdersStream, PlaceOrderCmd, SubscribeOrdersReq } from "@/app/types/order";
 import AccountProvider from "../../AccountProvider";
 import ioc, { ids } from "../ioc";
 import { TinkoffClient } from "../client";
@@ -13,7 +13,7 @@ export default class OrdersServiceSandbox implements IOrdersService {
     this.client = ioc.get<TinkoffClient>(ids.Client);
     this.accountProvider = ioc.get<AccountProvider>(ids.AccountProvider);
   }
-  getOrdersStream(): OrderTradesStream {
+  getOrdersStream(accountId: string): OrdersStream {
     throw new Error("Method not implemented.");
   }
 
@@ -21,11 +21,11 @@ export default class OrdersServiceSandbox implements IOrdersService {
     return '';
   }
 
-  public async cancel(orderId: string): Promise<void> {
+  public async cancel(orderId: string, accountId: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public subscribe(req: SubscribeOrdersReq): OrderTradesStream {
+  public subscribe(req: SubscribeOrdersReq): OrdersStream {
     throw new Error("Method not implemented.");
   }
 
