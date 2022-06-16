@@ -1,6 +1,6 @@
 <template>
   <h2>Debugging Spread Strategy Logs</h2>
-  <ul>
+  <ul class="text-left ml-16" >
     <li v-for="log in logs" :key="log">{{ log }}</li>
   </ul>
 </template>

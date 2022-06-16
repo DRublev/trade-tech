@@ -14,11 +14,16 @@ export default class DebugStrategyUseCase {
         this.logs.push(log);
       });
       (window as any).ipc.send('START_TRADING', {
-        figi: 'BBG222222222', parameters: {
-          availableBalance: 1,
-          maxHolding: 1,
+        // figi: 'BBG000QCW561', // VEON
+        // figi: 'BBG222222222', // TGLD
+        figi: 'BBG000000001', // TRUR
+        parameters: {
+          // availableBalance: 1,
+          availableBalance: 12,
+          maxHolding: 2,
           minSpread: 0,
-          moveOrdersOnStep: 0.2,
+          moveOrdersOnStep: 1,
+          lotsDistribution: 2,
         }
       });
     } catch (e) {
