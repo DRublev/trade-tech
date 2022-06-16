@@ -1,7 +1,5 @@
 import 'dotenv/config';
 import { TinkoffSdk } from 'shared-kernel';
-// import { IOC, Identifiers } from 'shared-kernel';
-import Sdk from 'shared-kernel/src/interfaces/Sdk';
 import logger from './logger';
 
 
@@ -15,7 +13,6 @@ process.on('exit', (code) => {
 });
 process.on('uncaughtException', console.error);
 
-const client: Sdk = TinkoffSdk;
 const killSwitch = new AbortController();
 
 let watchIntervalId = null;

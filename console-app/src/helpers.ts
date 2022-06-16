@@ -5,7 +5,7 @@ export const toNum = (qutation: { units: number, nano: number }) => Number(qutat
 
 export const toQuotation = (number: number) => ({
   units: Math.floor(number),
-  nano: Math.trunc(number),
+  nano: Math.trunc(number * nanoPrecision),
 });
 
 export const roundToNearestStep = (candidate, step) => {
