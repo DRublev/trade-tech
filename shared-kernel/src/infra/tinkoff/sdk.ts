@@ -5,6 +5,7 @@ import { createClient, TinkoffClient } from "./client";
 import type { LimitsController } from "./LimitsController";
 import { OrdersService } from "./orders";
 import { AccountsService } from "./accounts";
+import { CandlesStreamSubscriber } from "./marketData";
 
 
 const assembleSdk = (token: string, isSandbox: boolean) => {
@@ -14,6 +15,7 @@ const assembleSdk = (token: string, isSandbox: boolean) => {
   LimitsController.Client = client;
   return new Sdk(
     new OrderbookSubscriber(),
+    new CandlesStreamSubscriber(),
     new OrdersService(),
     new AccountsService(),
   );
