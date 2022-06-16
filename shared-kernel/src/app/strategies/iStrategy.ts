@@ -8,6 +8,12 @@ export interface IStrategy {
   onOrderbook(orderbook: Orderbook): Promise<void>;
   onOrderChanged(order: Order): Promise<void>;
   toggleWorking: ToggleWorkingModeCommand;
+
+  get LeftMoney(): number;
+  get ProcessingMoney(): number;
+  get HoldingLots(): number;
+  get ProcessingBuyOrders(): number;
+  get ProcessingSellOrders(): number;
 }
 
 export type PostOrderCommand = (figi: string, lots: number, pricePerLot: number, isBuy: boolean) => Promise<string>;

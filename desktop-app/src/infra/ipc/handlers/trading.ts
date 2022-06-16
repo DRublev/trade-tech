@@ -54,7 +54,7 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
 
     logstream._write = (chunk, encoding, next) => {
       event.sender.send('strategylog', chunk);
-      orderbookLogStream.write(chunk);
+      orderbookLogStream.write(new Date().toLocaleTimeString() + ' ' + chunk);
       next();
     };
     logstream._read = (s: any) => { };
@@ -83,11 +83,18 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
     const strategy = new strategyConstructor(data.parameters, postOrder, cancelOrder, logstream);
     WorkingStrategies[data.figi] = strategy;
 
-    const watchOrders = async () => {
-      const orderTradesStream = await TinkoffSdk.Sdk.OrdersService.getOrdersStream(accountId);
-      for await (const trade of orderTradesStream) {
-        logger.info(`Order ${trade.orderId} changed`, trade);
-        strategy.onOrderChanged(trade);
+    const watchOrders = async (): Promise<any> => {
+      try {
+        const orderTradesStream = await TinkoffSdk.Sdk.OrdersService.getOrdersStream(accountId);
+        console.log('88 trading', 'order stream');
+        for await (const trade of orderTradesStream) {
+          console.log('90 trading got order state changed');
+          logger.info(`Order ${trade.orderId} changed`, trade);
+          strategy.onOrderChanged(trade);
+        }
+      } catch (e) {
+        console.log('96 trading', e);
+        return watchOrders();
       }
     };
 
@@ -103,7 +110,7 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
       }
     };
     console.log('103 trading');
-    await Promise.allSettled([orderBookSubscribe(), watchOrders]);
+    await Promise.allSettled([orderBookSubscribe(), watchOrders()]);
   } catch (e) {
     logger.error('START_TRADING', e);
   }

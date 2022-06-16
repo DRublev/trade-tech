@@ -45,11 +45,21 @@ export default class OrdersService implements IOrdersService {
   public async *getOrdersStream(accountId: string): OrdersStream {
     try {
       while (this.isWorking) {
-        await sleep(800);
+        await sleep(1000);
         const allOrders = await this.client.orders.getOrders({ accountId });
+        const notFoundButSubscribed = Object.values(this.subscribedOrdersIds)
+          .filter(id => !allOrders.orders.find(o => o.orderId === id));
         for (const order of allOrders.orders) {
           if (this.subscribedOrdersIds[order.orderId]) {
             yield order;
+          }
+        }
+        for await (const orderId of notFoundButSubscribed) {
+          try {
+            const order = await this.client.orders.getOrderState({ accountId, orderId });
+            yield order;
+          } catch (e) {
+            console.error('Error checking state of order', orderId, e);
           }
         }
       }

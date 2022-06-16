@@ -22,7 +22,7 @@ export default class DebugStrategyUseCase {
           availableBalance: 12,
           maxHolding: 2,
           minSpread: 0,
-          moveOrdersOnStep: 1,
+          moveOrdersOnStep: 2,
           lotsDistribution: 2,
         }
       });
