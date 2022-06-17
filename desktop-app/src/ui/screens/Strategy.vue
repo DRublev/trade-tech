@@ -4,7 +4,7 @@
   </div>
   <div class="w-full mx-3 h-1/2">
     <div class="flex justify-between h-full divide-x">
-      <div class="flex-1 place-items-center pt-2">
+      <div class="flex-1 place-items-center pt-2 overflow-x-hidden overflow-y-scroll">
         <ul class="text-left ml-16">
           <li v-for="log in logs" :key="log">{{ log }}</li>
         </ul>
