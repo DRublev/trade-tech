@@ -12,6 +12,10 @@ export default class CandlesSubscriber implements ICandlesSubscriber {
   
   constructor() {
     this.client = ioc.get<TinkoffClient>(ids.Client);
+
+    this.subscribe = this.subscribe.bind(this);
+    this.stream = this.stream.bind(this);
+    this.getStreamSubscribeRequest = this.getStreamSubscribeRequest.bind(this);
   }
 
   subscribe(figi: string, timeframe: Timeframes) {
