@@ -24,11 +24,11 @@ const format = winston.format.combine(
 const transports: winston.transport[] = [
   new winston.transports.Console({}),
   new winston.transports.File({
-    filename: path.resolve(__dirname, '../data-storage/logs/logs.log'),
+    filename: path.resolve(__dirname, '../../data-storage/logs/logs.log'),
     level: 'info',
   }),
   new winston.transports.File({
-    filename: path.resolve(__dirname, '../data-storage/logs/errors.log'),
+    filename: path.resolve(__dirname, '../../data-storage/logs/errors.log'),
     level: 'warn',
   }),
 ];

@@ -1,6 +1,8 @@
 <template>
   <Onboarding v-if="showOnboarding" />
-  <DebuggingStrategy v-else />
+  <Strategy v-if="!showOnboarding" />
+
+  <DebuggingStrategy v-if="showDebug" />
 </template>
 
 <script lang="ts">
@@ -9,15 +11,18 @@ import { Options, Vue } from 'vue-class-component';
 import Store from '@/domain/Store';
 import Onboarding from './onboarding/index.vue';
 import DebuggingStrategy from './DebuggingStrategy.vue';
+import Strategy from './Strategy.vue';
 
 
 @Options({
   components: { 
     Onboarding,
+    Strategy,
     DebuggingStrategy,
   },
 })
 export default class Welcome extends Vue {
+  showDebug = false;
   get showOnboarding() {
     return !Store.HasToken || !Store.HasAccountChosen;
   }
