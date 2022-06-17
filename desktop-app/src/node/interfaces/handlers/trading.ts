@@ -125,7 +125,7 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
   }
 });
 
-ipcMain.handle(events.PAUSE_TRADING, async (evvent, data) => {
+ipcMain.handle(events.PAUSE_TRADING, async (event, data) => {
   try {
     if (!data.figi) throw new TypeError('Figi is not defined');
     if (!WorkingStrategies[data.figi]) throw new ReferenceError(`No working strategy for ${data.figi} was found`);
@@ -137,3 +137,5 @@ ipcMain.handle(events.PAUSE_TRADING, async (evvent, data) => {
     logger.error('PAUSE_TRADING', e);
   }
 });
+
+

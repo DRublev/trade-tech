@@ -1,5 +1,4 @@
 import { ipcEvents } from "@/constants";
-import logger from "@node/infra/Logger";
 
 export type Deal = {
   time: number;
@@ -54,7 +53,7 @@ export default class DealsListUseCase {
         isClosed: false,
       };
     } catch(e) {
-      logger.error('Processing place order log error', e, log);
+      console.error('Processing place order log error', e, log);
     }
   }
 
@@ -62,7 +61,7 @@ export default class DealsListUseCase {
     try {
       const orderIds = Object.keys(this.deals).filter(id => log.includes(id));
       if (!orderIds.length) {
-        logger.info('Processing cancelling orders log no ids interesting', log);
+        console.info('Processing cancelling orders log no ids interesting', log);
         return;
       }
 
@@ -72,7 +71,7 @@ export default class DealsListUseCase {
         }
       }
     } catch (e) {
-      logger.error('Processing cancelling orders log', e, log);
+      console.error('Processing cancelling orders log', e, log);
     }
   }
 

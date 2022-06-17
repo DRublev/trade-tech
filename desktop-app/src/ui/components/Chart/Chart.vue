@@ -71,6 +71,11 @@ export default class Chart extends Vue {
     this.candleSeries.update(value);
   }
 
+  @Watch('chartData', { immediate: true })
+  onChartDataChange(newData: any) {
+    console.log('76 Chart', newData);
+  }
+
   @Watch('markers', { immediate: true })
   onMarkersChange(newMarkers: any) {
     try {

@@ -5,6 +5,7 @@ import { TinkoffAccountsService, TinkoffSdk } from '@/node/app/tinkoff';
 import logger from '@/node/infra/Logger';
 import storage from '@/node/infra/Storage';
 import events from '../events';
+import { Timeframes } from 'shared-kernel/src/app/types/candle';
 
 export * from './trading';
 
@@ -107,3 +108,33 @@ ipcMain.handle(events.TINKOFF_GET_ACCOUNTS, async (event, options: any) => {
   return getAccounts();
 });
 
+ipcMain.handle(events.TINKOFF_SUBSCRIBE_ON_CANDLES, async (event, data: { figi: string }) => {
+  try {
+    if (!TinkoffSdk.IsSdkBinded) {
+      const isSandbox = storage.get('isSandbox');
+      await createSdk(isSandbox);
+    }
+    console.log('117 index', data.figi);
+    await TinkoffSdk.Sdk.CanddlesStreamSubscriber.subscribe(data.figi, Timeframes.OneMinute);
+    return true;
+  } catch (e) {
+    logger.error('TINKOFF_SUBSCRIBE_ON_CANDLES', e);
+  }
+});
+
+ipcMain.on(events.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
+  try {
+    if (!TinkoffSdk.IsSdkBinded) {
+      const isSandbox = storage.get('isSandbox');
+      await createSdk(isSandbox);
+    }
+    const stream = await TinkoffSdk.Sdk.CanddlesStreamSubscriber.stream();
+    for await (const candle of stream) {
+      console.log('133 index', candle);
+      event.sender.send(events.TINKOFF_ON_CANDLES_STREAM, candle);
+    }
+  } catch (e) {
+    logger.error('TINKOFF_GET_CANDLES_STREAM', e);
+    event.returnValue = e;
+  }
+});

@@ -56,7 +56,7 @@ import Loader from '../components/Loader.vue';
 })
 export default class Strategy extends Vue {
   controlUC = new StrategyControlUseCase();
-  chartUC = new StrategyChartUseCase();
+  chartUC = new StrategyChartUseCase(this.controlUC.Config.figi);
   dealsListUC = new DealsListUseCase();
 
   switchWorking() {

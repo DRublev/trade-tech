@@ -4,6 +4,8 @@ import { MarketDataRequest, SubscriptionAction, SubscriptionInterval } from "inv
 import { TinkoffClient } from "../client";
 import ioc, { ids } from "../ioc";
 
+const subscribed = [];
+
 export default class CandlesSubscriber implements ICandlesSubscriber {
   private client: TinkoffClient;
   private isWorking = true;
@@ -19,8 +21,8 @@ export default class CandlesSubscriber implements ICandlesSubscriber {
   }
 
   subscribe(figi: string, timeframe: Timeframes) {
-    if (!this.subscribed.find(s => s.figi === figi && s.timeframe === timeframe)) {
-      this.subscribed.push({
+    if (!subscribed.find(s => s.figi === figi && s.timeframe === timeframe)) {
+      subscribed.push({
         figi,
         timeframe,
       });
@@ -53,7 +55,7 @@ export default class CandlesSubscriber implements ICandlesSubscriber {
       yield MarketDataRequest.fromPartial({
         subscribeCandlesRequest: {
           subscriptionAction: SubscriptionAction.SUBSCRIPTION_ACTION_SUBSCRIBE,
-          instruments: this.subscribed.map((s) => ({
+          instruments: subscribed.map((s) => ({
             figi: s.figi,
             interval: this.toInterval(s.timeframe),
           })),
