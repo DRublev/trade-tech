@@ -1,9 +1,9 @@
 import { ipcMain, safeStorage } from 'electron';
 import ioc from 'shared-kernel/src/ioc';
 
-import { TinkoffAccountsService, TinkoffSdk } from '@/app/tinkoff';
-import logger from '@/infra/Logger';
-import storage from '@/infra/Storage';
+import { TinkoffAccountsService, TinkoffSdk } from '@/node/app/tinkoff';
+import logger from '@/node/infra/Logger';
+import storage from '@/node/infra/Storage';
 import events from '../events';
 
 export * from './trading';

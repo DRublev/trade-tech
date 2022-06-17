@@ -1,4 +1,4 @@
-export default {
+export const ipcEvents = {
   ENCRYPT_STRING: 'ENCRYPT_STRING',
   DECRYPT_STRING: 'DECRYPT_STRING',
   SAVE_TO_STORE: 'SAVE_TO_STORE',
@@ -9,4 +9,4 @@ export default {
 
   START_TRADING: 'START_TRADING',
   strategylog: 'strategylog'
-}
+};

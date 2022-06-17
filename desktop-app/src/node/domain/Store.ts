@@ -1,4 +1,4 @@
-import ipcEvents from "@/infra/ipc/events";
+import { ipcEvents } from "@/constants";
 
 class Store {
   private isSandbox?: boolean = undefined;

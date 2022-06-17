@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 import { Vue } from 'vue-class-component';
-import DebugStrategyUseCase from '@/interfaces/useCases/DebugStrategy';
+import DebugStrategyUseCase from '@/ui/useCases/DebugStrategy';
 
 export default class Debug extends Vue {
   private debugStrategyUC = new DebugStrategyUseCase();

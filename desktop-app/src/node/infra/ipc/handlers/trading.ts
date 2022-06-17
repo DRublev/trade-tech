@@ -5,9 +5,9 @@ import { ipcMain, safeStorage } from 'electron';
 import { Strategies, getStrategyConstructor, IStrategy } from 'shared-kernel';
 import ioc from 'shared-kernel/src/ioc';
 
-import { TinkoffSdk } from '@/app/tinkoff';
-import logger from '@/infra/Logger';
-import storage from '@/infra/Storage';
+import { TinkoffSdk } from '@/node/app/tinkoff';
+import logger from '@/node/infra/Logger';
+import storage from '@/node/infra/Storage';
 import events from '../events';
 
 export type StartTradingCmd = {

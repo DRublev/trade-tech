@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 
-import Store from '@/domain/Store';
+import Store from '@/node/domain/Store';
 import Onboarding from './onboarding/index.vue';
 import DebuggingStrategy from './DebuggingStrategy.vue';
 import Strategy from './Strategy.vue';

@@ -12,12 +12,12 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 
-import { OnboardingUseCase } from '@/interfaces/useCases';
+import { OnboardingUseCase } from '@/ui/useCases';
 
-import ChooseMode from '@/interfaces/components/onboarding/ChooseMode.vue';
-import EnterSandboxToken from '@/interfaces/components/onboarding/EnterSandboxToken.vue';
-import EnterRealTokens from '@/interfaces/components/onboarding/EnterRealTokens.vue';
-import ChooseAccount from '@/interfaces/components/onboarding/ChooseAccount.vue';
+import ChooseMode from '@/ui/components/onboarding/ChooseMode.vue';
+import EnterSandboxToken from '@/ui/components/onboarding/EnterSandboxToken.vue';
+import EnterRealTokens from '@/ui/components/onboarding/EnterRealTokens.vue';
+import ChooseAccount from '@/ui/components/onboarding/ChooseAccount.vue';
 
 
 @Options({
