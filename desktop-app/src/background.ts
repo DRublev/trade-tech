@@ -5,7 +5,7 @@ import path from 'path';
 import { app, protocol, BrowserWindow, shell } from 'electron'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
-import './node/infra/ipc/handlers';
+import './node/interfaces/handlers';
 
 
 const isDevelopment = process.env.NODE_ENV !== 'production';

@@ -1,4 +1,4 @@
-<template>
+<template class="text-center">
   <Onboarding v-if="showOnboarding" />
   <Strategy v-if="!showOnboarding" />
 

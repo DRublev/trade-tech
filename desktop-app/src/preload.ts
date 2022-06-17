@@ -7,7 +7,7 @@ import { ipcEvents } from '@/constants';
         Garbage collection should pick it up.
 */
 // @ts-ignore
-require = null;
+// require = null;
 
 
 const validChannels = Object.values(ipcEvents);

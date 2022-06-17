@@ -5,7 +5,18 @@ module.exports = {
     fontSmoothing: 'antialiased',
   },
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        purple: '#6868AC',
+      },
+    },
+    minHeight: {
+      '0': '0',
+      '1/4': '25%',
+      '1/2': '50%',
+      '3/4': '75%',
+      'full': '100%',
+    }
   },
   plugins: [],
 }

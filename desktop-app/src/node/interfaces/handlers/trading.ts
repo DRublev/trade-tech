@@ -35,8 +35,17 @@ const createSdk = (isSandbox: boolean) => {
 }
 const today = new Date();
 const todayFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+
+
 ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
   try {
+    if (!data.figi) throw new TypeError('Figi is not defined');
+    if (WorkingStrategies[data.figi]) {
+      const strategy: IStrategy = WorkingStrategies[data.figi];
+      strategy.toggleWorking();
+      event.returnValue = true;
+      return;
+    }
     if (!data.parameters) throw new TypeError('Parameters is not defined');
     if (!TinkoffSdk.IsSdkBinded) {
       const isSandbox = storage.get('isSandbox');
@@ -79,7 +88,7 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
       TinkoffSdk.Sdk.OrdersService.unsubscribe(orderId);
     };
 
-    
+
     const strategy = new strategyConstructor(data.parameters, postOrder, cancelOrder, logstream);
     WorkingStrategies[data.figi] = strategy;
 
@@ -113,5 +122,18 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
     await Promise.allSettled([orderBookSubscribe(), watchOrders()]);
   } catch (e) {
     logger.error('START_TRADING', e);
+  }
+});
+
+ipcMain.handle(events.PAUSE_TRADING, async (evvent, data) => {
+  try {
+    if (!data.figi) throw new TypeError('Figi is not defined');
+    if (!WorkingStrategies[data.figi]) throw new ReferenceError(`No working strategy for ${data.figi} was found`);
+    if (WorkingStrategies[data.figi]) {
+      const strategy: IStrategy = WorkingStrategies[data.figi];
+      strategy.toggleWorking();
+    }
+  } catch (e) {
+    logger.error('PAUSE_TRADING', e);
   }
 });

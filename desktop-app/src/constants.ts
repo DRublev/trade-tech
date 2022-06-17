@@ -8,5 +8,6 @@ export const ipcEvents = {
   TINKOFF_GET_ACCOUNTS: 'TINKOFF_GET_ACCOUNTS',
 
   START_TRADING: 'START_TRADING',
+  PAUSE_TRADING: 'PAUSE_TRADING',
   strategylog: 'strategylog'
 };

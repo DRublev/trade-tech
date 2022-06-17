@@ -1,45 +1,91 @@
 <template>
-<div id="chartContainer" class="min-w-full min-h-full">
-  <chart :chartData="chartData" />
-</div>
+  <div class="min-w-full min-h-1/2">
+    <chart :chartData="chartData" :markers="chartMarkers" v-on:visibleAreaChanged="onChartVisibleAreaChanged($event)" />
+  </div>
+  <div class="w-full mx-3 h-1/2">
+    <div class="flex justify-between h-full divide-x">
+      <div class="flex-1 place-items-center pt-2">
+        <ul class="text-left ml-16">
+          <li v-for="log in logs" :key="log">{{ log }}</li>
+        </ul>
+      </div>
+      <div class="flex-1 place-items-center pt-2 px-8">
+        <button @click="switchWorking" class="align-center text-purple text-center" style="height: 30px">
+          <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
+            class="text-3xl stroke-current mb-2" />
+          <p v-if="!status.working">Пуск</p>
+          <p v-else>Стоп</p>
+          <Loader v-if="status.loading" class="max-h-full" />
+        </button>
+      </div>
+      <div class="flex-1 place-items-center pt-2 px-8">
+        <h1 class="mb-12 text-left">
+          <span class="text-gray-500">Стратегия: </span>
+          <span class="text-xl">{{ strategyInfo.name }}</span>
+        </h1>
+        <ul>
+          <li v-for="d in deals" :key="d.time" class="flex justify-between">
+            <span :class="{
+              'text-red-500': d.action == 'sell',
+              'text-green-500': d.action == 'buy',
+              'text-slate-700': d.isClosed,
+            }">
+              {{ d.action }}
+            </span>
+            <span>{{ d.pricePerLot }}</span>
+            <span>{{ d.lots }}</span>
+            <span>{{ d.sum }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
 <script lang="ts">
+import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
 import { Options, Vue } from 'vue-class-component';
 import Chart from '../components/Chart';
+import Loader from '../components/Loader.vue';
 
 
 @Options({
   components: {
     Chart,
+    Loader,
   }
 })
 export default class Strategy extends Vue {
-  chartContainer: HTMLElement | null = null;
-  chartHeight = 100;
-  chartWidth = 100;
-  chartData = [
-    { time: '2018-10-19', open: 54.62, high: 55.50, low: 54.52, close: 54.90 },
-    { time: '2018-10-22', open: 55.08, high: 55.27, low: 54.61, close: 54.98 },
-    { time: '2018-10-23', open: 56.09, high: 57.47, low: 56.09, close: 57.21 },
-    { time: '2018-10-24', open: 57.00, high: 58.44, low: 56.41, close: 57.42 },
-    { time: '2018-10-25', open: 57.46, high: 57.63, low: 56.17, close: 56.43 },
-    { time: '2018-10-26', open: 56.26, high: 56.62, low: 55.19, close: 55.51 },
-    { time: '2018-10-29', open: 55.81, high: 57.15, low: 55.72, close: 56.48 },
-    { time: '2018-10-30', open: 56.92, high: 58.80, low: 56.92, close: 58.18 },
-  ];
+  controlUC = new StrategyControlUseCase();
+  chartUC = new StrategyChartUseCase();
+  dealsListUC = new DealsListUseCase();
 
-  mounted() {
-
+  switchWorking() {
+    this.controlUC.Working = !this.status.working;
   }
 
-  updateChartSize() {
-    try {
-      if (!this.chartContainer) {
-        this.chartContainer = document.querySelector('chartContainer');
-      }
-    } catch (e) {
-      console.error(e);
-    }
+  // eslint-disable-next-line no-unused-vars
+  onChartVisibleAreaChanged(range: any) {
+    // console.log('42 Strategy', range);
+  }
+
+  get status() {
+    return this.controlUC.Status;
+  }
+  get strategyInfo() {
+    const name = this.controlUC.Config.strategy;
+    return { name };
+  }
+  get chartData() {
+    return this.chartUC.Data;
+  }
+  get chartMarkers() {
+    return this.chartUC.Markers;
+  }
+  get deals() {
+    return this.dealsListUC.Deals;
+  }
+  get logs() {
+    return this.dealsListUC.Logs;
   }
 }
 </script>
