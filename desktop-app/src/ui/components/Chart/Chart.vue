@@ -1,100 +1,29 @@
 <template>
-  <div id="chart" />
+  <trading-vue :data="{ ohlcv }" :color-back="colors.colorBack" :color-grid="colors.colorGrid"
+    :color-text="colors.colorText"></trading-vue>
 </template>
 <script lang="ts">
-import { Vue } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
-import {
-  CandlestickData,
-  createChart,
-  ISeriesApi,
-  OhlcData,
-  SeriesMarker,
-  Time,
-  WhitespaceData,
-} from 'lightweight-charts';
+import { Options, Vue } from 'vue-class-component';
+import TradingVue from 'trading-vue3-js/src/TradingVue.vue'
 
 
+@Options({
+  components: {
+    TradingVue,
+  }
+})
 export default class Chart extends Vue {
-  width: number = 100;
-  height: number = 100;
-  chartOptions = {
-    // borderUpColor: '#333',
-    // borderDownColor: '#6868AC',
-    // downColor: '#6868AC',
-    // upColor: 'transparent',
-    // wickUpColor: '#333',
-    //  wickDownColor: '#6868AC'
+  colors = {
+    colorBack: '#fff',
+    colorGrid: '#eee',
+    colorText: '#333',
   }
-  @Prop() chartData!: OhlcData[];
-  @Prop() currentCandle: CandlestickData | WhitespaceData = {
-    open: null,
-    high: null,
-    low: null,
-    close: null,
-    time: null,
-  } as unknown as CandlestickData;
-  @Prop() markers!: SeriesMarker<Time>[];
-
-  chartContainer: HTMLElement | null = null;
-  chart?: ReturnType<typeof createChart>;
-  private candleSeries?: ISeriesApi<"Candlestick">;
-
-  mounted() {
-    this.chartContainer = document.querySelector('#chart') || null;
-    this.initChart();
-    window.addEventListener('resize', this.resize);
-  }
-
-  beforeUnmount() {
-    window.removeEventListener('resize', this.resize);
-  }
-
-  initChart() {
-    if (!this.chartContainer) return;
-    this.chart = createChart(this.chartContainer, { height: this.height, width: this.width });
-    this.candleSeries = this.chart.addCandlestickSeries(this.chartOptions);
-
-    this.candleSeries.setData(this.chartData);
-    this.candleSeries.setMarkers(this.markers);
-    this.resize();
-    this.chart.timeScale().fitContent();
-    this.chart.timeScale().scrollToPosition(Math.floor(this.chartData.length / 2), false);
-    this.chart.timeScale()
-      .subscribeVisibleTimeRangeChange((range) => this.$emit('visibleAreaChanged', range));
-    this.chart.priceScale
-  }
-
-  @Watch('currentCandle', { immediate: true })
-  onCurrentCandleChange(value: CandlestickData | WhitespaceData) {
-    if (!this.candleSeries) return;
-    this.candleSeries.update(value);
-  }
-
-  @Watch('chartData', { immediate: true })
-  onChartDataChange(newData: any) {
-    console.log('76 Chart', newData);
-  }
-
-  @Watch('markers', { immediate: true })
-  onMarkersChange(newMarkers: any) {
-    try {
-      if (!this.candleSeries) return;
-      this.candleSeries.setMarkers(newMarkers);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  resize() {
-    try {
-      if (!this.chartContainer) return;
-      const width = this.chartContainer.parentElement?.clientWidth || 100;
-      const height = this.chartContainer.parentElement?.clientHeight || 100;
-      this.chart?.resize(width, height);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  ohlcv = [
+    [1551128400000, 33, 37.1, 14, 14, 196],
+    [1551132000000, 13.7, 30, 6.6, 30, 206],
+    [1551135600000, 29.9, 33, 21.3, 21.8, 74],
+    [1551139200000, 21.7, 25.9, 18, 24, 140],
+    [1551142800000, 24.1, 24.1, 24, 24.1, 29],
+  ]
 }
 </script>
