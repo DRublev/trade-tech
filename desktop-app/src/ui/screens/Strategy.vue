@@ -1,6 +1,7 @@
 <template>
   <div class="min-w-full min-h-1/2">
-    <chart :chartData="chartData" :markers="chartMarkers" v-on:visibleAreaChanged="onChartVisibleAreaChanged($event)" />
+    <chart />
+    <!-- <chart :chartData="chartData" :markers="chartMarkers" v-on:visibleAreaChanged="onChartVisibleAreaChanged($event)" /> -->
   </div>
   <div class="w-full mx-3 h-1/2">
     <div class="flex justify-between h-full divide-x">
