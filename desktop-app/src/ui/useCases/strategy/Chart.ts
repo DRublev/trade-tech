@@ -1,19 +1,16 @@
 import { ipcEvents } from "@/constants";
-import { SeriesMarker, Time } from "lightweight-charts";
+import CandleToOhlcvDTO from "./CandleToOhlcvDTO";
 
 export default class ChartUseCase {
   private data: any[] = [
-    // { time: '2018-10-19', open: 54.62, high: 55.50, low: 54.52, close: 54.90 },
-    // { time: '2018-10-22', open: 55.08, high: 55.27, low: 54.61, close: 54.98 },
-    // { time: '2018-10-23', open: 56.09, high: 57.47, low: 56.09, close: 57.21 },
-    // { time: '2018-10-24', open: 57.00, high: 58.44, low: 56.41, close: 57.42 },
-    // { time: '2018-10-25', open: 57.46, high: 57.63, low: 56.17, close: 56.43 },
-    // { time: '2018-10-26', open: 56.26, high: 56.62, low: 55.19, close: 55.51 },
-    // { time: '2018-10-29', open: 55.81, high: 57.15, low: 55.72, close: 56.48 },
-    // { time: '2018-10-30', open: 56.92, high: 58.80, low: 56.92, close: 58.18 },
+    [1551128400000, 33, 37.1, 14, 14, 196],
+    [1551132000000, 13.7, 30, 6.6, 30, 206],
+    [1551135600000, 29.9, 33, 21.3, 21.8, 74],
+    [1551139200000, 21.7, 25.9, 18, 24, 140],
+    [1551142800000, 24.1, 24.1, 24, 24.1, 29],
   ];
 
-  private markers: SeriesMarker<Time>[] = [
+  private markers = [
     // { time: '2018-10-23', position: 'belowBar', text: 'Buy', color: '#39998E', shape: 'arrowUp', },
     // { time: '2018-10-26', position: 'aboveBar', text: 'Sell', color: '#DA674A', shape: 'arrowDown', }
   ];
@@ -42,28 +39,9 @@ export default class ChartUseCase {
 
   private async processCandle(e:any, candle: any) {
     console.log('44 Chart', candle);
-    console.log('45 Chart', typeof candle.time);
-    this.data.push({
-      open: toNum(candle.open),
-      high: toNum(candle.high),
-      low: toNum(candle.low),
-      close: toNum(candle.close),
-      time: candle.time.toString().split('T')[0],
-    })
+    this.data.push(CandleToOhlcvDTO.toOhlcv(candle));
   }
 
   public get Data() { return this.data; }
   public get Markers() { return this.markers; }
 }
-
-const nanoPrecision = 1_000_000_000;
-
-
-const toNum = (qutation: { units: number, nano: number }) => Number(qutation.units + (qutation.nano / nanoPrecision));
-
-const toQuotation = (number: number) => {
-  const decimal = (number - Math.floor(Number(number))).toFixed(9);
-  return ({
-  units: Math.floor(number),
-  nano: decimal.slice(2) as any as number,
-})};

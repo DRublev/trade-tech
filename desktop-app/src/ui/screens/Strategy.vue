@@ -1,7 +1,6 @@
 <template>
   <div class="min-w-full min-h-1/2">
     <chart />
-    <!-- <chart :chartData="chartData" :markers="chartMarkers" v-on:visibleAreaChanged="onChartVisibleAreaChanged($event)" /> -->
   </div>
   <div class="w-full mx-3 h-1/2">
     <div class="flex justify-between h-full divide-x">
@@ -62,11 +61,6 @@ export default class Strategy extends Vue {
 
   switchWorking() {
     this.controlUC.Working = !this.status.working;
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  onChartVisibleAreaChanged(range: any) {
-    // console.log('42 Strategy', range);
   }
 
   get status() {
