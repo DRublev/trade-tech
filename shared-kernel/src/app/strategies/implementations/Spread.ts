@@ -150,11 +150,12 @@ export default class SpreadStrategy implements IStrategy {
         const askPrice = toNum(ask.price);
         const profitableHolding = holdingPrices.find((p) => Number(p) - this.config.minSpread < askPrice);
         this.log('calc', `Ask price: ${askPrice}; Profitable holding: ${stringify(profitableHolding)}`);
-        if (profitableHolding) {
+        if (profitableHolding && this.holdingBids[profitableHolding]) {
           toSell.push({
             price: askPrice,
             lots: this.holdingBids[profitableHolding],
           });
+          this.holdingBids[profitableHolding] -= this.holdingBids[profitableHolding];
         }
       }
       return toSell;
@@ -220,25 +221,31 @@ export default class SpreadStrategy implements IStrategy {
       if (isExecuted) {
         if (isSell) {
           this.log('info', `SELL Order ${order.orderId} is executed. Holding lots: ${this.holdingLots}`);
-          this.log('calc', `Holding lots: ${this.holdingLots}; Processing sell: ${this.processingSell}; Lots executed: ${order.lotsExecuted};`);
+          this.log('calc', `before Holding lots: ${this.holdingLots}; Processing sell: ${this.processingSell}; Lots executed: ${order.lotsExecuted};`);
           this.holdingLots -= order.lotsExecuted;
           this.processingSell -= order.lotsExecuted;
-          this.log('calc', `Removing ${order.orderId} from asks map ${stringify(this.bidsOrdersMap)}`);
+          this.leftMoney += toNum(order.totalOrderAmount);
+          this.log('calc', `after Holding lots: ${this.holdingLots}; Processing sell: ${this.processingSell}; Lots executed: ${order.lotsExecuted};`);
+          this.log('calc', `Removing ${order.orderId} from asks map ${stringify(this.asksOrdersMap)}`);
           this.asksOrdersMap = Object.entries(this.asksOrdersMap).reduce((acc, [key, value]) => {
             if (value.includes(order.orderId)) {
               acc[key] = value.filter(id => id !== order.orderId);
             } else {
               acc[key] = value;
             }
+            if (acc[key].length === 0) {
+              delete acc[key];
+            }
             return acc;
           }, {});
           this.log('calc', `New asks map: ${stringify(this.asksOrdersMap)}`);
         } else if (isBuy) {
           this.log('info', `BUY Order ${order.orderId} is executed. Holding lots: ${this.holdingLots}`);
-          this.log('calc', `Holding lots: ${this.holdingLots}; Processing buy: ${this.processingBuy}; Lots executed: ${order.lotsExecuted};`);
+          this.log('calc', `before Holding lots: ${this.holdingLots}; Processing buy: ${this.processingBuy}; Lots executed: ${order.lotsExecuted};`);
           this.holdingLots += order.lotsExecuted;
           this.processingBuy -= order.lotsExecuted;
           this.processingMoney -= toNum(order.totalOrderAmount);
+          this.log('calc', `after Holding lots: ${this.holdingLots}; Processing buy: ${this.processingBuy}; Lots executed: ${order.lotsExecuted};`);
           this.leftMoney -= toNum(order.totalOrderAmount);
           this.log('calc', `Removing ${order.orderId} from bids map ${stringify(this.bidsOrdersMap)}`);
           this.bidsOrdersMap = Object.entries(this.bidsOrdersMap).reduce((acc, [key, value]) => {
@@ -247,8 +254,15 @@ export default class SpreadStrategy implements IStrategy {
             } else {
               acc[key] = value;
             }
+            if (acc[key].length === 0) {
+              delete acc[key];
+            }
             return acc;
           }, {});
+          if (!this.holdingBids[toNum(order.averagePositionPrice)]) {
+            this.holdingBids[toNum(order.averagePositionPrice)] = 0;
+          }
+          this.holdingBids[toNum(order.averagePositionPrice)] += order.lotsExecuted;
           this.log('calc', `New bids map: ${stringify(this.bidsOrdersMap)}`);
         } else {
           this.log('info', `Order ${order.orderId} is executed and not specified ${order}`);

@@ -19,9 +19,11 @@
       "webpack-env"
     ],
     "paths": {
+      "@node/*": ["./src/node/*"],
+      "@ui/*": ["./src/ui/*"],
       "@/*": [
         "src/*"
-      ]
+      ],
     },
     "lib": [
       "esnext",

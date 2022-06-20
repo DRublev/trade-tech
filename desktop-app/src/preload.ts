@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import ipcEvents from './infra/ipc/events';
+import { ipcEvents } from '@/constants';
 /*
   Experimental security feature:
         We set the global "require" variable to null after importing what we need.
@@ -7,7 +7,7 @@ import ipcEvents from './infra/ipc/events';
         Garbage collection should pick it up.
 */
 // @ts-ignore
-require = null;
+// require = null;
 
 
 const validChannels = Object.values(ipcEvents);

@@ -21,4 +21,12 @@ describe('Spread Strategy base cases', () => {
     strategy = new spreadConstructor(testConfig as any, postOrderMock, cancelOrderMock, process.stdout);
     expect(strategy).toBeDefined();
   });
+
+  /*
+    TEST
+    push orderbook
+    check if placing buy order
+    push new profitable orderbook
+    check if placing sell order
+  */
 });

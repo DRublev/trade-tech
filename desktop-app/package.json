@@ -13,20 +13,29 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "1.2.31",
+    "@fortawesome/free-regular-svg-icons": "5.15.0",
+    "@fortawesome/free-solid-svg-icons": "5.15.0",
+    "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@toruslabs/loglevel-sentry": "^4.0.0",
+    "add": "^2.0.6",
     "autoprefixer": "^10",
     "core-js": "^3.8.3",
     "file-system-cache": "^2.0.0",
     "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",
+    "loglevel": "^1.8.0",
     "postcss": "^8",
     "reflect-metadata": "^0.1.13",
     "shared-kernel": "./shared-kernel/built",
     "tailwindcss": "^3.1.2",
+    "trading-vue3-js": "git+https://github.com/sudoshu/trading-vue3-js.git",
     "ts-loader": "~8.2.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-property-decorator": "^9.1.2",
     "winston": "^3.7.2",
-    "winston-sentry-log": "^1.0.26"
+    "winston-sentry-log": "^1.0.26",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -53,6 +62,7 @@
     "stream-browserify": "^3.0.0",
     "typescript": "~4.5.5",
     "vue-cli-plugin-electron-builder": "~2.1.1",
+    "vue-cli-plugin-fontawesome": "~0.3.1",
     "vue-cli-plugin-tailwind": "~3.0.0"
   },
   "eslintConfig": {

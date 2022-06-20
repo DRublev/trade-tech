@@ -9,7 +9,9 @@
     "experimentalDecorators": true,
     "isolatedModules": true,
     "paths": {
-      "@/*": ["./*"] 
+      "@node/*": ["./node/*"],
+      "@ui/*": ["./ui/*"],
+      "@/*": ["./*"],
     }
   },
 
