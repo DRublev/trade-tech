@@ -1,8 +1,8 @@
 <template class="text-center">
   <Onboarding v-if="showOnboarding" />
-  <Strategy v-if="!showOnboarding" />
+  <Strategy v-if="!showOnboarding && !showDebug" />
 
-  <DebuggingStrategy v-if="showDebug" />
+  <DebuggingStrategy v-if="!showOnboarding && showDebug" />
 </template>
 
 <script lang="ts">

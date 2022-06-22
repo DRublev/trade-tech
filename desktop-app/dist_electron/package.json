@@ -23,7 +23,6 @@
     "core-js": "^3.8.3",
     "file-system-cache": "^2.0.0",
     "invest-nodejs-grpc-sdk": "git+https://github.com/mtvkand/invest-nodejs-grpc-sdk.git",
-    "lightweight-charts": "^3.8.0",
     "loglevel": "^1.8.0",
     "postcss": "^8",
     "reflect-metadata": "^0.1.13",

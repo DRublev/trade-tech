@@ -23,7 +23,7 @@ const pendingOrders: {
 } = {}
 
 let strategy: IStrategy;
-
+let dealsCount = 0;
 const postOrder = async (figi: string, lots: number, pricePerLot: number, isBuy: boolean) => {
   const orderId = randomUUID();
   pendingOrders[orderId] = {
@@ -53,7 +53,8 @@ const postOrder = async (figi: string, lots: number, pricePerLot: number, isBuy:
       currency: 'usd',
       orderType: 1,
       orderDate: new Date(),
-    })
+    });
+    dealsCount++;
   }, 2);
   return orderId;
 };
@@ -103,6 +104,7 @@ const collectMetrics = async () => {
         } else {
           clearInterval(intervalId);
           console.log('Balance after simulation', strategy.LeftMoney, strategy.HoldingLots, strategy.ProcessingSellOrders);
+          console.log('Made deals: ', dealsCount)
           resolve(1);
         }
       }, timeout);

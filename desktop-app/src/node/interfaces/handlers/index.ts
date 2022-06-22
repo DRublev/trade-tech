@@ -47,7 +47,7 @@ ipcMain.on(events.DECRYPT_STRING, (event, data: Buffer) => {
     event.returnValue = e;
   }
 });
-
+ 
 ipcMain.handle(events.SAVE_TO_STORE, async (event, command: { key: keyof StoreStructure, value: any }) => {
   try {
     await storage.save(command.key, command.value);

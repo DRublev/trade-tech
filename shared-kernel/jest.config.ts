@@ -8,7 +8,7 @@ const config: InitialOptionsTsJest = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   verbose: true,
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: [
     "./src/**/*.{ts,js}",
     "!**/src/**/*.t.{ts}",

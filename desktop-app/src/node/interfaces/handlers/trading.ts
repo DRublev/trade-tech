@@ -100,6 +100,10 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
           console.log('90 trading got order state changed');
           logger.info(`Order ${trade.orderId} changed`, trade);
           strategy.onOrderChanged(trade);
+          if (trade.lotsExecuted === trade.lotsRequested) {
+            logger.info(`Order ${trade.orderId} completed, unsubscribing`);
+            TinkoffSdk.Sdk.OrdersService.unsubscribe(trade.orderId);
+          }
         }
       } catch (e) {
         console.log('96 trading', e);
