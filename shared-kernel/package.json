@@ -2,7 +2,7 @@
   "name": "shared-kernel",
   "main": "./built/index.ts",
   "types": "./built/index.d.ts",
-  "version": "1.0.46-beta.65",
+  "version": "1.0.46-beta.72",
   "private": true,
   "engines": {
     "node": ">=14.0.0"

@@ -20,10 +20,10 @@ export default class DebugStrategyUseCase {
         // figi: 'BBG00DWX7QH0', // INSG
         figi: 'BBG00R240WL5', // AMTI
         parameters: {
-          availableBalance: 3.5,
+          availableBalance: 3.9,
           // availableBalance: 12,
           maxHolding: 1,
-          minSpread: 0.02,
+          minSpread: 0.01,
           moveOrdersOnStep: 1,
           lotsDistribution: 1,
         }

@@ -3942,7 +3942,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var util
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _CacheAccessor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CacheAccessor */ \"./src/node/infra/CacheAccessor.ts\");\n\nconst storage = new _CacheAccessor__WEBPACK_IMPORTED_MODULE_0__[\"default\"]('asd', 'store');\n/* harmony default export */ __webpack_exports__[\"default\"] = (storage);\n\n\n//# sourceURL=webpack:///./src/node/infra/Storage.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _CacheAccessor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CacheAccessor */ \"./src/node/infra/CacheAccessor.ts\");\n\nconst storage = new _CacheAccessor__WEBPACK_IMPORTED_MODULE_0__[\"default\"]('dev', 'store');\n/* harmony default export */ __webpack_exports__[\"default\"] = (storage);\n\n\n//# sourceURL=webpack:///./src/node/infra/Storage.ts?");
 
 /***/ }),
 
