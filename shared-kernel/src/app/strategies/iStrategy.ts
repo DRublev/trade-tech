@@ -9,6 +9,7 @@ export interface IStrategy {
   onOrderChanged(order: Order): Promise<void>;
   toggleWorking: ToggleWorkingModeCommand;
   
+  Version?: string;
   LeftMoney: number;
   ProcessingMoney: number;
   HoldingLots: number;
