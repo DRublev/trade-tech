@@ -228,6 +228,11 @@ export default class SpreadStrategy implements IStrategy {
           await this.cancelOrder(this.bids[bid].orderId);
           delete this.bids[bid];
         }
+        if (orderbook.bids[idx].quantity === this.bids[bid].lots) {
+          this.log('calc', `Bid ${bid} is only ours, cancelling order, ${stringify(this.bids[bid].orderId)}; Bids: ${stringify(orderbook.bids)}`);
+          await this.cancelOrder(this.bids[bid].orderId);
+          delete this.bids[bid];
+        }
       }
     } catch (e) {
       this.log('error', stringify(e));

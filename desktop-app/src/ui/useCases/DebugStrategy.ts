@@ -1,3 +1,65 @@
+const DEBUG_CONFIGS = {
+  'VEON': {
+    figi: 'BBG000QCW561',
+    parameters: {
+      availableBalance: 3.9,
+      maxHolding: 1,
+      minSpread: 0.02,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+    }
+  },
+  'TGLD': {
+    figi: 'BBG222222222',
+    parameters: {
+      availableBalance: 3.9,
+      maxHolding: 1,
+      minSpread: 0.02,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+    }
+  },
+  'TRUR': {
+    figi: 'BBG000000001',
+    parameters: {
+      availableBalance: 12,
+      maxHolding: 2,
+      minSpread: 0,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+    }
+  },
+  'INSG': {
+    figi: 'BBG00DWX7QH0',
+    parameters: {
+      availableBalance: 3.9,
+      maxHolding: 1,
+      minSpread: 0.02,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+    }
+  },
+  'AMTI': {
+    figi: 'BBG00R240WL5',
+    parameters: {
+      availableBalance: 3.9,
+      maxHolding: 1,
+      minSpread: 0.02,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+    }
+  },
+  'CVM': {
+    figi: 'BBG000H5G6L5',
+    parameters: {
+      availableBalance: 4.9,
+      maxHolding: 1,
+      minSpread: 0.02,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+    }
+  },
+}
 export default class DebugStrategyUseCase {
   private logs: string[] = [];
 
@@ -6,6 +68,7 @@ export default class DebugStrategyUseCase {
     return this.logs;
   }
 
+
   public async startStrategy() {
     try {
       (window as any).ipc.on('strategylog', (event: any, chunk: any) => {
@@ -13,21 +76,7 @@ export default class DebugStrategyUseCase {
         console.log('8 DebugStrategy', log);
         this.logs.push(log);
       });
-      (window as any).ipc.send('START_TRADING', {
-        // figi: 'BBG000QCW561', // VEON
-        // figi: 'BBG222222222', // TGLD
-        // figi: 'BBG000000001', // TRUR
-        // figi: 'BBG00DWX7QH0', // INSG
-        figi: 'BBG00R240WL5', // AMTI
-        parameters: {
-          availableBalance: 3.9,
-          // availableBalance: 12,
-          maxHolding: 1,
-          minSpread: 0.01,
-          moveOrdersOnStep: 1,
-          lotsDistribution: 1,
-        }
-      });
+      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.CVM);
     } catch (e) {
       console.error(e);
     }
