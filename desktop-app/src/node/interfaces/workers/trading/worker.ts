@@ -1,0 +1,1 @@
+import registerPromiseWorker from 'promise-worker'

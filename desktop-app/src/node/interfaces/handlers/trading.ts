@@ -56,7 +56,7 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
 
     const strategyConstructor = getStrategyConstructor(Strategies.SpreadScalping);
 
-    const orderbookLogStream = fs.createWriteStream(`${todayFormatted}_${data.figi}_spread.log`, { flags: 'a' });
+    const orderbookLogStream = fs.createWriteStream(`${todayFormatted}_${data.figi}_spread_v2.log`, { flags: 'a' });
     const logstream = new Duplex();
     logstream.pipe(process.stdout);
     orderbookLogStream.write('\n----------\n');
