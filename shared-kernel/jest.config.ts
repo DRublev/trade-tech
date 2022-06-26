@@ -1,14 +1,8 @@
 import type { Config } from '@jest/types';
-import type { InitialOptionsTsJest } from 'ts-jest'
 
-const config: InitialOptionsTsJest = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-  },
+const config: Config.InitialOptions = {
   verbose: true,
-  collectCoverage: false,
+  collectCoverage: true,
   collectCoverageFrom: [
     "./src/**/*.{ts,js}",
     "!**/src/**/*.t.{ts}",
@@ -21,6 +15,6 @@ const config: InitialOptionsTsJest = {
       lines: 80,
       statements: -10,
     }
-  },
+  }
 };
 export default config;

@@ -1,6 +1,6 @@
 import * as winston from "winston";
 import * as util from 'util';
-// import * as TelegramLogger from 'winston-telegram';
+import * as TelegramLogger from 'winston-telegram';
 
 
 interface ExtendedLogger extends winston.Logger {
@@ -36,31 +36,31 @@ const transports = [
 
 const logger = winston.createLogger({ format, levels, transports });
 
-// if (process.env.TG_TOKEN && process.env.TG_CHAT_ID) {
-//   logger.add(new TelegramLogger({
-//     token: process.env.TG_TOKEN,
-//     chatId: Number(process.env.TG_CHAT_ID),
-//     level: 'deals',
-//     unique: true,
-//     silent: false,
-//     template: 'Стратегия {message} \n {metadata.direction} {metadata.ticker} '
-//       + '{metadata.quantity} шт. по цене {metadata.price} ({metadata.orderType} заявка) \n'
-//       + ' ID заявки: {metadata.orderId} \n'
-//       + ' Аккаунт: {metadata.accountId}',
-//   }));
-//   logger.add(new TelegramLogger({
-//     token: process.env.TG_TOKEN,
-//     chatId: Number(process.env.TG_CHAT_ID),
-//     level: 'cancelOrder',
-//     unique: true,
-//     silent: false,
-//     template: 'Отмена заявки по {metadata.ticker} '
-//       + '{metadata.quantity} шт. по цене {metadata.price} ({metadata.orderType} заявка) \n'
-//       + 'Исполнено {metadata.lotsExecuted} \n'
-//       + ' ID заявки: {metadata.orderId} \n'
-//       + ' Аккаунт: {metadata.accountId}',
-//   }));
-// }
+if (process.env.TG_TOKEN && process.env.TG_CHAT_ID) {
+  logger.add(new TelegramLogger({
+    token: process.env.TG_TOKEN,
+    chatId: Number(process.env.TG_CHAT_ID),
+    level: 'deals',
+    unique: true,
+    silent: false,
+    template: 'Стратегия {message} \n {metadata.direction} {metadata.ticker} '
+      + '{metadata.quantity} шт. по цене {metadata.price} ({metadata.orderType} заявка) \n'
+      + ' ID заявки: {metadata.orderId} \n'
+      + ' Аккаунт: {metadata.accountId}',
+  }));
+  logger.add(new TelegramLogger({
+    token: process.env.TG_TOKEN,
+    chatId: Number(process.env.TG_CHAT_ID),
+    level: 'cancelOrder',
+    unique: true,
+    silent: false,
+    template: 'Отмена заявки по {metadata.ticker} '
+      + '{metadata.quantity} шт. по цене {metadata.price} ({metadata.orderType} заявка) \n'
+      + 'Исполнено {metadata.lotsExecuted} \n'
+      + ' ID заявки: {metadata.orderId} \n'
+      + ' Аккаунт: {metadata.accountId}',
+  }));
+}
 
 
 export default logger as ExtendedLogger;
