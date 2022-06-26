@@ -1,8 +1,4 @@
 {
   "name": "workers",
-  "version": "0.0.1",
-  "dependencies": {
-    "json-2-csv": "^3.17.1",
-    "shared-kernel": "./shared-kernel/built"
-  }
+  "version": "0.0.1"
 }
