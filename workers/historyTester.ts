@@ -97,7 +97,7 @@ const collectMetrics = async () => {
       intervalId = setInterval(() => {
         if (idx !== history.changes.length) {
           const orderbook = history.changes[idx];
-          orderbook.bids = orderbook.bids.map(o => ({ ...o, price: toQuotation(o.price) }));
+          orderbook.bids = orderbook.bids.map(o => ({ ...o, price: toQuotation(o.price || {}) }));
           orderbook.asks = orderbook.asks.map(o => ({ ...o, price: toQuotation(o.price) }));
           strategy.onOrderbook(orderbook);
           idx += 1;
