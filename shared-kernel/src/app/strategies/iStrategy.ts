@@ -15,6 +15,7 @@ export interface IStrategy {
   HoldingLots: number;
   ProcessingBuyOrders: number;
   ProcessingSellOrders: number;
+  IsWorking: boolean;
 }
 
 export type PostOrderCommand = (figi: string, lots: number, pricePerLot: number, isBuy: boolean) => Promise<string>;

@@ -442,4 +442,5 @@ export default class SpreadStrategy implements IStrategy {
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get Version() { return '1.0.0'; }
+  public get IsWorking() { return this.isWorking; }
 }
