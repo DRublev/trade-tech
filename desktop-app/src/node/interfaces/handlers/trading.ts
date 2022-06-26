@@ -6,7 +6,6 @@ import { TinkoffSdk } from '@/node/app/tinkoff';
 import logger from '@/node/infra/Logger';
 import storage from '@/node/infra/Storage';
 import { pauseStrategy, startStrategy } from '../workers/trading';
-import events from '../events';
 import { StartTradingCmd } from '../commands';
 
 
@@ -32,7 +31,7 @@ ipcMain.handle('test', async (event, data) => {
   }
 });
 
-ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
+ipcMain.on(ipcEvents.START_TRADING, async (event, data: StartTradingCmd) => {
   try {
     if (!data.figi) throw new TypeError('Figi is not defined');
     if (!data.parameters) throw new TypeError('Parameters is not defined');
@@ -56,7 +55,7 @@ ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
   }
 });
 
-ipcMain.handle(events.PAUSE_TRADING, async (event, data) => {
+ipcMain.handle(ipcEvents.PAUSE_TRADING, async (event, data) => {
   try {
     if (!data.figi) throw new TypeError('Figi is not defined');
     if (!runningTradingWorkers[data.figi]) throw new ReferenceError(`No working strategy for ${data.figi} was found`);

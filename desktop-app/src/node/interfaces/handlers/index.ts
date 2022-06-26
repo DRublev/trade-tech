@@ -1,11 +1,11 @@
 import { ipcMain, safeStorage } from 'electron';
 import ioc from 'shared-kernel/src/ioc';
+import { Timeframes } from 'shared-kernel/src/app/types/candle';
 
+import { ipcEvents } from '@/constants';
 import { TinkoffAccountsService, TinkoffSdk } from '@/node/app/tinkoff';
 import logger from '@/node/infra/Logger';
 import storage from '@/node/infra/Storage';
-import events from '../events';
-import { Timeframes } from 'shared-kernel/src/app/types/candle';
 
 export * from './trading';
 
@@ -20,7 +20,7 @@ if (process.env.CLEAR_STORE) {
 }
 
 
-ipcMain.handle(events.ENCRYPT_STRING, (event, data) => {
+ipcMain.handle(ipcEvents.ENCRYPT_STRING, (event, data) => {
   try {
     if (!safeStorage.isEncryptionAvailable()) {
       throw new Error('Encryption is not available');
@@ -33,7 +33,7 @@ ipcMain.handle(events.ENCRYPT_STRING, (event, data) => {
   }
 });
 
-ipcMain.on(events.DECRYPT_STRING, (event, data: Buffer) => {
+ipcMain.on(ipcEvents.DECRYPT_STRING, (event, data: Buffer) => {
   try {
     if (!(data instanceof Buffer)) throw new TypeError('Data is not a buffer');
 
@@ -48,7 +48,7 @@ ipcMain.on(events.DECRYPT_STRING, (event, data: Buffer) => {
   }
 });
  
-ipcMain.handle(events.SAVE_TO_STORE, async (event, command: { key: keyof StoreStructure, value: any }) => {
+ipcMain.handle(ipcEvents.SAVE_TO_STORE, async (event, command: { key: keyof StoreStructure, value: any }) => {
   try {
     await storage.save(command.key, command.value);
     return storage.get(command.key);
@@ -58,7 +58,7 @@ ipcMain.handle(events.SAVE_TO_STORE, async (event, command: { key: keyof StoreSt
   }
 });
 
-ipcMain.on(events.GET_FROM_STORE, (event, command: { key: keyof StoreStructure }) => {
+ipcMain.on(ipcEvents.GET_FROM_STORE, (event, command: { key: keyof StoreStructure }) => {
   try {
     const storedValue = storage.get(command.key);
     event.returnValue = storedValue;
@@ -79,7 +79,7 @@ const createSdk = (isSandbox: boolean) => {
   TinkoffSdk.bindSdk(mainBuild(token, isSandbox), isSandbox);
 }
 
-ipcMain.handle(events.TINKOFF_CREATE_SDK, (event, options: { isSandbox: boolean }) => {
+ipcMain.handle(ipcEvents.TINKOFF_CREATE_SDK, (event, options: { isSandbox: boolean }) => {
   try {
     createSdk(options.isSandbox);
     return true;
@@ -104,11 +104,11 @@ async function getAccounts(): Promise<any[]> {
   }
 }
 
-ipcMain.handle(events.TINKOFF_GET_ACCOUNTS, async (event, options: any) => {
+ipcMain.handle(ipcEvents.TINKOFF_GET_ACCOUNTS, async (event, options: any) => {
   return getAccounts();
 });
 
-ipcMain.handle(events.TINKOFF_SUBSCRIBE_ON_CANDLES, async (event, data: { figi: string }) => {
+ipcMain.handle(ipcEvents.TINKOFF_SUBSCRIBE_ON_CANDLES, async (event, data: { figi: string }) => {
   try {
     if (!TinkoffSdk.IsSdkBinded) {
       const isSandbox = storage.get('isSandbox');
@@ -122,7 +122,7 @@ ipcMain.handle(events.TINKOFF_SUBSCRIBE_ON_CANDLES, async (event, data: { figi: 
   }
 });
 
-ipcMain.on(events.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
+ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
   try {
     if (!TinkoffSdk.IsSdkBinded) {
       const isSandbox = storage.get('isSandbox');
@@ -131,7 +131,7 @@ ipcMain.on(events.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
     const stream = await TinkoffSdk.Sdk.CanddlesStreamSubscriber.stream();
     for await (const candle of stream) {
       console.log('133 index', candle);
-      event.sender.send(events.TINKOFF_ON_CANDLES_STREAM, candle);
+      event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, candle);
     }
   } catch (e) {
     logger.error('TINKOFF_GET_CANDLES_STREAM', e);
