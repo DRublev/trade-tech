@@ -28,6 +28,7 @@
     "reflect-metadata": "^0.1.13",
     "shared-kernel": "./shared-kernel/built",
     "tailwindcss": "^3.1.2",
+    "threads": "^1.7.0",
     "trading-vue3-js": "git+https://github.com/sudoshu/trading-vue3-js.git",
     "ts-loader": "~8.2.0",
     "vue": "^3.2.13",

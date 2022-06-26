@@ -8,18 +8,10 @@ import ioc from 'shared-kernel/src/ioc';
 import { TinkoffSdk } from '@/node/app/tinkoff';
 import logger from '@/node/infra/Logger';
 import storage from '@/node/infra/Storage';
+import { startStrategy } from '../workers/trading';
 import events from '../events';
+import { StartTradingCmd } from '../commands';
 
-export type StartTradingCmd = {
-  figi: string;
-  parameters: {
-    availableBalance: number;
-    maxHolding: number;
-    minSpread: number;
-    moveOrdersOnStep: number;
-    lotsDistribution: number;
-  }
-};
 
 const WorkingStrategies: { [ticker: string]: IStrategy } = {};
 
@@ -36,6 +28,17 @@ const createSdk = (isSandbox: boolean) => {
 const today = new Date();
 const todayFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
+ipcMain.handle('test', async (event, data) => {
+  try {
+    console.log('41 trading', data);
+    const prom = startStrategy(data).then((result) => {
+      console.log('42 trading', result);
+    });
+    return;
+  } catch (e) {
+    console.log('47 trading', e);
+  }
+});
 
 ipcMain.on(events.START_TRADING, async (event, data: StartTradingCmd) => {
   try {

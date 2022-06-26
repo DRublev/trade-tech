@@ -38,7 +38,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/node/interfaces/workers/trading/worker.js", "src/node/interfaces/workers/trading/worker.js"  ],
   "exclude": [
     "node_modules"
   ]

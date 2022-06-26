@@ -12,5 +12,6 @@ export const ipcEvents = {
 
   START_TRADING: 'START_TRADING',
   PAUSE_TRADING: 'PAUSE_TRADING',
-  strategylog: 'strategylog'
+  strategylog: 'strategylog',
+  test: 'test',
 };

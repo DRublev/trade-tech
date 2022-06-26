@@ -130,7 +130,8 @@ export default class SpreadStrategy implements IStrategy {
   
       return null;
     } catch (e) {
-      this.log('error', e);
+      console.log('133 Spread', e);
+      this.log('error', e.toString());
     } finally {
       this.isProcessing = false;
     }
@@ -195,10 +196,10 @@ export default class SpreadStrategy implements IStrategy {
       const notExecutedBids = Object.values(this.bids).filter(b => b.isExecuted && !b.isReserved && b.stopLoss);
       for (const bid of notExecutedBids) {
         this.log('calc', `Stop loss calc for ${stringify(bid)}; ask: ${stringify(orderbook.asks[0])}`);
-        if (toNum(orderbook.asks[0].price) <= bid.price - bid.stopLoss) {
-          this.log('calc', `Stop loss detected for ${(stringify(bid))}; bid.price - bid.stopLoss: ${bid.price - bid.stopLoss} ; ask: ${stringify(orderbook.asks[0])};`);
+        if (toNum(orderbook.asks[0].price) <= bid.stopLoss) {
+          this.log('calc', `Stop loss detected for ${(stringify(bid))}; bid.stopLoss: ${bid.stopLoss} ; ask: ${stringify(orderbook.asks[0])};`);
           toSell.push({
-            price: bid.price - bid.stopLoss,
+            price: bid.stopLoss,
             lots: bid.executedLots,
             idx: 0,
           });
@@ -208,11 +209,11 @@ export default class SpreadStrategy implements IStrategy {
       const pendingAsks = Object.values(this.asks).filter(a => !a.isExecuted && !a.isReserved);
       for (const ask of pendingAsks) {
         this.log('calc', `Stop loss calc for ${stringify(ask)}; ask: ${stringify(orderbook.asks[0])}`);
-        if (toNum(orderbook.asks[0].price) <= ask.price - ask.stopLoss) {
-          this.log('calc', `Stop loss detected for ${stringify(ask)}; ask.price - ask.stopLoss: ${ask.price - ask.stopLoss} ; ask: ${stringify(orderbook.asks[0])};`);
+        if (toNum(orderbook.asks[0].price) <= ask.stopLoss) {
+          this.log('calc', `Stop loss detected for ${stringify(ask)}; ask.stopLoss: ${ask.stopLoss} ; ask: ${stringify(orderbook.asks[0])};`);
           await this.cancelOrder(ask.orderId);
           toSell.push({
-            price: ask.price - ask.stopLoss,
+            price: ask.stopLoss,
             lots: ask.executedLots,
             idx: 0,
           });
@@ -360,6 +361,9 @@ export default class SpreadStrategy implements IStrategy {
         this.processedOrders.push(order.orderId);
         await this.onOrderbook(this.latestOrderbook);
         return;
+      } else {
+        this.log('calc', `Partially executed order ${order}`);
+        return;
       }
 
       const lastProcessedStageId = this.processedOrderStagesMap[order.orderId];
@@ -423,7 +427,8 @@ export default class SpreadStrategy implements IStrategy {
         this.log('error', `Order ${order.orderId} is not specified ${stringify(order)}`);
       }
     } catch (e) {
-      this.log('error', stringify(e));
+      console.log('429 Spread', e);
+      this.log('error', e.toString());
     }
   }
 
