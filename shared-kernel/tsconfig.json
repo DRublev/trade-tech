@@ -1,3 +1,15 @@
 {
-  "extends": "../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "types": ["reflect-metadata", "jest", "mocha"],
+    "paths": {
+      "@/*": ["./*"] 
+    }
+  },
+  "include": [
+    "./src/**/*",
+    "./__tests__/**/*.spec.ts",
+    "./index.ts"
+  ]
 }

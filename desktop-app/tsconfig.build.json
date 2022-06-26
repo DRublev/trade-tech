@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.build.json",
+
+  "compilerOptions": {
+    "outDir": "./built",
+    "baseUrl": "./src",
+    "target": "es6",
+    "lib": ["es6"],
+    "experimentalDecorators": true,
+    "isolatedModules": true,
+    "paths": {
+      "@node/*": ["./node/*"],
+      "@ui/*": ["./ui/*"],
+      "@/*": ["./*"],
+    }
+  },
+
+  "include": [
+    "src/**/*",
+  ]
+}
