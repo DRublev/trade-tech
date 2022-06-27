@@ -72,6 +72,17 @@ const DEBUG_CONFIGS = {
       stopLoss: 0.1,
     }
   },
+  'PIKK': {
+    figi: 'BBG004S68BH6',
+    parameters: {
+      availableBalance: 1100,
+      maxHolding: 1,
+      minSpread: 0.6,
+      moveOrdersOnStep: 2,
+      lotsDistribution: 1,
+      stopLoss: 15,
+    }
+  },
 }
 export default class DebugStrategyUseCase {
   private logs: string[] = [];
@@ -92,7 +103,7 @@ export default class DebugStrategyUseCase {
 
       // (window as any).ipc.invoke('test', DEBUG_CONFIGS.GTLB);
       console.log('94 DebugStrategy');
-      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.TRUR);
+      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.PIKK);
     } catch (e) {
       console.error(e);
     }
