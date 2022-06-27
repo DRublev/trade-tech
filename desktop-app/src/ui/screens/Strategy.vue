@@ -63,6 +63,10 @@ export default class Strategy extends Vue {
     this.controlUC.Working = !this.status.working;
   }
 
+  mounted() {
+    this.chartUC.subscribeOnCandles();
+  }
+
   get status() {
     return this.controlUC.Status;
   }

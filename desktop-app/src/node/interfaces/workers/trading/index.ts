@@ -1,16 +1,20 @@
 import { StartTradingCmd } from '@node/interfaces/commands';
 import WorkersPool from '../WorkersPool';
 import createWorker from '../createWorker';
-import logger from '@node/infra/Logger';
+import logger from '../../../infra/Logger';
 
 export const TYPES = {
   startStrategy: 'start-strategy',
 }
 
-export const startStrategy = (config: StartTradingCmd, onLog: (chunk: Uint8Array) => void, onWorker: (workerId: number) => void) => new Promise((resolve, reject) => {
+export const startStrategy = (token: string, config: StartTradingCmd, onLog: (chunk: Uint8Array) => void, onWorker: (workerId: number) => void) => new Promise((resolve, reject) => {
   const worker = createWorker('./src/node/interfaces/workers/trading/worker.ts', {
     eval: true,
-    workerData: { type: TYPES.startStrategy, config },
+    workerData: {
+      type: TYPES.startStrategy,
+      token,
+      config,
+    },
   });
   WorkersPool.Set(worker);
   onWorker(worker.threadId);

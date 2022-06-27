@@ -12,8 +12,8 @@ const DEBUG_CONFIGS = {
   'TGLD': {
     figi: 'BBG222222222',
     parameters: {
-      availableBalance: 50,
-      maxHolding: 5,
+      availableBalance: '20',
+      maxHolding: 1,
       minSpread: 0,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
@@ -25,7 +25,7 @@ const DEBUG_CONFIGS = {
     figi: 'BBG000000001',
     parameters: {
       availableBalance: 300,
-      maxHolding: 50,
+      maxHolding: 2,
       minSpread: 0,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
@@ -90,9 +90,9 @@ export default class DebugStrategyUseCase {
         this.logs.push(log);
       });
 
-      (window as any).ipc.invoke('test', DEBUG_CONFIGS.GTLB);
+      // (window as any).ipc.invoke('test', DEBUG_CONFIGS.GTLB);
       console.log('94 DebugStrategy');
-      // (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.GTLB);
+      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.TRUR);
     } catch (e) {
       console.error(e);
     }

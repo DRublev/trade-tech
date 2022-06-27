@@ -11,13 +11,18 @@ import { StartTradingCmd } from '../commands';
 
 const runningTradingWorkers: { [figi: string]: number } = {};
 
-const createSdk = (isSandbox: boolean) => {
+const getToken = (isSandbox: boolean) => {
   const storedToken = storage.getAll()[isSandbox ? 'sandboxToken' : 'fullAccessToken'];
   if (!storedToken) throw new Error('No stored token');
   if (!safeStorage.isEncryptionAvailable()) {
     throw new Error('Encryption is not available');
   }
   const token = safeStorage.decryptString(Buffer.from(Object.values(storedToken) as any));
+  return token;
+}
+
+const createSdk = (isSandbox: boolean) => {
+  const token = getToken(isSandbox);
   const mainBuild: Function = ioc.get(Symbol.for("TinkoffBuildClientFunc"));
   TinkoffSdk.bindSdk(mainBuild(token, isSandbox), isSandbox);
 }
@@ -36,12 +41,14 @@ ipcMain.on(ipcEvents.START_TRADING, async (event, data: StartTradingCmd) => {
     if (!data.figi) throw new TypeError('Figi is not defined');
     if (!data.parameters) throw new TypeError('Parameters is not defined');
     if (!TinkoffSdk.IsSdkBinded) {
-      const isSandbox = storage.get('isSandbox');
-      await createSdk(isSandbox);
+      // await createSdk(isSandbox);
     }
+    const isSandbox = storage.get('isSandbox');
+    const token = getToken(isSandbox);
     logger.info('Start trading');
 
     const tradingPromise = startStrategy(
+      token,
       data,
       (chunk) => event.sender.send(ipcEvents.strategylog, chunk),
       (id) => {
@@ -50,8 +57,9 @@ ipcMain.on(ipcEvents.START_TRADING, async (event, data: StartTradingCmd) => {
     );
     await tradingPromise;
    
-  } catch (e) {
-    logger.error('START_TRADING', e);
+  } catch (e: any) {
+    console.log('55 trading', e);
+    logger.error('START_TRADING', e.toString());
   }
 });
 

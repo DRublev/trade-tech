@@ -1,12 +1,15 @@
+import { safeStorage } from 'electron';
 import { workerData, parentPort } from "worker_threads";
 import * as fs from 'fs';
 import { Duplex } from "stream";
 import { randomUUID } from 'crypto';
 import { Strategies, getStrategyConstructor, IStrategy } from 'shared-kernel';
+import ioc from 'shared-kernel/src/ioc';
 
 import logger from '@/node/infra/Logger';
 import { TinkoffSdk } from '@/node/app/tinkoff';
 import storage from '@/node/infra/Storage';
+import { createSdk } from '../helpers';
 
 
 const accountId = storage.get('accountId');
@@ -16,9 +19,14 @@ let strategy: IStrategy;
 
 const startStrategy = async () => {
   try {
+    if (!TinkoffSdk.IsSdkBinded) {
+      console.log('39 trading', 'not binded sdk');
+      await createSdk(storage.get('isSandbox'), workerData.token);
+    }
     const StrategyConstructor = getStrategyConstructor(Strategies.SpreadScalping);
     const logStream = makeLogStream();
-    strategy = new StrategyConstructor(workerData, postOrder, cancelOrder, logStream);
+    console.log('28 worker', workerData.config);
+    strategy = new StrategyConstructor(workerData.config.parameters, postOrder, cancelOrder, logStream);
 
     const today = new Date();
     const todayFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
@@ -26,10 +34,10 @@ const startStrategy = async () => {
       fs.mkdirSync('logs');
     }
     logsFileStream = fs.createWriteStream(
-      `logs/${todayFormatted}_${workerData.figi}_spread_v${strategy.Version}.log`,
+      `logs/${todayFormatted}_${workerData.config.figi}_spread_v${strategy.Version}.log`,
       { flags: 'a' },
     );
-    logsFileStream.write(`\n---------- ${new Date().toTimeString} \n`);
+    logsFileStream.write(`\n---------- ${new Date().toTimeString()} \n`);
 
 
     const watchOrders = async (): Promise<any> => {
@@ -50,7 +58,7 @@ const startStrategy = async () => {
     };
 
     const orderBookSubscribe = async () => {
-      const stream = TinkoffSdk.Sdk.OrderbookStreamProvider.subscribe([{ figi: workerData.figi, depth: 20 }]);
+      const stream = TinkoffSdk.Sdk.OrderbookStreamProvider.subscribe([{ figi: workerData.config.figi, depth: 20 }]);
       for await (const orderbook of stream) {
         try {
           await strategy.onOrderbook(orderbook);
