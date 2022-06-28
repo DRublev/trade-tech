@@ -33,7 +33,9 @@
     "ts-loader": "~8.2.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
+    "vue-gtag": "^2.0.1",
     "vue-property-decorator": "^9.1.2",
+    "vue-router": "^4.0.13",
     "winston": "^3.7.2",
     "winston-sentry-log": "^1.0.26",
     "yarn": "^1.22.19"

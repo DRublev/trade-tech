@@ -1,19 +1,13 @@
 <template>
-  <Welcome />
+  <router-view />
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import Welcome from './Welcome.vue';
+import { Vue } from "vue-class-component";
 
-@Options({
-  components: {
-    Welcome,
-  },
-})
 export default class App extends Vue {}
 </script>
 
 <style>
-@import '../assets/style.css';
+@import "../assets/style.css";
 </style>
