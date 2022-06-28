@@ -67,7 +67,7 @@ const DEBUG_CONFIGS = {
       availableBalance: 70,
       maxHolding: 1,
       minSpread: 0.06,
-      moveOrdersOnStep: 2,
+      moveOrdersOnStep: 1,
       lotsDistribution: 1,
       stopLoss: 0.1,
     }
@@ -81,6 +81,17 @@ const DEBUG_CONFIGS = {
       moveOrdersOnStep: 2,
       lotsDistribution: 1,
       stopLoss: 15,
+    }
+  },
+  'MDMG': {
+    figi: 'BBG00Y3XYV94',
+    parameters: {
+      availableBalance: 500,
+      maxHolding: 1,
+      minSpread: 0.34,
+      moveOrdersOnStep: 2,
+      lotsDistribution: 1,
+      stopLoss: 3,
     }
   },
 }
@@ -103,7 +114,7 @@ export default class DebugStrategyUseCase {
 
       // (window as any).ipc.invoke('test', DEBUG_CONFIGS.GTLB);
       console.log('94 DebugStrategy');
-      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.PIKK);
+      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.MDMG);
     } catch (e) {
       console.error(e);
     }

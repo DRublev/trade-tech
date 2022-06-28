@@ -20,6 +20,7 @@ type ToPlaceOrderInfo = {
   lots: number;
   price: number;
   idx: number;
+  isStop?: boolean;
 };
 
 /*
@@ -37,6 +38,7 @@ type PositionState = {
   isReserved?: boolean;
   isExecuted?: boolean;
   isPartiallyExecuted?: boolean;
+  isStop?: boolean;
   executedLots: number;
   idx: number;
 }
@@ -86,7 +88,7 @@ export default class SpreadStrategy implements IStrategy {
       const toBuyInfo = this.calcToBuy(orderbook);
       this.log('calc', 'Calculating to sell');
       const toSellInfo = await this.calcToSell(orderbook);
-  
+
       if (toBuyInfo && toBuyInfo.length) {
         for await (const buyReq of toBuyInfo) {
           this.log('calc', `Placing buy order: ${stringify(buyReq)}`);
@@ -102,7 +104,7 @@ export default class SpreadStrategy implements IStrategy {
             executedLots: 0,
             stopLoss: this.config.stopLoss ? buyReq.price - this.config.stopLoss : undefined,
           }
-  
+
           this.log('calc', `Placed buy order: ${buyReq.price} ${buyReq.lots} ${placedId}`);
           this.log('calc', `New bids map ${stringify(this.bids)}`);
         }
@@ -112,7 +114,7 @@ export default class SpreadStrategy implements IStrategy {
           this.log('calc', `Placing sell order: ${stringify(sellReq)}`);
           const placedId = await this.postOrder(orderbook.figi, sellReq.lots, sellReq.price, false);
           this.watchingOrders.push(placedId);
-  
+
           this.log('calc', `Placed sell order: ${sellReq.price} ${sellReq.lots} ${placedId}`);
           this.asks[sellReq.price] = {
             price: sellReq.price,
@@ -123,11 +125,12 @@ export default class SpreadStrategy implements IStrategy {
             orderId: placedId,
             executedLots: 0,
             stopLoss: this.config.stopLoss ? sellReq.price - this.config.stopLoss : undefined,
+            isStop: !!sellReq.isStop,
           };
           this.log('calc', `New asks map ${stringify(this.asks)}`);
         }
       }
-  
+
       return null;
     } catch (e) {
       console.log('133 Spread', e);
@@ -141,8 +144,8 @@ export default class SpreadStrategy implements IStrategy {
     try {
       const notExecutedBuy = Object.values(this.bids)
         .reduce((acc, bid) => bid.isPartiallyExecuted
-        ? (bid.lots - bid.executedLots) + acc 
-        : acc + (!bid.isExecuted ? bid.lots : 0), 0);
+          ? (bid.lots - bid.executedLots) + acc
+          : acc + (!bid.isExecuted ? bid.lots : 0), 0);
       const isHoldingMax = notExecutedBuy + this.holdingLots >= this.config.maxHolding;
       if (isHoldingMax) {
         this.log('info', `Already holding max shares; holding: ${this.holdingLots}, processing: ${notExecutedBuy}; bids: ${stringify(this.bids)}`);
@@ -200,13 +203,14 @@ export default class SpreadStrategy implements IStrategy {
           this.log('calc', `Stop loss detected for ${(stringify(bid))}; bid.stopLoss: ${bid.stopLoss} ; ask: ${stringify(orderbook.asks[0])};`);
           toSell.push({
             price: bid.stopLoss,
-            lots: bid.executedLots,
+            lots: bid.isPartiallyExecuted ? bid.executedLots : bid.lots,
             idx: 0,
+            isStop: true,
           });
           this.bids[bid.price].isReserved = true;
         }
       }
-      const pendingAsks = Object.values(this.asks).filter(a => !a.isExecuted && !a.isReserved);
+      const pendingAsks = Object.values(this.asks).filter(a => !a.isExecuted && !a.isReserved && !a.isStop);
       for (const ask of pendingAsks) {
         this.log('calc', `Stop loss calc for ${stringify(ask)}; ask: ${stringify(orderbook.asks[0])}`);
         if (toNum(orderbook.asks[0].price) <= ask.stopLoss) {
@@ -214,14 +218,16 @@ export default class SpreadStrategy implements IStrategy {
           await this.cancelOrder(ask.orderId);
           toSell.push({
             price: ask.stopLoss,
-            lots: ask.executedLots,
+            lots: ask.isPartiallyExecuted ? ask.executedLots : ask.lots,
             idx: 0,
+            isStop: true,
           });
           this.asks[ask.price].isReserved = true;
         }
       }
       const notExecutedSell = Object.values(this.asks)
-        .reduce((acc, p) => !p.isExecuted ? p.lots + acc : acc + (p.isPartiallyExecuted ? p.executedLots : 0), 0);
+        .filter((ask) => !ask.isReserved)
+        .reduce((acc, p) => !p.isExecuted ? p.lots + acc : acc, 0);
       if (this.holdingLots - notExecutedSell <= 0) {
         this.log('calc', `Nothing to sell; holding: ${this.holdingLots}; notExecutedSell: ${notExecutedSell}`);
         return toSell;
@@ -441,6 +447,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.0'; }
+  public get Version() { return '1.0.0-beta.1'; }
   public get IsWorking() { return this.isWorking; }
 }
