@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-full min-h-1/2">
-    <chart />
+    <chart :dataCube="chartData" />
   </div>
   <div class="w-full mx-3 h-1/2">
     <div class="flex justify-between h-full divide-x">

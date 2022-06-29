@@ -47,7 +47,7 @@ ipcMain.on(ipcEvents.DECRYPT_STRING, (event, data: Buffer) => {
     event.returnValue = e;
   }
 });
- 
+
 ipcMain.handle(ipcEvents.SAVE_TO_STORE, async (event, command: { key: keyof StoreStructure, value: any }) => {
   try {
     await storage.save(command.key, command.value);
@@ -122,8 +122,39 @@ ipcMain.handle(ipcEvents.TINKOFF_SUBSCRIBE_ON_CANDLES, async (event, data: { fig
   }
 });
 
+
+const toQuotation = (number: number) => {
+  const decimal = (number - Math.floor(Number(number))).toFixed(9);
+  return ({
+  units: Math.floor(number),
+  nano: decimal.slice(2) as any as number,
+})};
 ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
   try {
+    if (data.debug) {
+      const debugCandles: any = [
+        {
+          time: 1656442440000,
+          open: toQuotation(52.7),
+          high: toQuotation(54.7),
+          low: toQuotation(51.69),
+          close: toQuotation(51.7),
+        }
+      ];
+      let interval: NodeJS.Timer;
+      let idx = 0;
+      interval = setInterval(() => {
+        if (debugCandles[idx]) {
+          debugCandles[idx].time += 60000;
+          console.log('149 index', new Date (debugCandles[idx].time).toString());
+          event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, {...debugCandles[idx], time: new Date(debugCandles[idx].time).toString()});
+          // idx++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 5000);
+      return;
+    }
     if (!TinkoffSdk.IsSdkBinded) {
       const isSandbox = storage.get('isSandbox');
       await createSdk(isSandbox);

@@ -89,9 +89,77 @@ const DEBUG_CONFIGS = {
       availableBalance: 500,
       maxHolding: 1,
       minSpread: 0.34,
-      moveOrdersOnStep: 2,
+      moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 3,
+      stopLoss: 0.6,
+    }
+  },
+  'GEMC': {
+    figi: 'BBG011MCM288',
+    parameters: {
+      availableBalance: 500,
+      maxHolding: 1,
+      minSpread: 0.34,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.3,
+    }
+  },
+  'OKEY': {
+    figi: 'BBG00172J7S9',
+    parameters: {
+      availableBalance: 250,
+      maxHolding: 1,
+      minSpread: 0.09,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.06,
+      sharesInLot: 10,
+    }
+  },
+  'PLOY': {
+    figi: 'BBG004PYF2N3',
+    parameters: {
+      availableBalance: 460,
+      maxHolding: 1,
+      minSpread: 0.24,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 1.5,
+    }
+  },
+  'LIFE': {
+    figi: 'BBG0019K04R5',
+    parameters: {
+      availableBalance: 450,
+      maxHolding: 1,
+      minSpread: 0.005,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.01,
+      sharesInLot: 100,
+    }
+  },
+  'FIXP': {
+    figi: 'BBG00ZHCX1X2',
+    parameters: {
+      availableBalance: 310,
+      maxHolding: 1,
+      minSpread: 0.5,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 1,
+    }
+  },
+  'TCX': {
+    figi: 'BBG000L69KL5',
+    parameters: {
+      availableBalance: 50,
+      maxHolding: 1,
+      minSpread: 0.04,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.4,
     }
   },
 }
@@ -114,7 +182,7 @@ export default class DebugStrategyUseCase {
 
       // (window as any).ipc.invoke('test', DEBUG_CONFIGS.GTLB);
       console.log('94 DebugStrategy');
-      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.MDMG);
+      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.TCX);
     } catch (e) {
       console.error(e);
     }

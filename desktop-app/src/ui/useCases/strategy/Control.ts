@@ -9,8 +9,9 @@ export default class ControlUseCase {
 
   private config = {
     strategy: 'Spread',
-    ticker: 'TRUR',
-    figi: 'BBG000000001', // TRUR
+    ticker: 'GTLB',
+    // figi: 'BBG000000001', // TRUR
+    figi: 'BBG00DHTYPH8', // GTLB
     parameters: {
       availableBalance: 12,
       maxHolding: 2,

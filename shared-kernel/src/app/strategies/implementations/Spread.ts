@@ -14,6 +14,7 @@ export type SpreadStrategyConfig = StrategyConfig & {
   lotsDistribution: number;
   stopLoss: number;
   sharesInLot: number;
+  enteringPrice?: number;
 };
 
 type ToPlaceOrderInfo = {
@@ -43,9 +44,17 @@ type PositionState = {
   idx: number;
 }
 
+/**
+ * -- Цена захода в позицию
+ * -- Поиск выгодного ask не по первому айтему, а по X (из конфига)
+ * -- поддержка частичного исполнения заявок
+ * -- знать на каком ask выйти прежде чем зайти в позицию
+ * -- заход не на весь баланс, а по частям (покупка n+1 должна быть на N бидов ниже)
+ */
 export default class SpreadStrategy implements IStrategy {
   private isWorking = true;
   private isProcessing = false;
+  private hasEnteredPosition = false;
 
   private leftMoney = 0;
   private holdingLots = 0;
@@ -154,6 +163,14 @@ export default class SpreadStrategy implements IStrategy {
       this.log('calc', `holding not enough lots; holding: ${this.holdingLots}, processing: ${notExecutedBuy}; bids: ${stringify(this.bids)}`)
       const minBid = toNum(orderbook.bids[0].price);
       this.log('calc', `Min bid: ${stringify(minBid)}; Money left: ${this.leftMoney}`);
+      if (!this.hasEnteredPosition && this.config.enteringPrice) {
+        if (minBid > this.config.enteringPrice) {
+          this.log('calc', `Waiting to enter profit position; enter price: ${this.config.enteringPrice}; min bid: ${minBid}`);
+          return [];
+        } else {
+          this.hasEnteredPosition = true;
+        }
+      }
       if (this.leftMoney < minBid) {
         this.log('info', `No money left. Left: ${this.leftMoney}; Min bid: ${stringify(minBid)}`);
         return [];
@@ -210,10 +227,12 @@ export default class SpreadStrategy implements IStrategy {
           this.bids[bid.price].isReserved = true;
         }
       }
+      this.log('calc', `Pending asks: ${stringify(Object.values(this.asks).filter(a => !a.isExecuted))}`)
       const pendingAsks = Object.values(this.asks).filter(a => !a.isExecuted && !a.isReserved && !a.isStop);
       for (const ask of pendingAsks) {
-        this.log('calc', `Stop loss calc for ${stringify(ask)}; ask: ${stringify(orderbook.asks[0])}`);
-        if (toNum(orderbook.asks[0].price) <= ask.stopLoss) {
+        const midPrice = (toNum(orderbook.asks[0].price) + toNum(orderbook.bids[0].price)) / 2;
+        this.log('calc', `Stop loss calc for ${stringify(ask)}; midPrice: ${midPrice}; bid: ${stringify(orderbook.bids[0])}; ask: ${stringify(orderbook.asks[0])}`);
+        if (midPrice <= ask.stopLoss) {
           this.log('calc', `Stop loss detected for ${stringify(ask)}; ask.stopLoss: ${ask.stopLoss} ; ask: ${stringify(orderbook.asks[0])};`);
           await this.cancelOrder(ask.orderId);
           toSell.push({
@@ -447,6 +466,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.0-beta.1'; }
+  public get Version() { return '1.0.1'; }
   public get IsWorking() { return this.isWorking; }
 }
