@@ -27,9 +27,13 @@ export default class Chart extends Vue {
     }, onchart: [], offchart: []
   });
 
+  mounted() {
+    (window as any).tv = this.$refs.tradingVue;
+  }
+
   updateChart(candles: number[][]) {
     this.dc.set('chart.data', candles);
-    (this.$refs.tradingVue as any).goto(candles[candles.length - 1][0]);
+    (this.$refs.tradingVue as any).goto(candles.length - 1);
   }
 }
 </script>

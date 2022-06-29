@@ -132,7 +132,8 @@ const toQuotation = (number: number) => {
 ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
   try {
     if (data.debug) {
-      let mins = 13;
+      let mins = 1;
+      let hours = 18;
       const debugCandles: any = [
         {
           figi: 'BBG00DHTYPH8',
@@ -149,11 +150,16 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
       let idx = 0;
       const interval = setInterval(() => {
         if (debugCandles[idx]) {
-          debugCandles[idx].time = `2022-06-29T18:${mins}:00.000Z`;
-          console.log('149 index', new Date (debugCandles[idx].time).toString());
+          debugCandles[idx].time = `2022-06-29T${hours}:${mins.toString().padStart(2, '0')}:00.000Z`;
+          console.log('154 index', debugCandles[idx].time);
           event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, {...debugCandles[idx], time: new Date(debugCandles[idx].time).toString()});
           // idx++;
-          mins += 1;
+          if (mins === 59) {
+            mins = 0;
+            hours += 1;
+          } else {
+            mins += 1;
+          }
         } else {
           clearInterval(interval);
         }
