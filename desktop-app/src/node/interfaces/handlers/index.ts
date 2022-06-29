@@ -151,7 +151,6 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
       const interval = setInterval(() => {
         if (debugCandles[idx]) {
           debugCandles[idx].time = `2022-06-29T${hours}:${mins.toString().padStart(2, '0')}:00.000Z`;
-          console.log('154 index', debugCandles[idx].time);
           event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, {...debugCandles[idx], time: new Date(debugCandles[idx].time).toString()});
           // idx++;
           if (mins === 59) {
@@ -172,7 +171,7 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
     }
     const stream = await TinkoffSdk.Sdk.CanddlesStreamSubscriber.stream();
     for await (const candle of stream) {
-      console.log('133 index', candle);
+      console.log('174 index', candle);
       event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, candle);
     }
   } catch (e) {

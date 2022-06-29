@@ -1,6 +1,6 @@
 <template>
   <trading-vue :data="dc" :color-back="colors.colorBack" :color-grid="colors.colorGrid" :color-text="colors.colorText"
-    ref="tradingVue" :index-based="false">
+    ref="tradingVue">
   </trading-vue>
 </template>
 <script lang="ts">
@@ -20,10 +20,13 @@ export default class Chart extends Vue {
     colorGrid: '#eee',
     colorText: '#333',
   }
+  chartWidth = 5;
+
   dc: DataCube = new DataCube({
     chart: {
       type: 'Candles',
       data: [],
+      tf: '1m'
     }, onchart: [], offchart: []
   });
 
@@ -33,7 +36,11 @@ export default class Chart extends Vue {
 
   updateChart(candles: number[][]) {
     this.dc.set('chart.data', candles);
-    (this.$refs.tradingVue as any).goto(candles.length - 1);
+    const ltsStamp = new Date(candles[candles.length - 1][0]);
+    const fstTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() - this.chartWidth);
+    const ltsTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() + this.chartWidth);
+
+    (this.$refs.tradingVue as any).setRange(fstTime.valueOf(), ltsTime.valueOf());
   }
 }
 </script>
