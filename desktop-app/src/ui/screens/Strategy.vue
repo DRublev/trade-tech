@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-full min-h-1/2">
-    <chart :dataCube="chartData" />
+    <chart ref="chartComponent"/>
   </div>
   <div class="w-full mx-3 h-1/2">
     <div class="flex justify-between h-full divide-x">
@@ -56,7 +56,7 @@ import Loader from '../components/Loader.vue';
 })
 export default class Strategy extends Vue {
   controlUC = new StrategyControlUseCase();
-  chartUC = new StrategyChartUseCase(this.controlUC.Config.figi);
+  chartUC?: StrategyChartUseCase = undefined;
   dealsListUC = new DealsListUseCase();
 
   switchWorking() {
@@ -64,7 +64,12 @@ export default class Strategy extends Vue {
   }
 
   mounted() {
+    this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi, this.onCandle.bind(this));
     this.chartUC.subscribeOnCandles();
+  }
+
+  onCandle() {
+    (this.$refs.chartComponent as any).updateChart(this.chartUC?.Data);
   }
 
   get status() {
@@ -73,12 +78,6 @@ export default class Strategy extends Vue {
   get strategyInfo() {
     const name = this.controlUC.Config.strategy;
     return { name };
-  }
-  get chartData() {
-    return this.chartUC.Data;
-  }
-  get chartMarkers() {
-    return this.chartUC.Markers;
   }
   get deals() {
     return this.dealsListUC.Deals;

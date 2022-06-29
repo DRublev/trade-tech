@@ -132,27 +132,32 @@ const toQuotation = (number: number) => {
 ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
   try {
     if (data.debug) {
+      let mins = 13;
       const debugCandles: any = [
         {
-          time: 1656442440000,
-          open: toQuotation(52.7),
-          high: toQuotation(54.7),
-          low: toQuotation(51.69),
-          close: toQuotation(51.7),
-        }
+          figi: 'BBG00DHTYPH8',
+          interval: 1,
+          open: { units: 52, nano: 400000000 },
+          high: { units: 52, nano: 400000000 },
+          low: { units: 52, nano: 400000000 },
+          close: { units: 52, nano: 400000000 },
+          volume: 100,
+          time: `2022-06-29T18:${mins}:00.000Z`,
+          lastTradeTs: `2022-06-29T18:${mins}:40.325Z`,
+        },
       ];
-      let interval: NodeJS.Timer;
       let idx = 0;
-      interval = setInterval(() => {
+      const interval = setInterval(() => {
         if (debugCandles[idx]) {
-          debugCandles[idx].time += 60000;
+          debugCandles[idx].time = `2022-06-29T18:${mins}:00.000Z`;
           console.log('149 index', new Date (debugCandles[idx].time).toString());
           event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, {...debugCandles[idx], time: new Date(debugCandles[idx].time).toString()});
           // idx++;
+          mins += 1;
         } else {
           clearInterval(interval);
         }
-      }, 5000);
+      }, 1000);
       return;
     }
     if (!TinkoffSdk.IsSdkBinded) {
