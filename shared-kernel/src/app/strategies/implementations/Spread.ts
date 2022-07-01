@@ -92,7 +92,7 @@ export default class SpreadStrategy implements IStrategy {
 
       this.log('calc', `Orderbook ${stringify(orderbook)}`)
       this.log('calc', 'Cancelling rotten bids');
-      await this.cancelRottenBidOrders(orderbook);
+      const shouldSkip = await this.cancelRottenBidOrders(orderbook);
       this.log('calc', 'Calculating to buy');
       const toBuyInfo = this.calcToBuy(orderbook);
       this.log('calc', 'Calculating to sell');
@@ -284,7 +284,7 @@ export default class SpreadStrategy implements IStrategy {
     }
   }
 
-  private async cancelRottenBidOrders(orderbook: Orderbook) {
+  private async cancelRottenBidOrders(orderbook: Orderbook): Promise<boolean> {
     try {
       const placedBids = Object.keys(this.bids);
       for (const bid of placedBids) {
@@ -310,13 +310,16 @@ export default class SpreadStrategy implements IStrategy {
           this.log('calc', `Bid ${bid} is too far from the top, cancelling order, ${stringify(this.bids[bid].orderId)}`);
           await this.cancelOrder(this.bids[bid].orderId);
           delete this.bids[bid];
+          return true;
         }
         if (idx !== -1 && this.bids[bid] && orderbook.bids[idx].quantity === this.bids[bid].lots && !this.bids[bid].isExecuted) {
           this.log('calc', `Bid ${bid} is only ours, cancelling order, ${stringify(this.bids[bid].orderId)}`);
           await this.cancelOrder(this.bids[bid].orderId);
           delete this.bids[bid];
+          return true;
         }
       }
+      return false;
     } catch (e) {
       console.log('283 Spread', e);
       this.log('error', e.toString());
@@ -466,6 +469,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.1'; }
+  public get Version() { return '1.0.2'; }
   public get IsWorking() { return this.isWorking; }
 }
