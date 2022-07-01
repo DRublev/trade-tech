@@ -22,7 +22,7 @@ import Strategy from './Strategy.vue';
   },
 })
 export default class Welcome extends Vue {
-  showDebug = false;
+  showDebug = true;
   get showOnboarding() {
     return !Store.HasToken || !Store.HasAccountChosen;
   }

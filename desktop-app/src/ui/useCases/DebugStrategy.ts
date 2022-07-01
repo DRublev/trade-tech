@@ -12,13 +12,14 @@ const DEBUG_CONFIGS = {
   'TGLD': {
     figi: 'BBG222222222',
     parameters: {
-      availableBalance: '20',
+      availableBalance: 8,
       maxHolding: 1,
-      minSpread: 0,
+      minSpread: 0.0002,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.0001,
+      stopLoss: 0.0004,
       sharesInLot: 100,
+      watchAsk: 3,
     }
   },
   'TRUR': {
@@ -156,10 +157,59 @@ const DEBUG_CONFIGS = {
     parameters: {
       availableBalance: 50,
       maxHolding: 1,
-      minSpread: 0.04,
+      minSpread: 0.08,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
       stopLoss: 0.4,
+      watchAsk: 3,
+    }
+  },
+  'ROSN': {
+    figi: 'BBG004731354',
+    parameters: {
+      availableBalance: 450,
+      maxHolding: 1,
+      minSpread: 0.5,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.4,
+      watchAsk: 3,
+    }
+  },
+  'ETLN': {
+    figi: 'BBG001M2SC01',
+    parameters: {
+      availableBalance: 500,
+      maxHolding: 7,
+      minSpread: 0.3,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.2,
+      watchAsk: 3,
+    }
+  },
+  'ALLK': {
+    figi: 'BBG003QBJKN0',
+    parameters: {
+      availableBalance: 5,
+      maxHolding: 1,
+      minSpread: 0.2,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.1,
+      watchAsk: 3,
+    }
+  },
+  'DMTK': {
+    figi: 'BBG00H19F184',
+    parameters: {
+      availableBalance: 7,
+      maxHolding: 1,
+      minSpread: 0.04,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.08,
+      watchAsk: 2,
     }
   },
 }

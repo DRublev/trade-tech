@@ -1,7 +1,7 @@
 import { Container } from "inversify";
 
 import { CONSTANTS } from "./identifiers";
-import ordersEmitter, { OrdersEmitter } from "./orders/Emitter";
+import ordersEmitter, { OrdersEmitter } from "./old/orders/Emitter";
 import shares, { SharesTradeConfig } from "./tradeConfig";
 
 

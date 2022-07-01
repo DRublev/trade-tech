@@ -15,6 +15,7 @@ export type SpreadStrategyConfig = StrategyConfig & {
   stopLoss: number;
   sharesInLot: number;
   enteringPrice?: number;
+  watchAsk?: number;
 };
 
 type ToPlaceOrderInfo = {
@@ -230,13 +231,13 @@ export default class SpreadStrategy implements IStrategy {
       this.log('calc', `Pending asks: ${stringify(Object.values(this.asks).filter(a => !a.isExecuted))}`)
       const pendingAsks = Object.values(this.asks).filter(a => !a.isExecuted && !a.isReserved && !a.isStop);
       for (const ask of pendingAsks) {
-        const midPrice = (toNum(orderbook.asks[0].price) + toNum(orderbook.bids[0].price)) / 2;
+        const midPrice = toNum(orderbook.bids[0].price);
         this.log('calc', `Stop loss calc for ${stringify(ask)}; midPrice: ${midPrice}; bid: ${stringify(orderbook.bids[0])}; ask: ${stringify(orderbook.asks[0])}`);
         if (midPrice <= ask.stopLoss) {
           this.log('calc', `Stop loss detected for ${stringify(ask)}; ask.stopLoss: ${ask.stopLoss} ; ask: ${stringify(orderbook.asks[0])};`);
           await this.cancelOrder(ask.orderId);
           toSell.push({
-            price: ask.stopLoss,
+            price: midPrice,
             lots: ask.isPartiallyExecuted ? ask.executedLots : ask.lots,
             idx: 0,
             isStop: true,
@@ -253,7 +254,7 @@ export default class SpreadStrategy implements IStrategy {
       }
 
 
-      const asks = orderbook.asks.slice(0, this.config.moveOrdersOnStep);
+      const asks = orderbook.asks.slice(0, this.config.watchAsk || this.config.moveOrdersOnStep);
       this.log('calc', `Asks: ${stringify(asks)}`);
       const holdingPrices = Object.keys(this.bids);
       this.log('calc', `Holding prices: ${stringify(holdingPrices)}`);
@@ -469,6 +470,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.2'; }
+  public get Version() { return '1.0.4'; }
   public get IsWorking() { return this.isWorking; }
 }

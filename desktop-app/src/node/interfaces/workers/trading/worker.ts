@@ -1,10 +1,8 @@
-import { safeStorage } from 'electron';
 import { workerData, parentPort } from "worker_threads";
 import * as fs from 'fs';
 import { Duplex } from "stream";
 import { randomUUID } from 'crypto';
 import { Strategies, getStrategyConstructor, IStrategy } from 'shared-kernel';
-import ioc from 'shared-kernel/src/ioc';
 
 import logger from '@/node/infra/Logger';
 import { TinkoffSdk } from '@/node/app/tinkoff';
@@ -30,11 +28,11 @@ const startStrategy = async () => {
 
     const today = new Date();
     const todayFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    if (!fs.existsSync('logs')) {
-      fs.mkdirSync('logs');
+    if (!fs.existsSync(`logs/${todayFormatted}`)) {
+      fs.mkdirSync(`logs/${todayFormatted}`);
     }
     logsFileStream = fs.createWriteStream(
-      `logs/${todayFormatted}_${workerData.config.figi}_spread_v${strategy.Version}.log`,
+      `logs/${todayFormatted}/${workerData.config.figi}_spread_v${strategy.Version}.log`,
       { flags: 'a' },
     );
     logsFileStream.write(`\n---------- ${new Date().toTimeString()} \n`);

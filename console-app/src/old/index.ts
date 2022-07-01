@@ -11,22 +11,22 @@ import {
   SubscriptionInterval,
 } from 'invest-nodejs-grpc-sdk/dist/generated/marketdata';
 
-import ShareTradeConfig from './tradeShare';
-import { Strategies } from './strategies';
-import * as strategies from './strategies';
-import AccountService from './accountService';
-import { chooseFromConsole } from './consoleReader';
-import { NoAccessException } from './exceptions';
+import ShareTradeConfig from '../tradeShare';
+import { Strategies } from '../strategies';
+import * as strategies from '../strategies';
+import AccountService from '../accountService';
+import { chooseFromConsole } from '../consoleReader';
+import { NoAccessException } from '../exceptions';
 import InstrumentsService from './instrumentsService';
-import ExchangeService from './exchangeService';
-import OrdersService from './ordersService';
-import logger from './logger';
-import BacktestingReader from './backtestingReader';
-import { sleep } from './helpers';
+import ExchangeService from '../exchangeService';
+import OrdersService from '../ordersService';
+import logger from '../logger';
+import BacktestingReader from '../backtestingReader';
+import { sleep } from '../helpers';
 
-import { CONSTANTS } from "./identifiers";
-import Container from './ioc';
-import { SharesTradeConfig } from './tradeConfig';
+import { CONSTANTS } from "../identifiers";
+import Container from '../ioc';
+import { SharesTradeConfig } from '../tradeConfig';
 
 if (!process.env.TOKEN) {
   logger.error('Необходимо подставить токен с полным доступ в переменную окружения TOKEN');
