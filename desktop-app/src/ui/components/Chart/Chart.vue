@@ -21,13 +21,18 @@ export default class Chart extends Vue {
     colorText: '#333',
   }
   chartWidth = 5;
-
+candles: number[][] = [];
   dc: DataCube = new DataCube({
     chart: {
       type: 'Candles',
       data: [],
       tf: '1m'
-    }, onchart: [], offchart: []
+    }, onchart: [{
+      type: 'Trades',
+      data: [],
+      name: 'Trades',
+      settings: {},
+    }], offchart: []
   });
 
   mounted() {
@@ -36,11 +41,20 @@ export default class Chart extends Vue {
 
   updateChart(candles: number[][]) {
     this.dc.set('chart.data', candles);
+    this.candles = candles;
     const ltsStamp = new Date(candles[candles.length - 1][0]);
     const fstTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() - this.chartWidth);
     const ltsTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() + this.chartWidth);
 
     (this.$refs.tradingVue as any).setRange(fstTime.valueOf(), ltsTime.valueOf());
+    // (this.$refs.tradingVue as any).goto(fstTime.valueOf());
+  }
+
+  updateTrades(deals: [number, 0 | 1, number, string?][]) {
+    const allCandles = this.candles;
+    console.log('54 Chart', this.dc.get('onchart.Trades'));
+    this.dc.set('onchart.Trades.data', deals
+      .map((d, idx) => [allCandles[idx][0], d[1], allCandles[idx][1], d[3]]));
   }
 }
 </script>

@@ -40,9 +40,7 @@ ipcMain.on(ipcEvents.START_TRADING, async (event, data: StartTradingCmd) => {
   try {
     if (!data.figi) throw new TypeError('Figi is not defined');
     if (!data.parameters) throw new TypeError('Parameters is not defined');
-    if (!TinkoffSdk.IsSdkBinded) {
-      // await createSdk(isSandbox);
-    }
+
     const isSandbox = storage.get('isSandbox');
     const token = getToken(isSandbox);
     logger.info('Start trading');

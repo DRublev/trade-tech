@@ -57,7 +57,7 @@ import Loader from '../components/Loader.vue';
 export default class Strategy extends Vue {
   controlUC = new StrategyControlUseCase();
   chartUC?: StrategyChartUseCase = undefined;
-  dealsListUC = new DealsListUseCase();
+  dealsListUC?: DealsListUseCase = undefined;
 
   switchWorking() {
     this.controlUC.Working = !this.status.working;
@@ -66,10 +66,24 @@ export default class Strategy extends Vue {
   mounted() {
     this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi, this.onCandle.bind(this));
     this.chartUC.subscribeOnCandles();
+
+    this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
   }
 
   onCandle() {
     (this.$refs.chartComponent as any).updateChart(this.chartUC?.Data);
+  }
+
+  onDeal() {
+    console.log('78 Strategy', this.dealsListUC?.Deals);
+    const deals = this.dealsListUC?.Deals.map((d) => [
+      d.time,
+      d.action === 'buy' ? 1 : 0,
+      d.pricePerLot,
+      `${d.pricePerLot}`,
+    ]);
+    console.log('85 Strategy', deals);
+    (this.$refs.chartComponent as any).updateTrades(deals);
   }
 
   get status() {
@@ -80,10 +94,10 @@ export default class Strategy extends Vue {
     return { name };
   }
   get deals() {
-    return this.dealsListUC.Deals;
+    return this.dealsListUC?.Deals || [];
   }
   get logs() {
-    return this.dealsListUC.Logs;
+    return this.dealsListUC?.Logs || [];
   }
 }
 </script>

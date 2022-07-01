@@ -129,6 +129,15 @@ const toQuotation = (number: number) => {
   units: Math.floor(number),
   nano: decimal.slice(2) as any as number,
 })};
+function str2ab(str: string) {
+  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+  var bufView = new Uint16Array(buf);
+  for (var i=0, strLen=str.length; i<strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+
 ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
   try {
     if (data.debug) {
@@ -147,11 +156,22 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
           lastTradeTs: `2022-06-29T18:${mins}:40.325Z`,
         },
       ];
+      const debugDeals = [
+        '14:55:24 calc: Placed buy order: 60.52 7 31790815643',
+        '15:01:55 calc: Placed sell order: 60.72 7 31791012583',
+      ]
       let idx = 0;
+      let dealsIdx = 0;
       const interval = setInterval(() => {
         if (debugCandles[idx]) {
           debugCandles[idx].time = `2022-06-29T${hours}:${mins.toString().padStart(2, '0')}:00.000Z`;
           event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, {...debugCandles[idx], time: new Date(debugCandles[idx].time).toString()});
+          if (debugDeals[dealsIdx]) {
+            event.sender.send(ipcEvents.strategylog, str2ab(debugDeals[dealsIdx]));
+            dealsIdx++;
+          } else {
+            idx++;
+          }
           // idx++;
           if (mins === 59) {
             mins = 0;
