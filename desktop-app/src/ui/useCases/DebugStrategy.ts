@@ -148,7 +148,7 @@ const DEBUG_CONFIGS = {
       minSpread: 0.5,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 1,
+      stopLoss: 3,
     }
   },
   'TCX': {

@@ -10,7 +10,7 @@ const toNum = (qutation: { units: number, nano: number }) => Number(qutation.uni
 const pipelines: { [figi: string]: fs.WriteStream } = {};
 const figiTickerMap: { [figi: string]: string } = {};
 
-const maxInstruments = 300;
+const maxInstruments = 3;
 const storagePath = path.resolve(__dirname, '../data-storage');
 
 const collect = async () => {
@@ -29,6 +29,29 @@ const selectInstruments = async () => {
   let figisToCollect = [
     'BBG00DHTYPH8',
     'BBG00SDJ8M78',
+    'BBG000QKNLB2', // RRBI
+    'BBG001MFW6D6', // CHEF
+    'BBG000BS2ZD1', // SLP
+    'BBG000BHP8J4', // MLCO
+    'BBG0026ZJQX7', // DOCS
+    'BBG009Q036D0', // GMS
+    'BBG000BHR1H9', // SHI
+    'BBG001K1CT23', // SPT
+    'BBG00B6G7GL7', // AXSM
+    'BBG003T4VFC2', // SPOT
+    'BBG000L69KL5', // TCX
+    'BBG00ZGF6SS3', // DOCN
+    'BBG000BD2167', // ITRI
+    'BBG000BX2YN2', // WWW
+    'BBG000BDCM24', // VCEL
+    'BBG00225ZDD0', // CDLX
+    'BBG000BGCQT9', // CRS
+    'BBG008P7F869', // DNLI
+    'BBG000HSLV70', // UCTT
+    'BBG00CWTTQ41', // ASIX
+    'BBG0025X16Y5', // SAGE
+    
+    'BBG00Y3XYV94', // MDMG
   ];
   try {
     const allTradable = JSON.parse(fs.readFileSync(path.join(storagePath, 'allShares.json'), 'utf8'));
@@ -41,7 +64,7 @@ const selectInstruments = async () => {
 
     const tradableOnMoex = allTradable.instruments.filter(isMoexFilter).filter(isTradableFilter);
   
-    figisToCollect = figisToCollect.concat(tradableOnMoex.map(share => share.figi));
+    // figisToCollect = figisToCollect.concat(tradableOnMoex.map(share => share.figi));
   
     tradableOnMoex.forEach(element => {
       figiTickerMap[element.figi] = element.ticker;
@@ -71,7 +94,7 @@ const createStream = async (orderbook: Orderbook) => {
     const formattedDateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     console.log('orderbook', orderbook.figi, orderbook.time);
     const ticker = figiTickerMap[orderbook.figi] || orderbook.figi;
-    const folder = `./orderbooks/${ticker}/${formattedDateStr}`;
+    const folder = `./orderbooks/${formattedDateStr}/${ticker}`;
     const filepath = `${folder}/${orderbook.figi}.json`;
     if (!pipelines[orderbook.figi]) {
       if(!fs.existsSync(path.dirname(path.join(storagePath, filepath)))) {
