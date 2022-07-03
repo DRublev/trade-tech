@@ -40,10 +40,12 @@
   </div>
 </template>
 <script lang="ts">
-import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
 import { Options, Vue } from 'vue-class-component';
+import { event, customMap } from 'vue-gtag';
+import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
 import Chart from '../components/Chart';
 import Loader from '../components/Loader.vue';
+import { Deal } from '@ui/useCases/strategy/DealsList';
 
 
 @Options({
@@ -66,6 +68,7 @@ export default class Strategy extends Vue {
   mounted() {
     this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi, this.onCandle.bind(this));
     this.chartUC.subscribeOnCandles();
+    customMap({ 'dimension2': 'turnover' });
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
     this.subscribeOnLogs();
@@ -75,13 +78,14 @@ export default class Strategy extends Vue {
     (this.$refs.chartComponent as any).updateChart(this.chartUC?.Data);
   }
 
-  onDeal() {
+  onDeal(latestDeal: Deal) {
     const deals = this.dealsListUC?.Deals.map((d) => [
       d.time,
       d.action === 'buy' ? 1 : 0,
       d.pricePerLot,
       `${d.pricePerLot}`,
     ]);
+    event('turnover_dimension', { turnover: latestDeal.sum });
     (this.$refs.chartComponent as any).updateTrades(deals);
   }
 
