@@ -10,19 +10,17 @@
         </ul>
       </div>
       <div class="flex-1 place-items-center pt-2 px-8">
-        <button @click="switchWorking" class="align-center text-purple text-center" style="height: 30px">
-          <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
-            class="text-3xl stroke-current mb-2" />
-          <p v-if="!status.working">Пуск</p>
-          <p v-else>Стоп</p>
-          <Loader v-if="status.loading" class="max-h-full" />
-        </button>
-      </div>
-      <div class="flex-1 place-items-center pt-2 px-8">
         <h1 class="mb-12 text-left">
           <span class="text-gray-500">Стратегия: </span>
           <span class="text-xl">{{ strategyInfo.name }}</span>
         </h1>
+          <button @click="switchWorking" class="align-center text-purple text-center" style="height: 30px">
+            <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
+              class="text-3xl stroke-current mb-2" />
+            <p v-if="!status.working">Пуск</p>
+            <p v-else>Стоп</p>
+            <Loader v-if="status.loading" class="max-h-full" />
+          </button>
         <ul>
           <li v-for="d in deals" :key="d.time" class="flex justify-between">
             <span :class="{
@@ -59,6 +57,8 @@ export default class Strategy extends Vue {
   chartUC?: StrategyChartUseCase = undefined;
   dealsListUC?: DealsListUseCase = undefined;
 
+  logs: string[] = [];
+
   switchWorking() {
     this.controlUC.Working = !this.status.working;
   }
@@ -68,6 +68,7 @@ export default class Strategy extends Vue {
     this.chartUC.subscribeOnCandles();
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
+    this.subscribeOnLogs();
   }
 
   onCandle() {
@@ -75,15 +76,21 @@ export default class Strategy extends Vue {
   }
 
   onDeal() {
-    console.log('78 Strategy', this.dealsListUC?.Deals);
     const deals = this.dealsListUC?.Deals.map((d) => [
       d.time,
       d.action === 'buy' ? 1 : 0,
       d.pricePerLot,
       `${d.pricePerLot}`,
     ]);
-    console.log('85 Strategy', deals);
     (this.$refs.chartComponent as any).updateTrades(deals);
+  }
+
+  private subscribeOnLogs() {
+    (window as any).ipc.on('strategylog', (event: any, chunk: any) => {
+        const log = new TextDecoder().decode((chunk));
+        console.log('8 DebugStrategy', log);
+        this.logs.push(log);
+      });
   }
 
   get status() {
@@ -96,7 +103,7 @@ export default class Strategy extends Vue {
   get deals() {
     return this.dealsListUC?.Deals || [];
   }
-  get logs() {
+  get Logs() {
     return this.dealsListUC?.Logs || [];
   }
 }

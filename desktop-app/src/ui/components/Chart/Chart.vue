@@ -1,6 +1,13 @@
 <template>
-  <trading-vue :data="dc" :color-back="colors.colorBack" :color-grid="colors.colorGrid" :color-text="colors.colorText"
-    ref="tradingVue">
+  <trading-vue
+    :data="dc"
+    :width="width"
+    :height="height"
+    :color-back="colors.colorBack"
+    :color-grid="colors.colorGrid"
+    :color-text="colors.colorText"
+    ref="tradingVue"
+  >
   </trading-vue>
 </template>
 <script lang="ts">
@@ -21,7 +28,9 @@ export default class Chart extends Vue {
     colorText: '#333',
   }
   chartWidth = 5;
-candles: number[][] = [];
+  width = 200;
+  height = 200;
+  candles: number[][] = [];
   dc: DataCube = new DataCube({
     chart: {
       type: 'Candles',
@@ -37,6 +46,10 @@ candles: number[][] = [];
 
   mounted() {
     (window as any).tv = this.$refs.tradingVue;
+    window.onresize = () => {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+    };
   }
 
   updateChart(candles: number[][]) {
@@ -47,14 +60,13 @@ candles: number[][] = [];
     const ltsTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() + this.chartWidth);
 
     (this.$refs.tradingVue as any).setRange(fstTime.valueOf(), ltsTime.valueOf());
-    // (this.$refs.tradingVue as any).goto(fstTime.valueOf());
   }
 
   updateTrades(deals: [number, 0 | 1, number, string?][]) {
-    const allCandles = this.candles;
-    console.log('54 Chart', this.dc.get('onchart.Trades'));
-    this.dc.set('onchart.Trades.data', deals
-      .map((d, idx) => [allCandles[idx][0], d[1], allCandles[idx][1], d[3]]));
+    // const allCandles = this.candles;
+    // this.dc.set('onchart.Trades.data', deals
+    //   .map((d, idx) => [allCandles[idx][0], d[1], allCandles[idx][1], d[3]]));
+    this.dc.set('onchart.Trades.data', deals);
   }
 }
 </script>
