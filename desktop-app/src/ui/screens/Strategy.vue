@@ -1,6 +1,6 @@
 <template>
-  <div class="min-w-full min-h-1/2">
-    <chart ref="chartComponent"/>
+  <div class="min-w-full min-h-1/2" ref="chartContainer">
+    <chart ref="chartComponent" :width="chartWidth" :height="chartHeight"/>
   </div>
   <div class="w-full mx-3 h-1/2">
     <div class="flex justify-between h-full divide-x">
@@ -60,9 +60,16 @@ export default class Strategy extends Vue {
   dealsListUC?: DealsListUseCase = undefined;
 
   logs: string[] = [];
+  chartWidth = 200;
+  chartHeight = 200;
 
   switchWorking() {
     this.controlUC.Working = !this.status.working;
+  }
+
+  declare $refs: {
+    chartContainer: HTMLFormElement,
+    chartComponent: HTMLFormElement,
   }
 
   mounted() {
@@ -72,10 +79,15 @@ export default class Strategy extends Vue {
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
     this.subscribeOnLogs();
+
+    window.onresize = () => {
+      this.chartWidth = this.$refs.chartContainer.clientWidth;
+      this.chartHeight = this.$refs.chartContainer.clientHeight;
+    };
   }
 
   onCandle() {
-    (this.$refs.chartComponent as any).updateChart(this.chartUC?.Data);
+    this.$refs.chartComponent.updateChart(this.chartUC?.Data);
   }
 
   onDeal(latestDeal?: Deal) {
@@ -89,7 +101,7 @@ export default class Strategy extends Vue {
 
       event('turnover', { turnover: latestDeal.sum });
     }
-    (this.$refs.chartComponent as any).updateTrades(deals);
+    this.$refs.chartComponent.updateTrades(deals);
   }
 
   private subscribeOnLogs() {

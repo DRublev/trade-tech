@@ -15,6 +15,7 @@ import { Options, Vue } from 'vue-class-component';
 // @ts-ignore
 import { DataCube } from 'trading-vue3-js';
 import TradingVue from 'trading-vue3-js/src/TradingVue.vue';
+import { Prop } from 'vue-property-decorator';
 
 @Options({
   components: {
@@ -27,9 +28,9 @@ export default class Chart extends Vue {
     colorGrid: '#eee',
     colorText: '#333',
   }
-  chartWidth = 5;
-  width = 200;
-  height = 400;
+  chartWidth = 12;
+  @Prop() width = 200;
+  @Prop() height = 200;
   candles: number[][] = [];
   dc: DataCube = new DataCube({
     chart: {
@@ -44,12 +45,12 @@ export default class Chart extends Vue {
     }], offchart: []
   });
 
+  declare $refs: {
+    tradingVue: HTMLFormElement,
+  }
+
   mounted() {
     (window as any).tv = this.$refs.tradingVue;
-    window.onresize = () => {
-      this.width = window.innerWidth;
-      // this.height = window.innerHeight;
-    };
   }
 
   updateChart(candles: number[][]) {
@@ -59,7 +60,7 @@ export default class Chart extends Vue {
     const fstTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() - this.chartWidth);
     const ltsTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() + this.chartWidth);
 
-    (this.$refs.tradingVue as any).setRange(fstTime.valueOf(), ltsTime.valueOf());
+    this.$refs.tradingVue.setRange(fstTime.valueOf(), ltsTime.valueOf());
   }
 
   updateTrades(deals: [number, 0 | 1, number, string?][]) {

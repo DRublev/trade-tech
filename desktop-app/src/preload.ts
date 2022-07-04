@@ -12,7 +12,18 @@ import { ipcEvents } from '@/constants';
 
 const validChannels = Object.values(ipcEvents);
 
-class SafeIpcRenderer {
+export interface IIpcRenderer {
+  on: (channel: string, listener: (event: any, ...args: any[]) => void) => void;
+  once: (channel: string, listener: (event: any, ...args: any[]) => void) => void;
+  removeListener: (channel: string, listener: (event: any, ...args: any[]) => void) => void;
+  removeAllListeners: (channel: string) => void;
+  send: (channel: string, ...args: any[]) => void;
+  sendSync: (channel: string, ...args: any[]) => void;
+  sendToHost: (channel: string, ...args: any[]) => void;
+  invoke: (channel: string, ...args: any[]) => Promise<any>;
+}
+
+export class SafeIpcRenderer {
   [x: string]: (channel: string, ...args: any[]) => any;
   constructor (events: string[]) {
     const protect = (fn: any) => {
