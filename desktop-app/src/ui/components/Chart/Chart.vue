@@ -1,13 +1,6 @@
 <template>
-  <trading-vue
-    :data="dc"
-    :width="width"
-    :height="height"
-    :color-back="colors.colorBack"
-    :color-grid="colors.colorGrid"
-    :color-text="colors.colorText"
-    ref="tradingVue"
-  >
+  <trading-vue :data="dc" :width="width" :height="height" :titleTxt="title" :color-back="colors.colorBack"
+    :color-grid="colors.colorGrid" :color-text="colors.colorText" ref="tradingVue">
   </trading-vue>
 </template>
 <script lang="ts">
@@ -23,14 +16,16 @@ import { Prop } from 'vue-property-decorator';
   }
 })
 export default class Chart extends Vue {
+  @Prop() width!: number;
+  @Prop() height!: number;
+  @Prop() title!: string;
+
+  chartWidth = 12;
   colors = {
     colorBack: '#fff',
     colorGrid: '#eee',
     colorText: '#333',
   }
-  chartWidth = 12;
-  @Prop() width = 200;
-  @Prop() height = 200;
   candles: number[][] = [];
   dc: DataCube = new DataCube({
     chart: {
@@ -51,10 +46,13 @@ export default class Chart extends Vue {
 
   mounted() {
     (window as any).tv = this.$refs.tradingVue;
+    this.dc.onrange(console.log);
+    // (window as any).dc = this.dc;
   }
 
   updateChart(candles: number[][]) {
     this.dc.set('chart.data', candles);
+
     this.candles = candles;
     const ltsStamp = new Date(candles[candles.length - 1][0]);
     const fstTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() - this.chartWidth);
@@ -64,9 +62,6 @@ export default class Chart extends Vue {
   }
 
   updateTrades(deals: [number, 0 | 1, number, string?][]) {
-    // const allCandles = this.candles;
-    // this.dc.set('onchart.Trades.data', deals
-    //   .map((d, idx) => [allCandles[idx][0], d[1], allCandles[idx][1], d[3]]));
     this.dc.set('onchart.Trades.data', deals);
   }
 }

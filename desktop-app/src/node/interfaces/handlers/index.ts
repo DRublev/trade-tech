@@ -170,7 +170,7 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
             event.sender.send(ipcEvents.strategylog, str2ab(debugDeals[dealsIdx]));
             dealsIdx++;
           } else {
-            idx++;
+            // idx++;
           }
           // idx++;
           if (mins === 59) {
