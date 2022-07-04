@@ -16,6 +16,7 @@ export type SpreadStrategyConfig = StrategyConfig & {
   sharesInLot: number;
   enteringPrice?: number;
   watchAsk?: number;
+  waitTillNextBuyMs?: number;
 };
 
 type ToPlaceOrderInfo = {
@@ -56,7 +57,7 @@ export default class SpreadStrategy implements IStrategy {
   private isWorking = true;
   private isProcessing = false;
   private hasEnteredPosition = false;
-
+  private waitingBuyTimer = null;
   private leftMoney = 0;
   private holdingLots = 0;
 
@@ -94,6 +95,9 @@ export default class SpreadStrategy implements IStrategy {
       this.log('calc', `Orderbook ${stringify(orderbook)}`)
       this.log('calc', 'Cancelling rotten bids');
       const shouldSkip = await this.cancelRottenBidOrders(orderbook);
+      if (shouldSkip) {
+        return;
+      }
       this.log('calc', 'Calculating to buy');
       const toBuyInfo = this.calcToBuy(orderbook);
       this.log('calc', 'Calculating to sell');
@@ -139,6 +143,11 @@ export default class SpreadStrategy implements IStrategy {
           };
           this.log('calc', `New asks map ${stringify(this.asks)}`);
         }
+        if (!this.waitingBuyTimer && this.config.waitTillNextBuyMs) {
+          this.waitingBuyTimer = setTimeout(() => {
+            this.waitingBuyTimer = null;
+          });
+        }
       }
 
       return null;
@@ -152,6 +161,10 @@ export default class SpreadStrategy implements IStrategy {
 
   private calcToBuy(orderbook: Orderbook): ToPlaceOrderInfo[] {
     try {
+      if (this.waitingBuyTimer) {
+        this.log('calc', 'Waiting for next buy');
+        return;
+      }
       const notExecutedBuy = Object.values(this.bids)
         .reduce((acc, bid) => bid.isPartiallyExecuted
           ? (bid.lots - bid.executedLots) + acc
@@ -176,6 +189,13 @@ export default class SpreadStrategy implements IStrategy {
         this.log('info', `No money left. Left: ${this.leftMoney}; Min bid: ${stringify(minBid)}`);
         return [];
       }
+
+      const minAsk = toNum(orderbook.asks[0].price);
+      if (minAsk - minBid < this.config.minSpread) {
+        this.log('calc', `No profitable exit point. Min ask: ${minAsk}; Min bid: ${minBid}; Min spread: ${this.config.minSpread}`);
+        return [];
+      }
+
       let lotsToBuy = this.config.maxHolding - notExecutedBuy - this.holdingLots;
       while (lotsToBuy * minBid > this.leftMoney) {
         this.log('calc', `Not enough money to buy ${lotsToBuy} lots. Left: ${this.leftMoney}; Min bid: ${stringify(minBid)}`);
@@ -287,7 +307,7 @@ export default class SpreadStrategy implements IStrategy {
 
   private async cancelRottenBidOrders(orderbook: Orderbook): Promise<boolean> {
     try {
-      const placedBids = Object.keys(this.bids);
+      const placedBids = Object.keys(this.bids).filter(b => !this.bids[b].isReserved && !this.bids[b].isExecuted);
       for (const bid of placedBids) {
         let idx = orderbook.bids.findIndex(b => toNum(b.price) == Number(bid));
         this.log('calc', `Rotten bids idx ${idx}; bid: ${stringify(bid)}; bids: ${stringify(this.bids)}`);
@@ -470,6 +490,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.4'; }
+  public get Version() { return '1.0.6'; }
   public get IsWorking() { return this.isWorking; }
 }
