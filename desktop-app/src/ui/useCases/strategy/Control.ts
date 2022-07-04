@@ -214,6 +214,19 @@ const configs = {
       watchAsk: 2,
     }
   },
+  'TCS': {
+    figi: 'BBG005DXJS36',
+    parameters: {
+      availableBalance: 40,
+      maxHolding: 1,
+      minSpread: 0.06,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.4,
+      watchAsk: 3,
+      waitTillNextBuyMs: 2000,
+    }
+  },
 };
 
 export default class ControlUseCase {
@@ -225,9 +238,16 @@ export default class ControlUseCase {
 
   private config = {
     strategy: 'Spread',
-    ticker: 'GTLB',
-    ...configs.GTLB,
+    ticker: 'TCS',
+    ...configs.TCS,
   };
+
+  constructor() {
+    // (window as any).ipc.send(ipcEvents.START_TRADING, {
+    //   figi: this.config.figi,
+    //   parameters: this.config.parameters,
+    // });
+  }
 
   public get Config() {
     return this.config;
@@ -238,7 +258,10 @@ export default class ControlUseCase {
   public set Working(isWorking: boolean) {
     try {
       this.Loading = true;
-      this.currentStatus.working = isWorking;
+      this.currentStatus = {
+        ...this.currentStatus,
+        working: isWorking,
+      };
       if (isWorking) {
         (window as any).ipc.send(ipcEvents.START_TRADING, {
           figi: this.config.figi,

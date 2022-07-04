@@ -78,14 +78,17 @@ export default class Strategy extends Vue {
     (this.$refs.chartComponent as any).updateChart(this.chartUC?.Data);
   }
 
-  onDeal(latestDeal: Deal) {
-    const deals = this.dealsListUC?.Deals.map((d) => [
+  onDeal(latestDeal?: Deal) {
+    const deals = this.dealsListUC?.Deals.filter(d => !d.isClosed).map((d) => [
       d.time,
       d.action === 'buy' ? 1 : 0,
       d.pricePerLot,
       `${d.pricePerLot}`,
     ]);
-    event('turnover_dimension', { turnover: latestDeal.sum });
+    if (latestDeal) {
+
+      event('turnover', { turnover: latestDeal.sum });
+    }
     (this.$refs.chartComponent as any).updateTrades(deals);
   }
 

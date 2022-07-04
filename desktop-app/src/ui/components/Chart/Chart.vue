@@ -29,7 +29,7 @@ export default class Chart extends Vue {
   }
   chartWidth = 5;
   width = 200;
-  height = 200;
+  height = 400;
   candles: number[][] = [];
   dc: DataCube = new DataCube({
     chart: {
@@ -48,7 +48,7 @@ export default class Chart extends Vue {
     (window as any).tv = this.$refs.tradingVue;
     window.onresize = () => {
       this.width = window.innerWidth;
-      this.height = window.innerHeight;
+      // this.height = window.innerHeight;
     };
   }
 

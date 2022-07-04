@@ -2,7 +2,7 @@ import { ipcEvents } from "@/constants";
 import CandleToOhlcvDTO from "./CandleToOhlcvDTO";
 
 export default class ChartUseCase {
-  public candles: number[][] = [];
+  public candles: { [time:number]: number[] } = {};
 
   private markers = [];
 
@@ -25,10 +25,10 @@ export default class ChartUseCase {
 
   private async processCandle(e: any, candle: any) {
     const ohlcv = CandleToOhlcvDTO.toOhlcv(candle);
-    this.candles.push(ohlcv);
+    this.candles[ohlcv[0]] = ohlcv;
     this.triggerCandlesUpdate();
   }
 
-  public get Data() { return this.candles; }
+  public get Data() { return Object.values(this.candles); }
   public get Markers() { return this.markers; }
 }

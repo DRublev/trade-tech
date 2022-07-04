@@ -164,6 +164,19 @@ const DEBUG_CONFIGS = {
       watchAsk: 3,
     }
   },
+  'TCS': {
+    figi: 'BBG005DXJS36',
+    parameters: {
+      availableBalance: 40,
+      maxHolding: 1,
+      minSpread: 0.06,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.3,
+      watchAsk: 3,
+      waitTillNextBuyMs: 1000,
+    }
+  },
   'ROSN': {
     figi: 'BBG004731354',
     parameters: {
@@ -232,7 +245,7 @@ export default class DebugStrategyUseCase {
 
       // (window as any).ipc.invoke('test', DEBUG_CONFIGS.GTLB);
       console.log('94 DebugStrategy');
-      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.TCX);
+      (window as any).ipc.send('START_TRADING', DEBUG_CONFIGS.TCS);
     } catch (e) {
       console.error(e);
     }
