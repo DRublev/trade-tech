@@ -236,7 +236,7 @@ export default class ControlUseCase {
     error: undefined,
   };
 
-  private config = {
+  config = {
     strategy: 'Spread',
     ticker: 'TCS',
     ...configs.TCS,
@@ -263,10 +263,11 @@ export default class ControlUseCase {
         working: isWorking,
       };
       if (isWorking) {
-        (window as any).ipc.send(ipcEvents.START_TRADING, {
+        const payload = {
           figi: this.config.figi,
-          parameters: this.config.parameters,
-        });
+          parameters: { ...this.config.parameters },
+        };
+        (window as any).ipc.send('START_TRADING', payload);
       } else {
         (window as any).ipc.invoke(ipcEvents.PAUSE_TRADING, {
           figi: this.config.figi,
