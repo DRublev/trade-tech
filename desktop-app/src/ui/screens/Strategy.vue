@@ -41,6 +41,7 @@ import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '
 import { Deal } from '@ui/useCases/strategy/DealsList';
 import Chart from '../components/Chart';
 import Loader from '../components/Loader.vue';
+import { Inject } from 'vue-property-decorator';
 
 
 @Options({
@@ -66,10 +67,13 @@ export default class Strategy extends Vue {
     chartContainer: HTMLFormElement,
     chartComponent: HTMLFormElement,
   }
+  @Inject('mixpanel') readonly mixpanel!: any;
 
   mounted() {
     this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi, this.onCandle.bind(this));
     this.chartUC.subscribeOnCandles();
+    this.mixpanel.identify();
+    this.mixpanel.track('Check working', { isFine: true });
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
 
@@ -98,7 +102,13 @@ export default class Strategy extends Vue {
       `${d.pricePerLot}`,
     ]);
     if (latestDeal) {
-      // event('turnover', { turnover: latestDeal.sum });
+      this.mixpanel.track('deal', {
+        action: latestDeal.action,
+        price: latestDeal.pricePerLot,
+        lots: latestDeal.lots,
+        sum: latestDeal.sum,
+      });
+      this.mixpanel.people.increment('turnover_usd, !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
     this.$refs.chartComponent.updateTrades(deals);
   }

@@ -14,14 +14,16 @@ const configs = {
   'TGLD': {
     figi: 'BBG222222222',
     parameters: {
-      availableBalance: 8,
-      maxHolding: 1,
-      minSpread: 0.0002,
+      availableBalance: 16,
+      maxHolding: 2,
+      // minSpread: 0.0001,
+      minSpread: 0,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.0004,
+      // stopLoss: 0.000,
       sharesInLot: 100,
       watchAsk: 3,
+      waitTillNextBuyMs: 2000,
     }
   },
   'TRUR': {
@@ -67,7 +69,7 @@ const configs = {
   'GTLB': {
     figi: 'BBG00DHTYPH8',
     parameters: {
-      availableBalance: 70,
+      availableBalance: 58,
       maxHolding: 1,
       minSpread: 0.06,
       moveOrdersOnStep: 1,
@@ -151,7 +153,9 @@ const configs = {
       minSpread: 0.5,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 3,
+      stopLoss: 2,
+      waitTillNextBuyMs: 2000,
+
     }
   },
   'TCX': {
@@ -176,6 +180,7 @@ const configs = {
       lotsDistribution: 1,
       stopLoss: 0.4,
       watchAsk: 3,
+      waitTillNextBuyMs: 2000,
     }
   },
   'ETLN': {
@@ -222,9 +227,23 @@ const configs = {
       minSpread: 0.06,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.4,
+      stopLoss: 0.8,
+      watchAsk: 3,
+      waitTillNextBuyMs: 1000,
+    }
+  },
+  'RUAL': {
+    figi: 'BBG008F2T3T2',
+    parameters: {
+      availableBalance: 690,
+      maxHolding: 1,
+      minSpread: 0.09,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.3,
       watchAsk: 3,
       waitTillNextBuyMs: 2000,
+      sharesInLot: 10,
     }
   },
 };
@@ -238,8 +257,8 @@ export default class ControlUseCase {
 
   config = {
     strategy: 'Spread',
-    ticker: 'TCS',
-    ...configs.TCS,
+    ticker: 'GTLB',
+    ...configs.GTLB,
   };
 
   constructor() {

@@ -36,7 +36,9 @@ export default class Chart extends Vue {
       type: 'Trades',
       data: [],
       name: 'Trades',
-      settings: {},
+      settings: {
+        zIndex: 20,
+      },
     }], offchart: []
   });
 
