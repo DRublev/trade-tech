@@ -7,7 +7,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        purple: '#6868AC',
+        purple: {
+          100: '#b4b4d6',
+          200: '#a4a4cd',
+          300: '#9595c5',
+          400: '#8686bd',
+          500: '#6868AC',
+          600: '#7777b4',
+          700: '#5e5e9b',
+          800: '#53538a',
+          900: '#494978',
+        }
       },
     },
     minHeight: {

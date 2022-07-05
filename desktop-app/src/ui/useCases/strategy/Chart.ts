@@ -17,7 +17,7 @@ export default class ChartUseCase {
       if (!this.figi) return;
       await (window as any).ipc.invoke(ipcEvents.TINKOFF_SUBSCRIBE_ON_CANDLES, { figi: this.figi });
 
-      (window as any).ipc.send(ipcEvents.TINKOFF_GET_CANDLES_STREAM, { figi: this.figi, debug: false });
+      (window as any).ipc.send(ipcEvents.TINKOFF_GET_CANDLES_STREAM, { figi: this.figi, debug: true });
     } catch (e) {
       console.error('Error subscribing on candels', e);
     }

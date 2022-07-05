@@ -126,13 +126,14 @@ ipcMain.handle(ipcEvents.TINKOFF_SUBSCRIBE_ON_CANDLES, async (event, data: { fig
 const toQuotation = (number: number) => {
   const decimal = (number - Math.floor(Number(number))).toFixed(9);
   return ({
-  units: Math.floor(number),
-  nano: decimal.slice(2) as any as number,
-})};
+    units: Math.floor(number),
+    nano: decimal.slice(2) as any as number,
+  })
+};
 function str2ab(str: string) {
-  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+  var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
   var bufView = new Uint16Array(buf);
-  for (var i=0, strLen=str.length; i<strLen; i++) {
+  for (var i = 0, strLen = str.length; i < strLen; i++) {
     bufView[i] = str.charCodeAt(i);
   }
   return buf;
@@ -148,9 +149,9 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
           figi: 'BBG00DHTYPH8',
           interval: 1,
           open: { units: 52, nano: 400000000 },
-          high: { units: 52, nano: 400000000 },
-          low: { units: 52, nano: 400000000 },
-          close: { units: 52, nano: 400000000 },
+          high: { units: 52, nano: 800000000 },
+          low: { units: 51, nano: 400000000 },
+          close: { units: 52, nano: 0 },
           volume: 100,
           time: `2022-06-29T18:${mins}:00.000Z`,
           lastTradeTs: `2022-06-29T18:${mins}:40.325Z`,
@@ -162,11 +163,23 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
       ]
       let idx = 0;
       let dealsIdx = 0;
+      let value = 1200;
       const interval = setInterval(() => {
         if (debugCandles[idx]) {
+          value += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+          const open = value + Math.round(Math.random() * 16 - 8);
+          const low = Math.min(value, open) - Math.round(Math.random() * 5);
+          const close = low + 0.1;
+          const high = Math.max(value, open) + Math.round(Math.random() * 5);
+
+          debugCandles[idx].open = toQuotation(open);
+          debugCandles[idx].low = toQuotation(low);
+          debugCandles[idx].high = toQuotation(high);
+          debugCandles[idx].close = toQuotation(close);
           debugCandles[idx].time = `2022-06-29T${hours}:${mins.toString().padStart(2, '0')}:00.000Z`;
-          event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, {...debugCandles[idx], time: new Date(debugCandles[idx].time).toString()});
+          event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, { ...debugCandles[idx], time: new Date(debugCandles[idx].time).toString() });
           if (debugDeals[dealsIdx]) {
+
             event.sender.send(ipcEvents.strategylog, str2ab(debugDeals[dealsIdx]));
             dealsIdx++;
           } else {

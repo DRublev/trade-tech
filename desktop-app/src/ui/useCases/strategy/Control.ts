@@ -66,17 +66,6 @@ const configs = {
       lotsDistribution: 1,
     }
   },
-  'GTLB': {
-    figi: 'BBG00DHTYPH8',
-    parameters: {
-      availableBalance: 58,
-      maxHolding: 1,
-      minSpread: 0.06,
-      moveOrdersOnStep: 1,
-      lotsDistribution: 1,
-      stopLoss: 0.1,
-    }
-  },
   'PIKK': {
     figi: 'BBG004S68BH6',
     parameters: {
@@ -158,18 +147,6 @@ const configs = {
 
     }
   },
-  'TCX': {
-    figi: 'BBG000L69KL5',
-    parameters: {
-      availableBalance: 50,
-      maxHolding: 1,
-      minSpread: 0.08,
-      moveOrdersOnStep: 1,
-      lotsDistribution: 1,
-      stopLoss: 0.4,
-      watchAsk: 3,
-    }
-  },
   'ROSN': {
     figi: 'BBG004731354',
     parameters: {
@@ -227,7 +204,7 @@ const configs = {
       minSpread: 0.06,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.8,
+      stopLoss: 1,
       watchAsk: 3,
       waitTillNextBuyMs: 1000,
     }
@@ -244,6 +221,32 @@ const configs = {
       watchAsk: 3,
       waitTillNextBuyMs: 2000,
       sharesInLot: 10,
+    }
+  },
+  'GTLB': {
+    figi: 'BBG00DHTYPH8',
+    parameters: {
+      availableBalance: 57.57,
+      maxHolding: 1,
+      minSpread: 0.08,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.8,
+      watchAsk: 3,
+      // waitTillNextBuyMs: 1000,
+    }
+  },
+  'TCX': {
+    figi: 'BBG000L69KL5',
+    parameters: {
+      availableBalance: 50,
+      maxHolding: 1,
+      minSpread: 0.08,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.8,
+      watchAsk: 3,
+      waitTillNextBuyMs: 1000,
     }
   },
 };

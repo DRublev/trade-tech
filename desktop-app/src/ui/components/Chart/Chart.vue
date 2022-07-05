@@ -1,6 +1,6 @@
 <template>
   <trading-vue :data="dc" :width="width" :height="height" :titleTxt="title" :color-back="colors.colorBack"
-    :color-grid="colors.colorGrid" :color-text="colors.colorText" ref="tradingVue">
+    :color-grid="colors.colorGrid" :color-text="colors.colorText" :color-scale="colors.colorScale" :color-candle-dw="colors.candleDwn" ref="tradingVue">
   </trading-vue>
 </template>
 <script lang="ts">
@@ -25,6 +25,9 @@ export default class Chart extends Vue {
     colorBack: '#fff',
     colorGrid: '#eee',
     colorText: '#333',
+    colorScale: '#eee',
+    candleDwn: '#ff0f75',
+    candleUp: '#9b7aff',
   }
   candles: number[][] = [];
   dc: DataCube = new DataCube({

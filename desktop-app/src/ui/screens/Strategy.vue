@@ -1,22 +1,33 @@
 <template>
-  <div class="min-w-full min-h-1/2" ref="chartContainer">
+  <div class="w-100 pb-2 pt-4 border-gray-300 border-b justify-center bg-gray-100">
+    <div class="flex-1"></div>
+    <div class="flex-1">
+      <div >
+        <button @click="switchWorking"
+          class="border border-gray-400 rounded px-4 py-1 align-center align-middle text-center" style="height: 30px">
+          <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']" class="text-xl  start-btn-icon" />
+          <Loader v-if="status.loading" class="max-h-full" />
+        </button>
+        <p class="mb-0 text-sm">
+          <span v-if="!status.working">Start</span>
+          <span v-else>Stop</span>
+        </p>
+      </div>
+    </div>
+    <div class="flex-1"></div>
+
+  </div>
+  <div class="max-w-full min-h-1/2 my-1" ref="chartContainer">
     <chart ref="chartComponent" :width="chartWidth" :height="chartHeight" :title="chartTitle" />
   </div>
   <div class="w-full mx-3 h-1/2">
-    <div class="flex justify-between h-full divide-x">
+    <div class="flex justify-between h-full">
       <div class="flex flex-1 place-items-start pt-2 overflow-x-hidden overflow-y-scroll">
         <ul class="text-left ml-16">
           <li v-for="log in logs" :key="log">{{ log }}</li>
         </ul>
       </div>
       <div class="flex flex-1 justify-start pt-2 px-8">
-        <button @click="switchWorking" class="align-center text-purple text-center" style="height: 30px">
-          <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
-            class="text-3xl stroke-current mb-2" />
-          <p v-if="!status.working">Пуск</p>
-          <p v-else>Стоп</p>
-          <Loader v-if="status.loading" class="max-h-full" />
-        </button>
         <ul>
           <li v-for="d in deals" :key="d.time" class="flex justify-between">
             <span :class="{
@@ -108,7 +119,7 @@ export default class Strategy extends Vue {
         lots: latestDeal.lots,
         sum: latestDeal.sum,
       });
-      this.mixpanel.people.increment('turnover_usd, !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
+      this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
     this.$refs.chartComponent.updateTrades(deals);
   }
@@ -128,3 +139,9 @@ export default class Strategy extends Vue {
   }
 }
 </script>
+<style scoped>
+.start-btn-icon {
+  /* stroke-width: 10px; */
+  /* stroke: #333; */
+}
+</style>
