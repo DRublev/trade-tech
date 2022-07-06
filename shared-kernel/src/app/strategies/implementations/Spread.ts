@@ -190,9 +190,10 @@ export default class SpreadStrategy implements IStrategy {
         return [];
       }
 
-      const minAsk = toNum(orderbook.asks[0].price);
-      if (minAsk - minBid < this.config.minSpread) {
-        this.log('calc', `No profitable exit point. Min ask: ${minAsk}; Min bid: ${minBid}; Min spread: ${this.config.minSpread}`);
+      const asks = orderbook.asks.slice(0, this.config.watchAsk || 1).map(ask => toNum(ask.price));
+      const hasProfitableAsk = asks.some(a => a - minBid >= this.config.minSpread);
+      if (!hasProfitableAsk) {
+        this.log('calc', `No profitable exit point. Asks: ${stringify(asks)}; Min bid: ${minBid}; Min spread: ${this.config.minSpread}`);
         return [];
       }
 
@@ -490,6 +491,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.6'; }
+  public get Version() { return '1.0.7'; }
   public get IsWorking() { return this.isWorking; }
 }
