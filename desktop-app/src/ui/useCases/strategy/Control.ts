@@ -1,4 +1,5 @@
 import { ipcEvents } from "@/constants";
+import StrategyConfig from "shared-kernel/src/app/strategies/Config";
 
 const configs = {
   'VEON': {
@@ -306,10 +307,13 @@ export default class ControlUseCase {
   };
 
   constructor() {
-    // (window as any).ipc.send(ipcEvents.START_TRADING, {
-    //   figi: this.config.figi,
-    //   parameters: this.config.parameters,
-    // });
+    this.changeConfig = this.changeConfig.bind(this);
+  }
+
+  async changeConfig(newConfig: typeof this.config) {
+    Object.assign(this.config.parameters, newConfig.parameters);
+    console.log('310 Control', 'changeConfig', newConfig, this.config);
+    await window.ipc.invoke('CHANGE_STRATEGY_CONFIG', this.config);
   }
 
   public get Config() {
@@ -330,9 +334,9 @@ export default class ControlUseCase {
           figi: this.config.figi,
           parameters: { ...this.config.parameters },
         };
-        (window as any).ipc.send('START_TRADING', payload);
+        window.ipc.send('START_TRADING', payload);
       } else {
-        (window as any).ipc.invoke(ipcEvents.PAUSE_TRADING, {
+        window.ipc.invoke(ipcEvents.PAUSE_TRADING, {
           figi: this.config.figi,
         });
       }

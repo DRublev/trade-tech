@@ -1,8 +1,10 @@
 <template>
   <main class="h-full">
-    <div class="content mt-4">
+    <section class="content mt-4">
       <div class="w-100 pb-2 pt-4 justify-center topbar">
-        <div class="w-1/3 flex-1"></div>
+        <div class="w-1/3 flex-1 mx-8">
+          <h2 class="text-left text-xl">{{ config.strategy }}</h2>
+        </div>
         <div class="w-1/3 mx-auto flex-1 flex flex-row justify-evenly">
           <div>
             <button @click="switchWorking" class="border rounded px-4 py-1 align-center align-middle text-center"
@@ -12,17 +14,17 @@
                 class="text-l align-baseline" />
               <Loader v-if="status.loading" class="max-h-full" />
             </button>
-            <p class="mb-0 text-sm">
+            <p class="mb-0 text-sm text-center">
               <span v-if="!status.working">Start</span>
               <span v-else>Stop</span>
             </p>
           </div>
         </div>
         <div class="w-1/3 flex-1"></div>
-  
+
       </div>
       <div class="max-w-full min-h-1/2 mx-4 mb-3 chart-container" ref="chartContainer">
-        <chart ref="chartComponent" :width="chartWidth" :height="chartHeight" :title="chartTitle" />
+        <chart ref="chartComponent" :width="chartWidth" :height="chartHeight" />
       </div>
       <div class="w-full mx-3">
         <div class="flex justify-between">
@@ -49,36 +51,39 @@
           </div>
         </div>
       </div>
-    </div>
-    <aside class="sidebar">
+    </section>
+    <aside v-if="!!shownSection" class="sidebar transition">
+      <edit-config v-if="shownSection === 'config'" :config="config" v-on:save="controlUC.changeConfig" />
+    </aside>
+    <aside class="toolbar">
       <ul class="flex flex-col controls-list">
         <li>
-          <button @click="openConfigModal" class="rounded px-4 py-1 align-center align-middle text-center">
+          <button @click="shownSection = !shownSection ? 'config' : ''"
+            class="rounded px-4 py-1 align-center align-middle text-center">
             <fa :icon="['far', 'edit']" class="text-l align-baseline" />
           </button>
         </li>
       </ul>
     </aside>
-    <Modal v-model="showModal" :close="closeConfigModal">
-    hello world!
-    </Modal>
   </main>
-  
+
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import { Inject } from 'vue-property-decorator';
+import { Inject, Watch } from 'vue-property-decorator';
 
 import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
 import { Deal } from '@ui/useCases/strategy/DealsList';
 import Chart from '../../components/Chart';
 import Loader from '../../components/Loader.vue';
+import EditConfig from '../../components/EditConfig.vue';
 
 
 @Options({
   components: {
     Chart,
     Loader,
+    EditConfig,
   }
 })
 export default class Strategy extends Vue {
@@ -87,11 +92,11 @@ export default class Strategy extends Vue {
   chartUC?: StrategyChartUseCase = undefined;
   dealsListUC?: DealsListUseCase = undefined;
 
-  logs: string[] = [];
   chartWidth = 200;
   chartHeight = 200;
 
   showModal = false;
+  shownSection = '';
 
   declare $refs: {
     chartContainer: HTMLFormElement,
@@ -106,8 +111,8 @@ export default class Strategy extends Vue {
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
 
     this.updateChartSize = this.updateChartSize.bind(this);
-    window.addEventListener('resize', this.updateChartSize(this.$refs.chartContainer))
-    this.updateChartSize(this.$refs.chartContainer)()
+    window.addEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
+    this.updateChartSize(this.$refs.chartContainer)();
   }
   beforeDestroy() {
     window.removeEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
@@ -132,9 +137,9 @@ export default class Strategy extends Vue {
       d.action === 'buy' ? 1 : 0,
       d.pricePerLot,
       `${d.pricePerLot}`,
-    ])
-    console.log('109 Strategy', 'dealchange', latestDeal, isPending);
-     const deals = this.dealsListUC?.Deals.filter(d => !d.isClosed).map(mapDeal);
+    ]);
+
+    const deals = this.dealsListUC?.Deals.filter(d => !d.isClosed).map(mapDeal);
     const pendingDeals = this.dealsListUC?.PendingDeals.filter(d => !d.isClosed).map(mapDeal);
     if (latestDeal && !isPending) {
       this.mixpanel.track('deal', {
@@ -149,41 +154,42 @@ export default class Strategy extends Vue {
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
   }
 
-  openConfigModal() {
-    this.showModal = true;
-  }
-  closeConfigModal() {
-    this.showModal = false;
+  @Watch('shownSection')
+  onShownSectionChange() {
+    this.updateChartSize(this.$refs.chartContainer)();
   }
 
-  get chartTitle() {
-    const { ticker, strategy } = this.controlUC.Config;
-    return `${ticker} ${strategy}`;
-  }
-  get status() {
-    return this.controlUC.Status;
-  }
-  get deals() {
-    return this.dealsListUC?.Deals || [];
-  }
-  get pendingDeals() {
-    return this.dealsListUC?.PendingDeals || [];
-  }
-  get Logs() {
-    return this.dealsListUC?.Logs || [];
-  }
+  get config() { return this.controlUC.Config; }
+  get status() { return this.controlUC.Status; }
+  get deals() { return this.dealsListUC?.Deals || []; }
+  get pendingDeals() { return this.dealsListUC?.PendingDeals || []; }
+  get logs() { return this.dealsListUC?.Logs || []; }
 }
 </script>
 <style scoped>
 main {
   background-color: #f6f6f6;
+  display: flex;
+  justify-content: space-between;
+  max-width: 100vw;
 }
 
 .topbar {
   height: 75px;
+  display: flex;
+  flex-direction: row;
 }
+
+.topbar h2 {
+  font-size: xx-large;
+}
+
 .controls-list {
-  margin-top: 105px; 
+  margin-top: 105px;
+}
+
+.controls-list li {
+  text-align: center;
 }
 
 .chart-container {
@@ -194,16 +200,23 @@ main {
 .content {
   border-radius: 25px;
   margin-left: 1.25rem;
-  width: calc(100% - 60px - 1.25rem);
-  height: calc(100% - 75px);
-  float: left;
+  flex: 1 1 auto;
   background-color: #fff;
 }
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  right: 60px;
+  height: 100vh;
+  width: 20vw;
+  max-width: 25vw;
+  padding-top: 105px;
+  background-color: #fff;
+}
+
+.toolbar {
   width: 60px;
   height: 100%;
-  float: right;
-  height: calc(100% - 75px);
 }
 </style>

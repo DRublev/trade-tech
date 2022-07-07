@@ -19,7 +19,6 @@ import { Prop } from 'vue-property-decorator';
 export default class Chart extends Vue {
   @Prop() width!: number;
   @Prop() height!: number;
-  @Prop() title!: string;
 
   chartWidth = 12;
   colors = {
