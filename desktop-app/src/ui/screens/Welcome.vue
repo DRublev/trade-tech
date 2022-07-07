@@ -10,8 +10,8 @@ import { Options, Vue } from 'vue-class-component';
 
 import Store from '@/node/domain/Store';
 import Onboarding from './onboarding/index.vue';
-import DebuggingStrategy from './DebuggingStrategy.vue';
-import Strategy from './Strategy.vue';
+import DebuggingStrategy from './strategy/DebuggingStrategy.vue';
+import Strategy from './strategy/Strategy.vue';
 
 
 @Options({

@@ -1,6 +1,7 @@
 <template>
-  <trading-vue :data="dc" :width="width" :height="height" :titleTxt="title" :color-back="colors.colorBack"
-    :color-grid="colors.colorGrid" :color-text="colors.colorText" :color-scale="colors.colorScale" :color-candle-dw="colors.candleDwn" ref="tradingVue">
+  <trading-vue :data="dc" :width="width" :height="height" :titleTxt="''" :color-back="colors.colorBack"
+    :color-grid="colors.colorGrid" :color-text="colors.colorText" :color-scale="colors.colorScale"
+    :color-candle-dw="colors.candleDwn" :color-candle-up="colors.candleUp" ref="tradingVue">
   </trading-vue>
 </template>
 <script lang="ts">
@@ -22,12 +23,13 @@ export default class Chart extends Vue {
 
   chartWidth = 12;
   colors = {
-    colorBack: '#fff',
+    colorBack: 'transparent',
     colorGrid: '#eee',
-    colorText: '#333',
-    colorScale: '#eee',
+    colorText: '#313234',
+    colorScale: '#313234',
     candleDwn: '#ff0f75',
-    candleUp: '#9b7aff',
+    candleUp: '#68d8b7',
+    // candleUp: '#9b7aff',
   }
   candles: number[][] = [];
   dc: DataCube = new DataCube({
@@ -35,14 +37,28 @@ export default class Chart extends Vue {
       type: 'Candles',
       data: [],
       tf: '1m'
-    }, onchart: [{
-      type: 'Trades',
-      data: [],
-      name: 'Trades',
-      settings: {
-        zIndex: 20,
+    }, onchart: [
+      {
+        type: 'Trades',
+        data: [],
+        name: 'Trades',
+        settings: {
+          zIndex: 21,
+          // buyColor: '#70938d',
+          // sellColor: '#fb474a',
+        },
       },
-    }], offchart: []
+      {
+        type: 'Trades',
+        data: [],
+        name: 'Pending',
+        settings: {
+          zIndex: 20,
+          buyColor: '#879a77',
+          sellColor: '#c48586',
+        },
+      },
+    ], offchart: []
   });
 
   declare $refs: {
@@ -66,8 +82,10 @@ export default class Chart extends Vue {
     this.$refs.tradingVue.setRange(fstTime.valueOf(), ltsTime.valueOf());
   }
 
-  updateTrades(deals: [number, 0 | 1, number, string?][]) {
+  updateTrades(deals: [number, 0 | 1, number, string?][], pendingDeals: [number, 0 | 1, number, string?][]) {
     this.dc.set('onchart.Trades.data', deals);
+    this.dc.set('onchart.Pending.data', pendingDeals);
+
   }
 }
 </script>

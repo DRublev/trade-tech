@@ -14,15 +14,14 @@ const configs = {
   'TGLD': {
     figi: 'BBG222222222',
     parameters: {
-      availableBalance: 16,
-      maxHolding: 2,
-      // minSpread: 0.0001,
-      minSpread: 0,
+      availableBalance: 10,
+      maxHolding: 1,
+      minSpread: 0.0001,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      // stopLoss: 0.000,
+      stopLoss: 0.0004,
       sharesInLot: 100,
-      watchAsk: 3,
+      watchAsk: 1,
       waitTillNextBuyMs: 2000,
     }
   },
@@ -104,11 +103,13 @@ const configs = {
     parameters: {
       availableBalance: 250,
       maxHolding: 1,
-      minSpread: 0.09,
+      minSpread: 0.05,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.06,
+      stopLoss: 0.4,
       sharesInLot: 10,
+      watchAsk: 2,
+      waitTillNextBuyMs: 1000,
     }
   },
   'PLOY': {
@@ -199,13 +200,13 @@ const configs = {
   'TCS': {
     figi: 'BBG005DXJS36',
     parameters: {
-      availableBalance: 40,
+      availableBalance: 36,
       maxHolding: 1,
       minSpread: 0.06,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 1,
-      watchAsk: 3,
+      stopLoss: 0.15,
+      watchAsk: 1,
       waitTillNextBuyMs: 1000,
     }
   },
@@ -249,6 +250,46 @@ const configs = {
       waitTillNextBuyMs: 1000,
     }
   },
+  'POGR': {
+    figi: 'BBG00VPKLPX4',
+    parameters: {
+      availableBalance: 360,
+      maxHolding: 1,
+      minSpread: 0.01,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.02,
+      watchAsk: 2,
+      waitTillNextBuyMs: 1000,
+    }
+  },
+  'SFTL': {
+    figi: 'BBG0136BTL03',
+    parameters: {
+      availableBalance: 150,
+      maxHolding: 1,
+      minSpread: 0.5,
+      moveOrdersOnStep: 2,
+      lotsDistribution: 1,
+      stopLoss: 1.8,
+      watchAsk: 2,
+      // enteringPrice: 120.1,
+      waitTillNextBuyMs: 1000,
+    }
+  },
+  'SPBE': {
+    figi: 'BBG002GHV6L9',
+    parameters: {
+      availableBalance: 16,
+      maxHolding: 5,
+      minSpread: 0.03,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.025,
+      watchAsk: 3,
+      waitTillNextBuyMs: 1000,
+    }
+  },
 };
 
 export default class ControlUseCase {
@@ -260,8 +301,8 @@ export default class ControlUseCase {
 
   config = {
     strategy: 'Spread',
-    ticker: 'GTLB',
-    ...configs.GTLB,
+    ticker: 'SFTL',
+    ...configs.SFTL,
   };
 
   constructor() {
