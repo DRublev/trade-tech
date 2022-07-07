@@ -38,6 +38,7 @@
     "vue-mixpanel": "^2.0.0",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^4.0.13",
+    "vue-universal-modal": "^1.1.4",
     "winston": "^3.7.2",
     "winston-sentry-log": "^1.0.26",
     "yarn": "^1.22.19"

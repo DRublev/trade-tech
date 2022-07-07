@@ -1,11 +1,15 @@
-import "./plugins/fontawesome";
 import { createApp } from "vue";
-import App from "@/ui/screens/App.vue";
-import "@/ui/assets/tailwind.css";
-import FontAwesomeIcon from "./plugins/fontawesome";
 import VueGtag from "vue-gtag";
-import router from "./plugins/router";
 import VueMixpanel from "vue-mixpanel";
+import VueUniversalModal from "vue-universal-modal";
+
+import "vue-universal-modal/dist/index.css";
+import "@/ui/assets/tailwind.css";
+
+import App from "@/ui/screens/App.vue";
+import "./plugins/fontawesome";
+import FontAwesomeIcon from "./plugins/fontawesome";
+import router from "./plugins/router";
 
 createApp(App)
   .component("fa", FontAwesomeIcon)
@@ -17,6 +21,9 @@ createApp(App)
     config: {
       debug: true,
     },
+  })
+  .use(VueUniversalModal, {
+    teleportTarget: '#modals',
   })
   .use(router)
   .mount("#app");
