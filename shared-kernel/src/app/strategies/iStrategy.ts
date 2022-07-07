@@ -8,6 +8,7 @@ export interface IStrategy {
   onOrderbook(orderbook: Orderbook): Promise<void>;
   onOrderChanged(order: Order): Promise<void>;
   toggleWorking: ToggleWorkingModeCommand;
+  changeConfig(newConfig: StrategyConfig): void;
   
   Version?: string;
   LeftMoney: number;

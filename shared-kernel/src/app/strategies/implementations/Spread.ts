@@ -47,10 +47,7 @@ type PositionState = {
 }
 
 /**
- * -- Цена захода в позицию
- * -- Поиск выгодного ask не по первому айтему, а по X (из конфига)
  * -- поддержка частичного исполнения заявок
- * -- знать на каком ask выйти прежде чем зайти в позицию
  * -- заход не на весь баланс, а по частям (покупка n+1 должна быть на N бидов ниже)
  */
 export default class SpreadStrategy implements IStrategy {
@@ -78,6 +75,10 @@ export default class SpreadStrategy implements IStrategy {
     private stdOut: NodeJS.WritableStream,
   ) {
     this.leftMoney = Number(config.availableBalance);
+  }
+  changeConfig(newConfig: SpreadStrategyConfig): void {
+    const toSet = Object.assign(this.config, newConfig);
+    this.config = toSet;
   }
 
   public toggleWorking(): boolean {
@@ -491,6 +492,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.7'; }
+  public get Version() { return '1.0.8'; }
   public get IsWorking() { return this.isWorking; }
 }
