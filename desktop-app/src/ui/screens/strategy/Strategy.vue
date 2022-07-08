@@ -1,14 +1,14 @@
 <template>
   <main class="h-full">
-    <section class="content mt-4">
-      <div class="w-100 pb-2 pt-4 justify-center topbar">
+    <div class="content mt-4">
+      <div class="w-full pb-2 pt-4 justify-center topbar">
         <div class="w-1/3 flex-1 mx-8">
           <h2 class="text-left text-xl">{{ config.strategy }}</h2>
         </div>
         <div class="w-1/3 mx-auto flex-1 flex flex-row justify-evenly">
           <div>
             <button @click="switchWorking" class="border rounded px-4 py-1 align-center align-middle text-center"
-              :class="{ 'bg-red-400 text-white': status.working, 'bg-indigo-400 text-white': !status.working }"
+              :class="{ 'bg-red-600 text-white': status.working }"
               style="height: 30px">
               <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
                 class="text-l align-baseline" />
@@ -23,7 +23,7 @@
         <div class="w-1/3 flex-1"></div>
 
       </div>
-      <div class="max-w-full min-h-1/2 mx-4 mb-3 chart-container" ref="chartContainer">
+      <div class="max-w-fulssl min-h-1/2 mx-4 mb-3 mt-3 chart-container" ref="chartContainer">
         <chart ref="chartComponent" :width="chartWidth" :height="chartHeight" />
       </div>
       <div class="w-full mx-3">
@@ -51,12 +51,12 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
     <aside v-if="!!shownSection" class="sidebar transition">
       <edit-config v-if="shownSection === 'config'" :config="config" v-on:save="controlUC.changeConfig" />
     </aside>
-    <aside class="toolbar">
-      <ul class="flex flex-col controls-list">
+    <aside class="toolbar pt-4">
+      <ul class="flex flex-col controls-list mt-5">
         <li>
           <button @click="shownSection = !shownSection ? 'config' : ''"
             class="rounded px-4 py-1 align-center align-middle text-center">
@@ -123,6 +123,7 @@ export default class Strategy extends Vue {
   }
 
   updateChartSize = (container: HTMLFormElement) => () => {
+    console.log('126 Strategy', container.clientWidth, container.getBoundingClientRect());
     this.chartWidth = container.clientWidth;
     this.chartHeight = container.clientHeight;
   }
@@ -184,17 +185,18 @@ main {
   font-size: xx-large;
 }
 
-.controls-list {
-  margin-top: 105px;
-}
+/* .controls-list {
+  margin-top: 105px; */
+/* } */
 
 .controls-list li {
   text-align: center;
 }
 
 .chart-container {
-  background-color: #f6f6f6;
+  border: 1px solid rgb(30 41 59 / 1);
   border-radius: 25px;
+  max-width: 100vw;
 }
 
 .content {

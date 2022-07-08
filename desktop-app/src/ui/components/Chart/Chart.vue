@@ -1,5 +1,5 @@
 <template>
-  <trading-vue :data="dc" :width="width" :height="height" :titleTxt="''" :color-back="colors.colorBack"
+  <trading-vue  :data="dc" :width="width" :height="height" :titleTxt="''" :color-back="colors.colorBack"
     :color-grid="colors.colorGrid" :color-text="colors.colorText" :color-scale="colors.colorScale"
     :color-candle-dw="colors.candleDwn" :color-candle-up="colors.candleUp" ref="tradingVue">
   </trading-vue>
@@ -34,6 +34,7 @@ export default class Chart extends Vue {
   dc: DataCube = new DataCube({
     chart: {
       type: 'Candles',
+      indexBased: true,
       data: [],
       tf: '1m'
     }, onchart: [
@@ -79,6 +80,7 @@ export default class Chart extends Vue {
     const ltsTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() + this.chartWidth);
 
     this.$refs.tradingVue.setRange(fstTime.valueOf(), ltsTime.valueOf());
+    // this.$refs.tradingVue.goto(candles.length - 1);
   }
 
   updateTrades(deals: [number, 0 | 1, number, string?][], pendingDeals: [number, 0 | 1, number, string?][]) {
