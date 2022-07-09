@@ -22,7 +22,6 @@ export default class OrdersService implements IOrdersService {
     if (!postOrderRequest.accountId) {
       postOrderRequest.accountId = this.accountProvider.Id;
     }
-    console.log(`placing order, ${stringify(postOrderRequest)}`);
     const posted = await this.client.orders.postOrder(postOrderRequest);
     return posted.orderId;
   }
