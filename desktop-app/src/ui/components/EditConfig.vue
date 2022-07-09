@@ -20,12 +20,11 @@ export default class EditConfig extends Vue {
   edited: any = {};
 
   mounted() {
-    console.log(this.config);
     this.edited = { ...this.config.parameters };
   }
 
   save() {
-    this.$emit('save', this.edited);
+    this.$emit('save', Object.assign({}, this.edited));
   }
 
   get keys() { return Object.keys(this.config.parameters); }

@@ -63,10 +63,10 @@ ipcMain.handle(ipcEvents.PAUSE_TRADING, async (event, data) => {
   }
 });
 
-ipcMain.handle(ipcEvents.CHANGE_CONFIG, async (event, config) => {
+ipcMain.handle(ipcEvents.CHANGE_CONFIG, async (event, data) => {
   try {
-    if (!runningTradingWorkers[config.figi]) throw new ReferenceError(`No working strategy for ${config.figi} was found`);
-    await changeConfig(runningTradingWorkers[config.figi], config);
+    if (!runningTradingWorkers[data.figi]) throw new ReferenceError(`No working strategy for ${data.figi} was found`);
+    await changeConfig(runningTradingWorkers[data.figi], data.config);
   } catch(e) {
     logger.error('CHANGE_CONFIG', e);
   }

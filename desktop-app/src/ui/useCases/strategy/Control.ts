@@ -312,9 +312,8 @@ export default class ControlUseCase {
   }
 
   async changeConfig(newConfig: typeof this.config) {
-    Object.assign(this.config.parameters, newConfig.parameters);
-    console.log('310 Control', 'changeConfig', newConfig, this.config);
-    await window.ipc.invoke(ipcEvents.CHANGE_CONFIG, this.config);
+    const newConfigParams = Object.assign({}, this.config.parameters, newConfig);
+    await window.ipc.invoke(ipcEvents.CHANGE_CONFIG, { figi: this.config.figi, config: newConfigParams });
   }
 
   public get Config() {
