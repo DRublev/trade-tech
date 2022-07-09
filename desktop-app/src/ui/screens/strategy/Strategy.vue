@@ -23,7 +23,7 @@
         <div class="w-1/3 flex-1"></div>
 
       </div>
-      <div class="max-w-fulssl min-h-1/2 mx-4 mb-3 mt-3 chart-container" ref="chartContainer">
+      <div class="min-h-1/2 mx-4 mb-3 mt-3 chart-container" ref="chartContainer">
         <chart ref="chartComponent" :width="chartWidth" :height="chartHeight" />
       </div>
       <div class="w-full mx-3">
@@ -123,7 +123,6 @@ export default class Strategy extends Vue {
   }
 
   updateChartSize = (container: HTMLFormElement) => () => {
-    console.log('126 Strategy', container.clientWidth, container.getBoundingClientRect());
     this.chartWidth = container.clientWidth;
     this.chartHeight = container.clientHeight;
   }
@@ -157,6 +156,7 @@ export default class Strategy extends Vue {
 
   @Watch('shownSection')
   onShownSectionChange() {
+    console.log('160 Strategy', );
     this.updateChartSize(this.$refs.chartContainer)();
   }
 
@@ -172,7 +172,7 @@ main {
   background-color: #f6f6f6;
   display: flex;
   justify-content: space-between;
-  max-width: 100vw;
+  max-width: 100%;
 }
 
 .topbar {
@@ -185,16 +185,12 @@ main {
   font-size: xx-large;
 }
 
-/* .controls-list {
-  margin-top: 105px; */
-/* } */
-
 .controls-list li {
   text-align: center;
 }
 
 .chart-container {
-  border: 1px solid rgb(30 41 59 / 1);
+  border: 1px solid rgb(30 41 59);
   border-radius: 25px;
   max-width: 100vw;
 }
@@ -211,7 +207,7 @@ main {
   top: 0;
   right: 60px;
   height: 100vh;
-  width: 20vw;
+  width: auto;
   max-width: 25vw;
   padding-top: 105px;
   background-color: #fff;
