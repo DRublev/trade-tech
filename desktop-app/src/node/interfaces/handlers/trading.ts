@@ -1,11 +1,9 @@
 import { ipcMain, safeStorage } from 'electron';
-import ioc from 'shared-kernel/src/ioc';
 
 import { ipcEvents } from '@/constants';
-import { TinkoffSdk } from '@/node/app/tinkoff';
 import logger from '@/node/infra/Logger';
 import storage from '@/node/infra/Storage';
-import { pauseStrategy, startStrategy } from '../workers/trading';
+import { pauseStrategy, startStrategy, changeConfig } from '../workers/trading';
 import { StartTradingCmd } from '../commands';
 
 
@@ -19,12 +17,6 @@ const getToken = (isSandbox: boolean) => {
   }
   const token = safeStorage.decryptString(Buffer.from(Object.values(storedToken) as any));
   return token;
-}
-
-const createSdk = (isSandbox: boolean) => {
-  const token = getToken(isSandbox);
-  const mainBuild: Function = ioc.get(Symbol.for("TinkoffBuildClientFunc"));
-  TinkoffSdk.bindSdk(mainBuild(token, isSandbox), isSandbox);
 }
 
 ipcMain.handle('test', async (event, data) => {
@@ -71,4 +63,11 @@ ipcMain.handle(ipcEvents.PAUSE_TRADING, async (event, data) => {
   }
 });
 
-
+ipcMain.handle(ipcEvents.CHANGE_CONFIG, async (event, data) => {
+  try {
+    if (!runningTradingWorkers[data.figi]) throw new ReferenceError(`No working strategy for ${data.figi} was found`);
+    await changeConfig(runningTradingWorkers[data.figi], data.config);
+  } catch(e) {
+    logger.error('CHANGE_CONFIG', e);
+  }
+});

@@ -48,3 +48,13 @@ export const resumeStrategy = (threadId: number) => {
     throw e;
   }
 };
+
+export const changeConfig = (threadId: number, config: any) => {
+  try {
+    const worker = WorkersPool.Get(threadId);
+    worker.postMessage({ type: 'change-config', config });
+  } catch (e) {
+    logger.error('changeConfig', e);
+    throw e;
+  }
+};

@@ -13,10 +13,12 @@ export type SpreadStrategyConfig = StrategyConfig & {
   moveOrdersOnStep: number;
   lotsDistribution: number;
   stopLoss: number;
+  askStopLoss: number;
   sharesInLot: number;
   enteringPrice?: number;
   watchAsk?: number;
   waitTillNextBuyMs?: number;
+  waitAfterStopLossMs?: number;
 };
 
 type ToPlaceOrderInfo = {
@@ -24,6 +26,7 @@ type ToPlaceOrderInfo = {
   price: number;
   idx: number;
   isStop?: boolean;
+  forBid?: string;
 };
 
 /*
@@ -42,6 +45,7 @@ type PositionState = {
   isExecuted?: boolean;
   isPartiallyExecuted?: boolean;
   isStop?: boolean;
+  becauseOfOrderId?: string;
   executedLots: number;
   idx: number;
 }
@@ -130,7 +134,7 @@ export default class SpreadStrategy implements IStrategy {
           const placedId = await this.postOrder(orderbook.figi, sellReq.lots, sellReq.price, false);
           this.watchingOrders.push(placedId);
 
-          this.log('calc', `Placed sell order: ${sellReq.price} ${sellReq.lots} ${placedId}`);
+          this.log('calc', `Placed sell order: ${sellReq.price} ${sellReq.lots} ${placedId} ${sellReq.forBid}`);
           this.asks[sellReq.price] = {
             price: sellReq.price,
             lots: sellReq.lots,
@@ -139,15 +143,16 @@ export default class SpreadStrategy implements IStrategy {
             isExecuted: false,
             orderId: placedId,
             executedLots: 0,
-            stopLoss: this.config.stopLoss ? sellReq.price - this.config.stopLoss : undefined,
+            stopLoss: this.config.askStopLoss ? sellReq.price - this.config.askStopLoss : undefined,
             isStop: !!sellReq.isStop,
+            becauseOfOrderId: sellReq.forBid,
           };
           this.log('calc', `New asks map ${stringify(this.asks)}`);
         }
         if (!this.waitingBuyTimer && this.config.waitTillNextBuyMs) {
           this.waitingBuyTimer = setTimeout(() => {
             this.waitingBuyTimer = null;
-          });
+          }, this.config.waitTillNextBuyMs);
         }
       }
 
@@ -246,6 +251,7 @@ export default class SpreadStrategy implements IStrategy {
             lots: bid.isPartiallyExecuted ? bid.executedLots : bid.lots,
             idx: 0,
             isStop: true,
+            forBid: bid.orderId,
           });
           this.bids[bid.price].isReserved = true;
         }
@@ -263,6 +269,7 @@ export default class SpreadStrategy implements IStrategy {
             lots: ask.isPartiallyExecuted ? ask.executedLots : ask.lots,
             idx: 0,
             isStop: true,
+            forBid: ask.orderId,
           });
           this.asks[ask.price].isReserved = true;
         }
@@ -292,6 +299,7 @@ export default class SpreadStrategy implements IStrategy {
           toSell.push({
             price: askPrice,
             lots: this.bids[profitableHolding].lots,
+            forBid: this.bids[profitableHolding].orderId,
             idx,
           });
           this.bids[profitableHolding].isReserved = true;
@@ -385,6 +393,12 @@ export default class SpreadStrategy implements IStrategy {
           this.leftMoney += toNum(order.totalOrderAmount);
           this.log('calc', `after Holding lots: ${this.holdingLots}; Lots executed: ${order.lotsExecuted}; asks: ${stringify(this.asks)}`);
           this.log('calc', `Left money: ${this.LeftMoney}`);
+          if (this.asks[askIdx].isStop && this.config.waitAfterStopLossMs) {
+            this.log('info', `Waiting ${this.config.waitAfterStopLossMs} ms after stop loss`);
+            this.waitingBuyTimer = setTimeout(() => {
+              this.waitingBuyTimer = null;
+            }, this.config.waitAfterStopLossMs);
+          }
           this.archive.push({ ...this.asks[askIdx], isBuy: false });
           const bids = Object.values(this.bids);
           for (const bid of bids) {
@@ -492,6 +506,6 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.8'; }
+  public get Version() { return '1.0.11'; }
   public get IsWorking() { return this.isWorking; }
 }

@@ -1,4 +1,5 @@
 import { ipcEvents } from "@/constants";
+import StrategyConfig from "shared-kernel/src/app/strategies/Config";
 
 const configs = {
   'VEON': {
@@ -200,14 +201,14 @@ const configs = {
   'TCS': {
     figi: 'BBG005DXJS36',
     parameters: {
-      availableBalance: 36,
+      availableBalance: 40,
       maxHolding: 1,
-      minSpread: 0.06,
+      minSpread: 0.03,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.15,
+      stopLoss: 0.2,
       watchAsk: 1,
-      waitTillNextBuyMs: 1000,
+      // waitTillNextBuyMs: 1000,
     }
   },
   'RUAL': {
@@ -268,13 +269,14 @@ const configs = {
     parameters: {
       availableBalance: 150,
       maxHolding: 1,
-      minSpread: 0.5,
+      minSpread: 0.4,
       moveOrdersOnStep: 2,
       lotsDistribution: 1,
-      stopLoss: 1.8,
-      watchAsk: 2,
-      // enteringPrice: 120.1,
-      waitTillNextBuyMs: 1000,
+      stopLoss: 0.32,
+      askStopLoss: 1.5,
+      watchAsk: 4,
+      // enteringPrice: 140,
+      waitAfterStopLossMs: 60_000,
     }
   },
   'SPBE': {
@@ -285,7 +287,7 @@ const configs = {
       minSpread: 0.03,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.025,
+      stopLoss: 0.06,
       watchAsk: 3,
       waitTillNextBuyMs: 1000,
     }
@@ -306,10 +308,12 @@ export default class ControlUseCase {
   };
 
   constructor() {
-    // (window as any).ipc.send(ipcEvents.START_TRADING, {
-    //   figi: this.config.figi,
-    //   parameters: this.config.parameters,
-    // });
+    this.changeConfig = this.changeConfig.bind(this);
+  }
+
+  async changeConfig(newConfig: typeof this.config) {
+    const newConfigParams = Object.assign({}, this.config.parameters, newConfig);
+    await window.ipc.invoke(ipcEvents.CHANGE_CONFIG, { figi: this.config.figi, config: newConfigParams });
   }
 
   public get Config() {
@@ -330,9 +334,9 @@ export default class ControlUseCase {
           figi: this.config.figi,
           parameters: { ...this.config.parameters },
         };
-        (window as any).ipc.send('START_TRADING', payload);
+        window.ipc.send('START_TRADING', payload);
       } else {
-        (window as any).ipc.invoke(ipcEvents.PAUSE_TRADING, {
+        window.ipc.invoke(ipcEvents.PAUSE_TRADING, {
           figi: this.config.figi,
         });
       }

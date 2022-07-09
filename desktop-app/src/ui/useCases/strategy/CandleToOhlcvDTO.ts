@@ -20,7 +20,7 @@ export default class CandleToOhlcvDTO {
     const high = toNum(candle.high);
     const low = toNum(candle.low);
     const close = toNum(candle.close);
-    const volume = 0;
+    const volume = candle.volume;
     return [
       time,
       open,

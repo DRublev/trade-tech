@@ -120,6 +120,10 @@ parentPort?.on('message', (command) => {
     if (strategy && !strategy.IsWorking) {
       strategy.toggleWorking();
     }
+  } else if (command.type === 'change-config') {
+    if (strategy) {
+      strategy.changeConfig(command.config);
+    }
   }
 });
 
