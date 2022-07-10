@@ -1,15 +1,15 @@
 <template>
   <main class="h-full">
-    <div class="content mt-4">
+    <div class="content">
       <div class="w-full pb-2 pt-4 justify-center topbar">
         <div class="w-1/3 flex-1 mx-8">
           <h2 class="text-left text-xl">{{ config.strategy }}</h2>
         </div>
         <div class="w-1/3 mx-auto flex-1 flex flex-row justify-evenly">
           <div>
-            <button @click="switchWorking" class="border rounded px-4 py-1 align-center align-middle text-center"
-              :class="{ 'bg-red-600 text-white': status.working }"
-              style="height: 30px">
+            <button @click="switchWorking"
+              class="border border-gray-400 rounded-md shadow-sm px-4 py-1 align-center align-middle text-center"
+              :class="{ 'bg-red-600 text-white': status.working }" style="height: 30px">
               <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
                 class="text-l align-baseline" />
               <Loader v-if="status.loading" class="max-h-full" />
@@ -56,7 +56,7 @@
       <edit-config v-if="shownSection === 'config'" :config="config" v-on:save="controlUC.changeConfig" />
     </aside>
     <aside class="toolbar pt-4">
-      <ul class="flex flex-col controls-list mt-5">
+      <ul class="flex flex-col controls-list mt-5 pr-5">
         <li>
           <button @click="shownSection = !shownSection ? 'config' : ''"
             class="rounded px-4 py-1 align-center align-middle text-center">
@@ -73,7 +73,8 @@ import { Options, Vue } from 'vue-class-component';
 import { Inject, Watch } from 'vue-property-decorator';
 
 import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
-import { Deal } from '@ui/useCases/strategy/DealsList';
+import { Deal } from '@/ui/useCases/strategy/DealsList';
+import ActivesUseCase from '@/ui/useCases/Actives';
 import Chart from '../../components/Chart';
 import Loader from '../../components/Loader.vue';
 import EditConfig from '../../components/EditConfig.vue';
@@ -152,11 +153,11 @@ export default class Strategy extends Vue {
       // this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
+    ActivesUseCase.fetchBalances();
   }
 
   @Watch('shownSection')
   onShownSectionChange() {
-    console.log('160 Strategy', );
     this.updateChartSize(this.$refs.chartContainer)();
   }
 

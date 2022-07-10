@@ -7,6 +7,7 @@ import { TinkoffAccountsService, TinkoffSdk } from '@/node/app/tinkoff';
 import logger from '@/node/infra/Logger';
 import storage from '@/node/infra/Storage';
 
+export * from './account';
 export * from './trading';
 
 type StoreStructure = {
@@ -115,7 +116,7 @@ ipcMain.handle(ipcEvents.TINKOFF_SUBSCRIBE_ON_CANDLES, async (event, data: { fig
       await createSdk(isSandbox);
     }
     console.log('117 index', data.figi);
-    await TinkoffSdk.Sdk.CanddlesStreamSubscriber.subscribe(data.figi, Timeframes.OneMinute);
+    await TinkoffSdk.Sdk.CandlesStreamSubscriber.subscribe(data.figi, Timeframes.OneMinute);
     return true;
   } catch (e) {
     logger.error('TINKOFF_SUBSCRIBE_ON_CANDLES', e);
@@ -202,7 +203,7 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
       const isSandbox = storage.get('isSandbox');
       await createSdk(isSandbox);
     }
-    const stream = await TinkoffSdk.Sdk.CanddlesStreamSubscriber.stream();
+    const stream = await TinkoffSdk.Sdk.CandlesStreamSubscriber.stream();
     for await (const candle of stream) {
       console.log('174 index', candle);
       event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, candle);

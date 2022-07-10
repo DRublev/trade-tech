@@ -20,7 +20,7 @@ export default class CandlesSubscriber implements ICandlesSubscriber {
     this.getStreamSubscribeRequest = this.getStreamSubscribeRequest.bind(this);
   }
 
-  subscribe(figi: string, timeframe: Timeframes) {
+  public subscribe(figi: string, timeframe: Timeframes) {
     if (!subscribed.find(s => s.figi === figi && s.timeframe === timeframe)) {
       subscribed.push({
         figi,
@@ -29,7 +29,7 @@ export default class CandlesSubscriber implements ICandlesSubscriber {
     }
   }
 
-  unsubscribe(figi: string): void {
+  public unsubscribe(figi: string): void {
     const includes = this.subscribed.find(s => s.figi === figi);
     if (!includes) return;
     this.subscribed = this.subscribed.filter(s => s.figi !== figi);

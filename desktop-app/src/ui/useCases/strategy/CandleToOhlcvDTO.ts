@@ -1,16 +1,6 @@
+import { toNum } from "../helpers";
+
 type Candle = any;
-
-const nanoPrecision = 1_000_000_000;
-
-
-
-const toQuotation = (number: number) => {
-  const decimal = (number - Math.floor(Number(number))).toFixed(9);
-  return ({
-  units: Math.floor(number),
-  nano: decimal.slice(2) as any as number,
-})};
-const toNum = (qutation: { units: number, nano: number }) => Number(qutation.units + (qutation.nano / nanoPrecision));
 
 
 export default class CandleToOhlcvDTO {
