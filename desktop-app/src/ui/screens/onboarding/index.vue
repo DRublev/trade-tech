@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding mt-24">
+  <div class="onboarding pt-24 text-center">
     <h1 class="mb-8 text-5xl">Trade.Tech</h1>
     <ChooseMode v-if="!isModeChosen" :chooseMode="chooseMode" />
     <EnterSandboxToken v-if="isModeChosen && isSandbox && !IsTokenEntered" :done="onSandboxTokenEntered" />

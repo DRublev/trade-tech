@@ -1,7 +1,9 @@
 <template class="text-center">
-  <Onboarding v-if="showOnboarding" />
-  <Strategy v-if="!showOnboarding && !showDebug" />
+  <Header v-if="!showOnboarding" />
 
+  <Onboarding v-if="showOnboarding" />
+
+  <Strategy v-if="!showOnboarding && !showDebug" />
   <DebuggingStrategy v-if="!showOnboarding && showDebug" />
 </template>
 
@@ -12,13 +14,15 @@ import Store from '@/node/domain/Store';
 import Onboarding from './onboarding/index.vue';
 import DebuggingStrategy from './strategy/DebuggingStrategy.vue';
 import Strategy from './strategy/Strategy.vue';
+import Header from '@/ui/components/Header.vue';
 
 
 @Options({
-  components: { 
+  components: {
     Onboarding,
     Strategy,
     DebuggingStrategy,
+    Header,
   },
 })
 export default class Welcome extends Vue {

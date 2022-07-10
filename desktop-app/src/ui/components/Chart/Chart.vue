@@ -67,8 +67,7 @@ export default class Chart extends Vue {
 
   mounted() {
     (window as any).tv = this.$refs.tradingVue;
-    this.dc.onrange(console.log);
-    // (window as any).dc = this.dc;
+    (window as any).dc = this.dc;
   }
 
   updateChart(candles: number[][]) {

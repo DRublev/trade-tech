@@ -30,14 +30,14 @@ export default class OnboardingUseCase {
 
   public async buildSdk() {
     if (!this.isTokenEntered) throw new Error("No token");
-    await (window as any).ipc.invoke(ipcEvents.TINKOFF_CREATE_SDK, {
+    await window.ipc.invoke(ipcEvents.TINKOFF_CREATE_SDK, {
       isSandbox: this.mode === "sandbox",
     });
   }
 
   public async fetchAccounts() {
     try {
-      const accounts = await (window as any).ipc.invoke(
+      const accounts = await window.ipc.invoke(
         ipcEvents.TINKOFF_GET_ACCOUNTS,
         {}
       );
