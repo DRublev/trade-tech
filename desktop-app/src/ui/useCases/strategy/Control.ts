@@ -15,15 +15,17 @@ const configs = {
   'TGLD': {
     figi: 'BBG222222222',
     parameters: {
-      availableBalance: 10,
+      availableBalance: 9,
       maxHolding: 1,
-      minSpread: 0.0001,
+      minSpread: 0,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.0004,
+      stopLoss: 0.0002,
       sharesInLot: 100,
       watchAsk: 1,
-      waitTillNextBuyMs: 2000,
+      waitTillNextBuyMs: 1500,
+      askStopLoss: 0.0003,
+      waitAfterStopLossMs: 60_000,
     }
   },
   'TRUR': {
@@ -206,9 +208,11 @@ const configs = {
       minSpread: 0.03,
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
-      stopLoss: 0.2,
+      stopLoss: 0.1,
+      askStopLoss: 0.6,
       watchAsk: 1,
-      // waitTillNextBuyMs: 1000,
+      waitTillNextBuyMs: 1000,
+      waitAfterStopLossMs: 60_000,
     }
   },
   'RUAL': {
@@ -288,8 +292,26 @@ const configs = {
       moveOrdersOnStep: 1,
       lotsDistribution: 1,
       stopLoss: 0.06,
+      askStopLoss: 0.1,
       watchAsk: 3,
       waitTillNextBuyMs: 1000,
+      waitAfterStopLossMs: 60_000,
+    }
+  },
+  'AI': {
+    figi: 'BBG00Y6G6X31',
+    parameters: {
+      availableBalance: 22,
+      maxHolding: 1,
+      minSpread: 0.03,
+      moveOrdersOnStep: 1,
+      lotsDistribution: 1,
+      stopLoss: 0.06,
+      askStopLoss: 0.12,
+      watchAsk: 2,
+      waitTillNextBuyMs: 500,
+
+      waitAfterStopLossMs: 60_000,
     }
   },
 };
@@ -303,8 +325,8 @@ export default class ControlUseCase {
 
   config = {
     strategy: 'Spread',
-    ticker: 'SFTL',
-    ...configs.SFTL,
+    ticker: 'AI',
+    ...configs.AI,
   };
 
   constructor() {

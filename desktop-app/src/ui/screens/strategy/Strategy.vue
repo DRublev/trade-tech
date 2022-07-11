@@ -149,8 +149,8 @@ export default class Strategy extends Vue {
         lots: latestDeal.lots,
         sum: latestDeal.sum,
       });
-      this.mixpanel.people.increment('turnover', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
-      // this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
+      // this.mixpanel.people.increment('turnover', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
+      this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
     ActivesUseCase.fetchBalances();

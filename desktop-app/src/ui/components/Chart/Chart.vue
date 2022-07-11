@@ -34,7 +34,7 @@ export default class Chart extends Vue {
   dc: DataCube = new DataCube({
     chart: {
       type: 'Candles',
-      indexBased: true,
+      indexBased: false,
       data: [],
       tf: '1m'
     }, onchart: [
