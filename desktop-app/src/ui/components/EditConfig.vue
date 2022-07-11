@@ -11,12 +11,13 @@
   </section>
 </template>
 <script lang="ts">
+import { TradingConfig } from '@/node/domain/TradingConfig';
 import { Vue } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 
 export default class EditConfig extends Vue {
-  @Prop() readonly config!: { strategy: string; ticker: string; figi: string; parameters: { [x: string]: any; } };
+  @Prop() readonly config!: TradingConfig;
   edited: any = {};
 
   mounted() {

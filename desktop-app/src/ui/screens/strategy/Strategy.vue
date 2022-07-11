@@ -9,7 +9,7 @@
           <div>
             <button @click="switchWorking"
               class="border border-gray-400 rounded-md shadow-sm px-4 py-1 align-center align-middle text-center"
-              :class="{ 'bg-red-600 text-white': status.working }" style="height: 30px">
+              :class="{ 'bg-red-600 border-transparent text-white': status.working }" style="height: 30px" :disabled="status.loading">
               <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
                 class="text-l align-baseline" />
               <Loader v-if="status.loading" class="max-h-full" />
@@ -99,6 +99,8 @@ export default class Strategy extends Vue {
   showModal = false;
   shownSection = '';
 
+  deals: Deal[] = [];
+
   declare $refs: {
     chartContainer: HTMLFormElement,
     chartComponent: HTMLFormElement,
@@ -110,6 +112,7 @@ export default class Strategy extends Vue {
     this.mixpanel.identify();
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
+    this.deals = this.dealsListUC.Deals;
 
     this.updateChartSize = this.updateChartSize.bind(this);
     window.addEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
@@ -152,6 +155,7 @@ export default class Strategy extends Vue {
       // this.mixpanel.people.increment('turnover', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
       this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
+    this.deals = this.dealsListUC?.Deals || [];
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
     ActivesUseCase.fetchBalances();
   }
@@ -163,7 +167,6 @@ export default class Strategy extends Vue {
 
   get config() { return this.controlUC.Config; }
   get status() { return this.controlUC.Status; }
-  get deals() { return this.dealsListUC?.Deals || []; }
   get pendingDeals() { return this.dealsListUC?.PendingDeals || []; }
   get logs() { return this.dealsListUC?.Logs || []; }
 }
