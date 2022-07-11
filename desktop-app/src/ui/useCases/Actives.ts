@@ -3,7 +3,10 @@ import MoneyDTO, { BalanceEntity } from "./MoneyDTO";
 
 
 class ActivesUseCase {
+  private static instance: ActivesUseCase;
   private balance: { [code: string]: BalanceEntity } = {};
+
+  private constructor() {}
 
   public async fetchBalances() {
     try {
@@ -15,7 +18,10 @@ class ActivesUseCase {
   }
 
   public get Balance() { return this.balance; }
+
+  public static get Instance() {
+    return this.instance || (this.instance = new this());
+  }
 }
 
-const instance = new ActivesUseCase();
-export default instance;
+export default ActivesUseCase.Instance;
