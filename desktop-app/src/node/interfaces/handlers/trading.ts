@@ -3,11 +3,14 @@ import { ipcMain, safeStorage } from 'electron';
 import { ipcEvents } from '@/constants';
 import logger from '@/node/infra/Logger';
 import storage from '@/node/infra/Storage';
+import TradingConfigPersistor from '@/node/infra/TradingConfigPersistor';
 import { pauseStrategy, startStrategy, changeConfig } from '../workers/trading';
 import { StartTradingCmd } from '../commands';
 
 
 const runningTradingWorkers: { [figi: string]: number } = {};
+
+const ConfigPersistor = new TradingConfigPersistor();
 
 const getToken = (isSandbox: boolean) => {
   const storedToken = storage.getAll()[isSandbox ? 'sandboxToken' : 'fullAccessToken'];
@@ -18,15 +21,6 @@ const getToken = (isSandbox: boolean) => {
   const token = safeStorage.decryptString(Buffer.from(Object.values(storedToken) as any));
   return token;
 }
-
-ipcMain.handle('test', async (event, data) => {
-  try {
-    
-    return;
-  } catch (e) {
-    console.log('47 trading', e);
-  }
-});
 
 ipcMain.on(ipcEvents.START_TRADING, async (event, data: StartTradingCmd) => {
   try {
@@ -40,15 +34,13 @@ ipcMain.on(ipcEvents.START_TRADING, async (event, data: StartTradingCmd) => {
     const tradingPromise = startStrategy(
       token,
       data,
-      (chunk) => event.sender.send(ipcEvents.strategylog, chunk),
+      (chunk) => event.sender.send(ipcEvents.STRATEGY_LOG, chunk),
       (id) => {
         runningTradingWorkers[data.figi] = id;
       },
     );
     await tradingPromise;
-   
   } catch (e: any) {
-    console.log('55 trading', e);
     logger.error('START_TRADING', e.toString());
   }
 });
@@ -63,11 +55,23 @@ ipcMain.handle(ipcEvents.PAUSE_TRADING, async (event, data) => {
   }
 });
 
-ipcMain.handle(ipcEvents.CHANGE_CONFIG, async (event, data) => {
+ipcMain.handle(ipcEvents.CHANGE_STRATEGY_CONFIG, async (event, data) => {
   try {
     if (!runningTradingWorkers[data.figi]) throw new ReferenceError(`No working strategy for ${data.figi} was found`);
-    await changeConfig(runningTradingWorkers[data.figi], data.config);
-  } catch(e) {
+    const changed = await ConfigPersistor.changeConfig(data.ticker, data);
+    await changeConfig(runningTradingWorkers[data.figi], changed.parameters);
+  } catch (e) {
     logger.error('CHANGE_CONFIG', e);
+  }
+});
+
+ipcMain.handle(ipcEvents.LOAD_STRATEGY_CONFIG, async (event, data) => {
+  try {
+    if (!data.ticker) throw new TypeError('Ticker is not defined');
+    const config = ConfigPersistor.loadByTicker(data.ticker);
+    return config;
+  } catch (e) {
+    logger.error('LOAD_CONFIG', e);
+    throw e;
   }
 });

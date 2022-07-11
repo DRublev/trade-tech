@@ -181,7 +181,7 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
           event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, { ...debugCandles[idx], time: new Date(debugCandles[idx].time).toString() });
           if (debugDeals[dealsIdx]) {
 
-            event.sender.send(ipcEvents.strategylog, str2ab(debugDeals[dealsIdx]));
+            event.sender.send(ipcEvents.STRATEGY_LOG, str2ab(debugDeals[dealsIdx]));
             dealsIdx++;
           } else {
             // idx++;
