@@ -9,6 +9,7 @@ import storage from '@/node/infra/Storage';
 
 export * from './account';
 export * from './trading';
+export * from './instruments';
 
 type StoreStructure = {
   sandboxToken: string | null;

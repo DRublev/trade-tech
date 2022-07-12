@@ -10,7 +10,9 @@ class ActivesUseCase {
 
   public async fetchBalances() {
     try {
+      console.log('13 Actives', 'fetching balances');
       const balances = await window.ipc.invoke(ipcEvents.TINKOFF_GET_POSITIONS, {});
+      console.log('15 Actives', 'balances fetched', balances);
       this.balance = MoneyDTO.toBalanceEntity(balances.money);
     } catch (e) {
       console.error('ActivesUseCase.fetchBalances', e);
