@@ -2,14 +2,19 @@
   <main class="h-full">
     <div class="content">
       <div class="w-full pb-2 pt-4 justify-center topbar">
-        <div class="w-1/3 flex-1 mx-8">
+        <div class="w-1/3 flex flex-1 mx-8">
           <h2 class="text-left text-xl">{{ config.strategy }}</h2>
+          <select class="text-left rounded-2xl border pl-2 pr-3 py-1 ml-3 h-8" @change="changeInstrument($event)" style="width:-webkit-fill-available">
+            <option v-for="i in instrumentOptions" :key="i.value" :value="i.value"
+              :selected="i.value === controlUC.currentTicker">{{ i.label }}</option>
+          </select>
         </div>
         <div class="w-1/3 mx-auto flex-1 flex flex-row justify-evenly">
           <div>
             <button @click="switchWorking"
               class="border border-gray-400 rounded-md shadow-sm px-4 py-1 align-center align-middle text-center"
-              :class="{ 'bg-red-600 border-transparent text-white': status.working }" style="height: 30px" :disabled="status.loading">
+              :class="{ 'bg-red-600 border-transparent text-white': status.working }" style="height: 30px"
+              :disabled="status.loading">
               <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
                 class="text-l align-baseline" />
               <Loader v-if="status.loading" class="max-h-full" />
@@ -74,7 +79,7 @@ import { Inject, Watch } from 'vue-property-decorator';
 
 import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
 import { Deal } from '@/ui/useCases/strategy/DealsList';
-import ActivesUseCase from '@/ui/useCases/Actives';
+import { ActivesUseCase, InstrumentsListUseCase } from '@/ui/useCases';
 import Chart from '../../components/Chart';
 import Loader from '../../components/Loader.vue';
 import EditConfig from '../../components/EditConfig.vue';
@@ -90,6 +95,7 @@ import EditConfig from '../../components/EditConfig.vue';
 export default class Strategy extends Vue {
   @Inject('mixpanel') readonly mixpanel!: any;
   controlUC = new StrategyControlUseCase();
+  instrumentsListUC = new InstrumentsListUseCase();
   chartUC?: StrategyChartUseCase = undefined;
   dealsListUC?: DealsListUseCase = undefined;
 
@@ -101,13 +107,15 @@ export default class Strategy extends Vue {
 
   deals: Deal[] = [];
 
+  instrumentOptions: { value: string, label: string }[] = [];
+
   declare $refs: {
     chartContainer: HTMLFormElement,
     chartComponent: HTMLFormElement,
   }
 
   mounted() {
-    this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi, this.onCandle.bind(this));
+    this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi || '', this.onCandle.bind(this));
     this.chartUC.subscribeOnCandles();
     this.mixpanel.identify();
 
@@ -117,6 +125,12 @@ export default class Strategy extends Vue {
     this.updateChartSize = this.updateChartSize.bind(this);
     window.addEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
     this.updateChartSize(this.$refs.chartContainer)();
+    this.instrumentsListUC.load().then(() => {
+      this.instrumentOptions = this.instrumentsListUC.Instruments.map(i => ({
+        value: i.ticker,
+        label: `${i.name} (${i.ticker})`,
+      }));
+    });
   }
   beforeDestroy() {
     window.removeEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
@@ -158,6 +172,9 @@ export default class Strategy extends Vue {
     this.deals = this.dealsListUC?.Deals || [];
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
     ActivesUseCase.fetchBalances();
+  }
+  changeInstrument(e: any) {
+    this.controlUC.Ticker = e.target.value;
   }
 
   @Watch('shownSection')

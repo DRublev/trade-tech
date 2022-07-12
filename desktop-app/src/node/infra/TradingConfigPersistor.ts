@@ -1,10 +1,22 @@
-import { TradingConfig } from '@node/domain/TradingConfig';
+import { TradingConfig } from '@/node/domain/TradingConfig';
 import * as fs from 'fs';
 import logger from './Logger';
 
 
 const configFilePath = `./trading-config.json`;
 
+const defaultConfigParameters = {
+  availableBalance: null,
+  maxHolding: null,
+  minSpread: null,
+  moveOrdersOnStep: null,
+  lotsDistribution: null,
+  stopLoss: null,
+  askStopLoss: null,
+  watchAsk: null,
+  waitTillNextBuyMs: null,
+  waitAfterStopLossMs: null,
+};
 
 
 export default class TradingConfigPersistor {
@@ -33,8 +45,12 @@ export default class TradingConfigPersistor {
     if (!this.cached[ticker]) {
       this.cached[ticker] = newConfig;
     }
-
-    this.cached[ticker].parameters = { ...newConfig.parameters };
+    const parameters = Object.assign(
+      { ...defaultConfigParameters },
+      this.cached[ticker].parameters,
+      newConfig.parameters,
+    );
+    this.cached[ticker].parameters = parameters;
 
     this.saveToFile();
     return this.cached[ticker];
