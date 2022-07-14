@@ -4,7 +4,8 @@
       <div class="w-full pb-2 pt-4 justify-center topbar">
         <div class="w-1/3 flex flex-1 mx-8">
           <h2 class="text-left text-xl">{{ config.strategy }}</h2>
-          <select class="text-left rounded-2xl border pl-2 pr-3 py-1 ml-3 h-8" @change="changeInstrument($event)" style="width:-webkit-fill-available">
+          <select class="text-left rounded-2xl border pl-2 pr-3 py-1 ml-3 h-8" @change="changeInstrument($event)"
+            style="width:-webkit-fill-available">
             <option v-for="i in instrumentOptions" :key="i.value" :value="i.value"
               :selected="i.value === controlUC.Config.ticker">{{ i.label }}</option>
           </select>
@@ -40,17 +41,33 @@
           </div>
           <div class="flex flex-1 justify-start pt-2 px-8">
             <ul>
-              <li v-for="d in deals" :key="d.time" class="flex justify-between">
+              <li v-for="d in pendingDeals" :key="d.time" class="flex justify-between space-x-1">
                 <span :class="{
                   'text-red-500': d.action == 'sell',
                   'text-green-500': d.action == 'buy',
                   'text-slate-700': d.isClosed,
-                }">
+                }" class="uppercase">
                   {{ d.action }}
                 </span>
                 <span>{{ d.pricePerLot }}</span>
                 <span>{{ d.lots }}</span>
                 <span>{{ d.sum }}</span>
+                <span>{{ new Date(d.time).toLocaleTimeString() }}</span>
+              </li>
+            </ul>
+            <ul>
+              <li v-for="d in deals" :key="d.time" class="flex justify-between space-x-1">
+                <span :class="{
+                  'text-red-500': d.action == 'sell',
+                  'text-green-500': d.action == 'buy',
+                  'text-slate-700': d.isClosed,
+                }" class="uppercase">
+                  {{ d.action }}
+                </span>
+                <span>{{ d.pricePerLot }}</span>
+                <span>{{ d.lots }}</span>
+                <span>{{ d.sum }}</span>
+                <span>{{ new Date(d.time).toLocaleTimeString() }}</span>
               </li>
             </ul>
           </div>
@@ -106,6 +123,7 @@ export default class Strategy extends Vue {
   shownSection = '';
 
   deals: Deal[] = [];
+  pendingDeals: Deal[] = [];
 
   instrumentOptions: { value: string, label: string }[] = [];
 
@@ -125,6 +143,7 @@ export default class Strategy extends Vue {
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
     this.deals = this.dealsListUC.Deals;
+    this.pendingDeals = this.dealsListUC.PendingDeals;
 
     this.updateChartSize = this.updateChartSize.bind(this);
     window.addEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
@@ -173,7 +192,8 @@ export default class Strategy extends Vue {
       // this.mixpanel.people.increment('turnover', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
       this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
-    this.deals = this.dealsListUC?.PendingDeals || [];
+    this.deals = this.dealsListUC?.Deals || [];
+    this.pendingDeals = this.dealsListUC?.PendingDeals || [];
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
     ActivesUseCase.fetchBalances();
   }
@@ -188,7 +208,6 @@ export default class Strategy extends Vue {
 
   get config() { return this.controlUC.Config; }
   get status() { return this.controlUC.Status; }
-  get pendingDeals() { return this.dealsListUC?.PendingDeals || []; }
   get logs() { return this.dealsListUC?.Logs || []; }
 }
 </script>
