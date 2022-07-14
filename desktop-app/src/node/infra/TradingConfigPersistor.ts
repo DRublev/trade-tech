@@ -1,5 +1,7 @@
+import { ipcEvents } from '@/constants';
 import { TradingConfig } from '@/node/domain/TradingConfig';
 import * as fs from 'fs';
+import InstrumentsPersistor from './InstrumentsPersistor';
 import logger from './Logger';
 
 
@@ -22,6 +24,7 @@ const defaultConfigParameters = {
 export default class TradingConfigPersistor {
   private cached: { [ticker: string]: TradingConfig } = {};
   private isInited = false;
+  private instrumentsPersisor = new InstrumentsPersistor();
 
   constructor() {
     this.init();
@@ -60,7 +63,17 @@ export default class TradingConfigPersistor {
     if (!this.isInited) {
       await this.loadFromFile();
     }
-    if (!this.cached[ticker]) throw new ReferenceError(`Config for ${ticker} not found`);
+    if (!this.cached[ticker]) {
+      const instrument = await this.instrumentsPersisor.getByTicker(ticker);
+      if (!instrument) throw new ReferenceError(`Instrument ${ticker} not found`);
+      this.cached[ticker] = {
+        ticker,
+        figi: instrument.figi,
+        strategy: 'Spread',
+        parameters: { ...defaultConfigParameters } as any,
+      };
+    }
+
     return this.cached[ticker];
   }
 

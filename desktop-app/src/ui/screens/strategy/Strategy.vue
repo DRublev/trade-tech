@@ -6,7 +6,7 @@
           <h2 class="text-left text-xl">{{ config.strategy }}</h2>
           <select class="text-left rounded-2xl border pl-2 pr-3 py-1 ml-3 h-8" @change="changeInstrument($event)" style="width:-webkit-fill-available">
             <option v-for="i in instrumentOptions" :key="i.value" :value="i.value"
-              :selected="i.value === controlUC.currentTicker">{{ i.label }}</option>
+              :selected="i.value === controlUC.Config.ticker">{{ i.label }}</option>
           </select>
         </div>
         <div class="w-1/3 mx-auto flex-1 flex flex-row justify-evenly">
@@ -115,8 +115,12 @@ export default class Strategy extends Vue {
   }
 
   mounted() {
-    this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi || '', this.onCandle.bind(this));
-    this.chartUC.subscribeOnCandles();
+    this.chartUC = new StrategyChartUseCase(this.onCandle.bind(this));
+    this.controlUC.loadConfig().then(() => {
+      const figi = this.controlUC.Config.figi || '';
+      console.log('121 Strategy', figi);
+      this.chartUC?.subscribeOnCandles(figi);
+    });
     this.mixpanel.identify();
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
@@ -146,6 +150,7 @@ export default class Strategy extends Vue {
   }
 
   onCandle() {
+console.log('153 Strategy', this.chartUC?.Data);
     this.$refs.chartComponent.updateChart(this.chartUC?.Data);
   }
 
@@ -169,7 +174,7 @@ export default class Strategy extends Vue {
       // this.mixpanel.people.increment('turnover', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
       this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
-    this.deals = this.dealsListUC?.Deals || [];
+    this.deals = this.dealsListUC?.PendingDeals || [];
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
     ActivesUseCase.fetchBalances();
   }
