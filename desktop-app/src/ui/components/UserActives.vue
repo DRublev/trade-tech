@@ -15,10 +15,7 @@ import { BalanceEntity } from '@/ui/useCases/MoneyDTO';
 
 export default class UserActives extends Vue {
   currencies: BalanceEntity[] = [];
-  
   activesUC = ActivesUseCase;
-  
-
 
   mounted() {
     this.activesUC.subscribe(this.onBalancesChanged.bind(this));
