@@ -7,7 +7,7 @@ export default class ControlUseCase {
     loading: false,
     error: undefined,
   };
-  private currentTicker = 'COIN';
+  private currentTicker = 'TGLD';
   private currentStrategy = 'Spread';
   private config: Partial<TradingConfig> = {
     strategy: this.currentStrategy,
@@ -27,7 +27,6 @@ export default class ControlUseCase {
         ticker: this.currentTicker,
         ...config,
       };
-      console.log('31 Control', config);
     } catch (e) {
       console.error('loadConfig', e);
       this.Error = <Error>e;

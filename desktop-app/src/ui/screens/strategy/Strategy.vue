@@ -150,7 +150,6 @@ export default class Strategy extends Vue {
   }
 
   onCandle() {
-console.log('153 Strategy', this.chartUC?.Data);
     this.$refs.chartComponent.updateChart(this.chartUC?.Data);
   }
 
