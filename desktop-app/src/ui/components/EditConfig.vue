@@ -25,7 +25,8 @@ export default class EditConfig extends Vue {
   }
 
   save() {
-    this.$emit('save', Object.assign({}, this.edited));
+    console.log('28 EditConfig', this.edited);
+    // this.$emit('save', Object.assign({}, this.edited));
   }
 
   get keys() { return Object.keys(this.config.parameters); }
