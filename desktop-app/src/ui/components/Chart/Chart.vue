@@ -71,7 +71,6 @@ export default class Chart extends Vue {
   }
 
   updateChart(candles: number[][]) {
-    console.log('74 Chart', candles);
     this.dc.set('chart.data', candles);
 
     this.candles = candles;
