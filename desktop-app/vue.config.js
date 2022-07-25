@@ -20,6 +20,9 @@ module.exports = defineConfig({
             ],
             plugins: ['@babel/plugin-proposal-class-properties']
           })
+      },
+      builderOptions: {
+        productName: 'Trade Tech'
       }
     }
   },
