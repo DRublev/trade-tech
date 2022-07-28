@@ -2,7 +2,7 @@ import { workerData, parentPort } from "worker_threads";
 import * as fs from 'fs';
 import { Duplex } from "stream";
 import { randomUUID } from 'crypto';
-import { Strategies, getStrategyConstructor, IStrategy } from 'shared-kernel';
+import { Strategies, getStrategyConstructor, getStrategyStateConstructor, IStrategy } from 'shared-kernel';
 
 import logger from '@/node/infra/Logger';
 import { TinkoffSdk } from '@/node/app/tinkoff';
@@ -14,6 +14,7 @@ const accountId = storage.get('accountId');
 
 let logsFileStream: fs.WriteStream;
 let strategy: IStrategy;
+let strategyState;
 
 const startStrategy = async () => {
   try {
@@ -24,8 +25,9 @@ const startStrategy = async () => {
     const StrategyConstructor = getStrategyConstructor(Strategies.SpreadScalping);
     const logStream = makeLogStream();
     console.log('28 worker', workerData.config);
-    strategy = new StrategyConstructor(workerData.config.parameters, postOrder, cancelOrder, logStream);
-
+    const StrategyStateConstructor = getStrategyStateConstructor(Strategies.SpreadScalping);
+    strategyState = new StrategyStateConstructor(false, workerData.config.parameters.availableBalance, 0);
+    strategy = new StrategyConstructor(workerData.config.parameters, strategyState, postOrder, cancelOrder, logStream);
     const today = new Date();
     const todayFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
     if (!fs.existsSync(`logs/${todayFormatted}`)) {

@@ -107,7 +107,7 @@ export default class Strategy extends Vue {
   }
 
   mounted() {
-    this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi, this.onCandle.bind(this));
+    this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi || '', this.onCandle.bind(this));
     this.chartUC.subscribeOnCandles();
     this.mixpanel.identify();
 
