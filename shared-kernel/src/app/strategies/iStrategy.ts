@@ -1,4 +1,4 @@
-
+import { Candle } from "../types/candle";
 import { Order } from "../types/order";
 import { Orderbook } from "../types/orderbook";
 import StrategyConfig from "./Config";
@@ -7,10 +7,12 @@ import StrategyConfig from "./Config";
 export interface IStrategy {
   onOrderbook(orderbook: Orderbook): Promise<void>;
   onOrderChanged(order: Order): Promise<void>;
+  onCandle?(candle: Candle): Promise<void>;
   toggleWorking: ToggleWorkingModeCommand;
   changeConfig(newConfig: StrategyConfig): void;
   
   Version?: string;
+  Interval?: number;
   LeftMoney: number;
   ProcessingMoney: number;
   HoldingLots: number;

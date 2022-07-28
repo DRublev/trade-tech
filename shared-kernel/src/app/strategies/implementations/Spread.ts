@@ -1,12 +1,13 @@
-import * as fs from 'fs';
 import stringify from 'fast-safe-stringify';
+import { OrderDirection } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
+import { BollingerBands } from '@debut/indicators';
 
 import { Order } from "@/app/types/order";
 import { Orderbook } from "@/app/types/orderbook";
 import { toNum } from "@/infra/tinkoff/helpers";
 import StrategyConfig from "../Config";
 import { IStrategy, CancelOrderCommand, PostOrderCommand } from "../iStrategy";
-import { OrderDirection } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
+import { Candle, Timeframes } from '@/app/types/candle';
 
 export type SpreadStrategyConfig = StrategyConfig & {
   minSpread: number;
@@ -19,6 +20,10 @@ export type SpreadStrategyConfig = StrategyConfig & {
   watchAsk?: number;
   waitTillNextBuyMs?: number;
   waitAfterStopLossMs?: number;
+
+  considerBB?: boolean;
+  bbBuyBelow?: number;
+  bbSellAbove?: number;
 };
 
 type ToPlaceOrderInfo = {
@@ -66,11 +71,15 @@ export default class SpreadStrategy implements IStrategy {
   private asks: { [ask: number]: PositionState } = {};
   private archive: PositionState[] = [];
 
-
   private watchingOrders: string[] = [];
   private processedOrderStagesMap: { [orderId: string]: string } = {};
   private processedOrders: string[] = [];
   private latestOrderbook: Orderbook;
+
+  private candlesCloses: number[] = [];
+
+  private bb = null;
+  private bbGen = new BollingerBands(2, 2);
 
   constructor(
     private config: SpreadStrategyConfig,
@@ -97,7 +106,7 @@ export default class SpreadStrategy implements IStrategy {
       this.isProcessing = true;
       this.latestOrderbook = orderbook;
 
-      this.log('calc', `Orderbook ${stringify(orderbook)}`)
+      this.log('data', `Orderbook ${stringify(orderbook)}`)
       this.log('calc', 'Cancelling rotten bids');
       const shouldSkip = await this.cancelRottenBidOrders(orderbook);
       if (shouldSkip) {
@@ -165,6 +174,24 @@ export default class SpreadStrategy implements IStrategy {
     }
   }
 
+  public async onCandle(candle: Candle): Promise<void> {
+    try {
+      this.log('info', 'Candle: ' + stringify(candle));
+      const latestClose = toNum(candle.close);
+      this.candlesCloses.push(latestClose);
+  
+      const bb = this.bbGen.nextValue(latestClose);
+      if (!bb) return;
+      // %b = (last − lowerBB) / (upperBB − lowerBB)
+      const bbPercent = (latestClose - bb.lower) / (bb.upper - bb.lower);
+      this.bb = bbPercent;
+      this.log('calc', `BB%: ${bbPercent}, BB: ${stringify(bb)}`);
+    } catch (e) {
+      console.log('188 Spread', e);
+      this.log('error', e.toString());
+    }
+  }
+
   private calcToBuy(orderbook: Orderbook): ToPlaceOrderInfo[] {
     try {
       if (this.waitingBuyTimer) {
@@ -208,6 +235,12 @@ export default class SpreadStrategy implements IStrategy {
         this.log('calc', `Not enough money to buy ${lotsToBuy} lots. Left: ${this.leftMoney}; Min bid: ${stringify(minBid)}`);
         lotsToBuy--;
       }
+
+      if (this.config.considerBB && this.bb > this.config.bbBuyBelow) {
+        this.log('calc', `BB% is too low to high. BB%: ${this.bb}; Buy below BB%: ${this.config.bbBuyBelow}`);
+        return [];
+      }
+
       const toBuyLots = [lotsToBuy];
       this.log('calc', `To buy: ${toBuyLots}`);
       const blockedMoney = Object.values(this.bids).reduce((acc, bid) => !bid.isExecuted ? bid.dealSum + acc : acc, 0);
@@ -282,6 +315,10 @@ export default class SpreadStrategy implements IStrategy {
         return toSell;
       }
 
+      if (this.config.considerBB && this.bb < this.config.bbSellAbove) {
+        this.log('calc', `BB% is too low to sell. BB%: ${this.bb}; Sell above BB%: ${this.config.bbSellAbove}`);
+        return toSell;
+      }
 
       const asks = orderbook.asks.slice(0, this.config.watchAsk || this.config.moveOrdersOnStep);
       this.log('calc', `Asks: ${stringify(asks)}`);
@@ -497,15 +534,16 @@ export default class SpreadStrategy implements IStrategy {
     }
   }
 
-  private log(level: 'calc' | 'info' | 'error', message: string | any) {
+  private log(level: 'calc' | 'data' | 'info' | 'error', message: string | any) {
     this.stdOut.write(`${level}: ${typeof message === 'string' ? message : stringify(message)}\n`);
   }
 
+  public get Interval() { return Timeframes.OneMinute; }
   public get LeftMoney() { return this.leftMoney; }
   public get ProcessingMoney() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.dealSum + acc : acc + (p.executedLots * p.price), 0); }
   public get HoldingLots() { return this.holdingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.11'; }
+  public get Version() { return '1.1.0'; }
   public get IsWorking() { return this.isWorking; }
 }

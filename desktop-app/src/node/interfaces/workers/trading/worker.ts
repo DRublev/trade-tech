@@ -65,7 +65,26 @@ const startStrategy = async () => {
         }
       }
     };
-    await Promise.allSettled([orderBookSubscribe(), watchOrders()]);
+
+    const candlesSubscribe = async () => {
+      try {
+        if (!strategy.onCandle || !strategy.Interval) return;
+        TinkoffSdk.Sdk.CandlesStreamSubscriber.subscribe(workerData.config.figi, strategy.Interval);
+        const stream = await TinkoffSdk.Sdk.CandlesStreamSubscriber.stream();
+        for await (const candle of stream) {
+          try {
+            console.log('76 worker', 'got candle');
+            await strategy.onCandle(candle);
+          } catch (e) {
+            logger.error(e);
+          }
+        }
+      } catch (e) {
+        logger.error('Error subscribing to candles', e);
+      }
+    };
+
+    await Promise.allSettled([candlesSubscribe(), orderBookSubscribe(), watchOrders()]);
 
   } catch (e) {
     console.log('10 worker', e);

@@ -169,7 +169,7 @@ export default class Strategy extends Vue {
   }
 
   onCandle() {
-    this.$refs.chartComponent.updateChart(this.chartUC?.Data);
+    this.$refs.chartComponent.updateChart(this.chartUC?.Data, this.chartUC?.Indicators);
   }
 
   onDeal(latestDeal?: Deal, isPending: boolean = false) {
