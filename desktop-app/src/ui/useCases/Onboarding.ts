@@ -82,6 +82,7 @@ export default class OnboardingUseCase {
       );
 
       await Store.SetRealTokens(readOnlyEncrypted, fullAccessEncrypted);
+      console.log(Store.HasToken);
       this.isTokenEntered = true;
       Analytics.sendEvent(eventTypes.setToken, { type: "real" });
     } catch (e) {

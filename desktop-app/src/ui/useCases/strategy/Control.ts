@@ -7,16 +7,15 @@ export default class ControlUseCase {
     loading: false,
     error: undefined,
   };
-  currentTicker = 'AI';
-  currentStrategy = 'Spread';
-  config: Partial<TradingConfig> = {
+  private currentTicker = 'TGLD';
+  private currentStrategy = 'Spread';
+  private config: Partial<TradingConfig> = {
     strategy: this.currentStrategy,
     ticker: this.currentTicker,
   };
 
   constructor() {
     this.changeConfig = this.changeConfig.bind(this);
-    this.loadConfig();
   }
 
   async loadConfig() {
@@ -37,21 +36,25 @@ export default class ControlUseCase {
   }
 
   async changeConfig(newConfig: typeof this.config) {
-    const newConfigParams = Object.assign({}, this.config.parameters, newConfig);
-    await window.ipc.invoke(ipcEvents.CHANGE_STRATEGY_CONFIG, {
+    if (this.currentStatus.working) throw new Error('Cannot change ticker while strategy is working');
+    const newConfigParams = Object.assign({}, this.config.parameters || {}, newConfig);
+
+    const changed = await window.ipc.invoke(ipcEvents.CHANGE_STRATEGY_CONFIG, {
       figi: this.config.figi,
       ticker: this.currentTicker,
       strategy: this.currentStrategy,
       parameters: newConfigParams,
     });
+    this.config = changed;
   }
 
   public get Config() { return this.config; }
   public get Status() { return this.currentStatus; }
 
   public set Ticker(ticker: string) {
+    if (this.currentStatus.working) throw new Error('Cannot change ticker while strategy is working');
     this.currentTicker = ticker;
-    this.loadConfig();
+    this.changeConfig({});
   }
   public set Working(isWorking: boolean) {
     try {

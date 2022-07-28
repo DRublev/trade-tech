@@ -1,5 +1,5 @@
 <template>
-  <trading-vue  :data="dc" :width="width" :height="height" :titleTxt="''" :color-back="colors.colorBack"
+  <trading-vue :data="dc" :width="width" :height="height" :titleTxt="''" :color-back="colors.colorBack"
     :color-grid="colors.colorGrid" :color-text="colors.colorText" :color-scale="colors.colorScale"
     :color-candle-dw="colors.candleDwn" :color-candle-up="colors.candleUp" ref="tradingVue">
   </trading-vue>
@@ -58,7 +58,14 @@ export default class Chart extends Vue {
           sellColor: '#c48586',
         },
       },
-    ], offchart: []
+    ], offchart: [
+      {
+        name: "BB%",
+        type: "Channel",
+        data: [],
+        settings: {},
+      },
+    ]
   });
 
   declare $refs: {
@@ -70,13 +77,17 @@ export default class Chart extends Vue {
     (window as any).dc = this.dc;
   }
 
-  updateChart(candles: number[][]) {
+  updateChart(candles: number[][], indicators: { [key: string]: any[][] } = {}) {
     this.dc.set('chart.data', candles);
 
     this.candles = candles;
     const ltsStamp = new Date(candles[candles.length - 1][0]);
     const fstTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() - this.chartWidth);
     const ltsTime = new Date(ltsStamp).setMinutes(ltsStamp.getMinutes() + this.chartWidth);
+
+    if (indicators['BB%']) {
+      this.dc.set('offchart[0].data', indicators['BB%']);
+    }
 
     this.$refs.tradingVue.setRange(fstTime.valueOf(), ltsTime.valueOf());
     // this.$refs.tradingVue.goto(candles.length - 1);

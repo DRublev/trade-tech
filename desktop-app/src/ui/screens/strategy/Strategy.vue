@@ -2,14 +2,20 @@
   <main class="h-full">
     <div class="content">
       <div class="w-full pb-2 pt-4 justify-center topbar">
-        <div class="w-1/3 flex-1 mx-8">
+        <div class="w-1/3 flex flex-1 mx-8">
           <h2 class="text-left text-xl">{{ config.strategy }}</h2>
+          <select class="text-left rounded-2xl border pl-2 pr-3 py-1 ml-3 h-8" @change="changeInstrument($event)"
+            style="width:-webkit-fill-available">
+            <option v-for="i in instrumentOptions" :key="i.value" :value="i.value"
+              :selected="i.value === controlUC.Config.ticker">{{ i.label }}</option>
+          </select>
         </div>
         <div class="w-1/3 mx-auto flex-1 flex flex-row justify-evenly">
           <div>
             <button @click="switchWorking"
               class="border border-gray-400 rounded-md shadow-sm px-4 py-1 align-center align-middle text-center"
-              :class="{ 'bg-red-600 border-transparent text-white': status.working }" style="height: 30px" :disabled="status.loading">
+              :class="{ 'bg-red-600 border-transparent text-white': status.working }" style="height: 30px"
+              :disabled="status.loading">
               <fa v-if="!status.loading" :icon="['fas', status.working ? 'pause' : 'play']"
                 class="text-l align-baseline" />
               <Loader v-if="status.loading" class="max-h-full" />
@@ -35,17 +41,33 @@
           </div>
           <div class="flex flex-1 justify-start pt-2 px-8">
             <ul>
-              <li v-for="d in deals" :key="d.time" class="flex justify-between">
+              <li v-for="d in pendingDeals" :key="d.time" class="flex justify-between space-x-1">
                 <span :class="{
                   'text-red-500': d.action == 'sell',
                   'text-green-500': d.action == 'buy',
                   'text-slate-700': d.isClosed,
-                }">
+                }" class="uppercase">
                   {{ d.action }}
                 </span>
                 <span>{{ d.pricePerLot }}</span>
                 <span>{{ d.lots }}</span>
                 <span>{{ d.sum }}</span>
+                <span>{{ new Date(d.time).toLocaleTimeString() }}</span>
+              </li>
+            </ul>
+            <ul>
+              <li v-for="d in deals" :key="d.time" class="flex justify-between space-x-1">
+                <span :class="{
+                  'text-red-500': d.action == 'sell',
+                  'text-green-500': d.action == 'buy',
+                  'text-slate-700': d.isClosed,
+                }" class="uppercase">
+                  {{ d.action }}
+                </span>
+                <span>{{ d.pricePerLot }}</span>
+                <span>{{ d.lots }}</span>
+                <span>{{ d.sum }}</span>
+                <span>{{ new Date(d.time).toLocaleTimeString() }}</span>
               </li>
             </ul>
           </div>
@@ -74,7 +96,7 @@ import { Inject, Watch } from 'vue-property-decorator';
 
 import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
 import { Deal } from '@/ui/useCases/strategy/DealsList';
-import ActivesUseCase from '@/ui/useCases/Actives';
+import { ActivesUseCase, InstrumentsListUseCase } from '@/ui/useCases';
 import Chart from '../../components/Chart';
 import Loader from '../../components/Loader.vue';
 import EditConfig from '../../components/EditConfig.vue';
@@ -90,6 +112,7 @@ import EditConfig from '../../components/EditConfig.vue';
 export default class Strategy extends Vue {
   @Inject('mixpanel') readonly mixpanel!: any;
   controlUC = new StrategyControlUseCase();
+  instrumentsListUC = new InstrumentsListUseCase();
   chartUC?: StrategyChartUseCase = undefined;
   dealsListUC?: DealsListUseCase = undefined;
 
@@ -100,6 +123,9 @@ export default class Strategy extends Vue {
   shownSection = '';
 
   deals: Deal[] = [];
+  pendingDeals: Deal[] = [];
+
+  instrumentOptions: { value: string, label: string }[] = [];
 
   declare $refs: {
     chartContainer: HTMLFormElement,
@@ -107,16 +133,27 @@ export default class Strategy extends Vue {
   }
 
   mounted() {
-    this.chartUC = new StrategyChartUseCase(this.controlUC.Config.figi || '', this.onCandle.bind(this));
-    this.chartUC.subscribeOnCandles();
+    this.chartUC = new StrategyChartUseCase(this.onCandle.bind(this));
+    this.controlUC.loadConfig().then(() => {
+      const figi = this.controlUC.Config.figi || '';
+      console.log('121 Strategy', figi);
+      this.chartUC?.subscribeOnCandles(figi);
+    });
     this.mixpanel.identify();
 
     this.dealsListUC = new DealsListUseCase(this.onDeal.bind(this));
     this.deals = this.dealsListUC.Deals;
+    this.pendingDeals = this.dealsListUC.PendingDeals;
 
     this.updateChartSize = this.updateChartSize.bind(this);
     window.addEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
     this.updateChartSize(this.$refs.chartContainer)();
+    this.instrumentsListUC.load().then(() => {
+      this.instrumentOptions = this.instrumentsListUC.Instruments.map(i => ({
+        value: i.ticker,
+        label: `${i.name} (${i.ticker})`,
+      }));
+    });
   }
   beforeDestroy() {
     window.removeEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
@@ -132,7 +169,7 @@ export default class Strategy extends Vue {
   }
 
   onCandle() {
-    this.$refs.chartComponent.updateChart(this.chartUC?.Data);
+    this.$refs.chartComponent.updateChart(this.chartUC?.Data, this.chartUC?.Indicators);
   }
 
   onDeal(latestDeal?: Deal, isPending: boolean = false) {
@@ -156,8 +193,12 @@ export default class Strategy extends Vue {
       this.mixpanel.people.increment('turnover_usd', !latestDeal.isClosed ? latestDeal.sum : latestDeal.sum * -1);
     }
     this.deals = this.dealsListUC?.Deals || [];
+    this.pendingDeals = this.dealsListUC?.PendingDeals || [];
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
     ActivesUseCase.fetchBalances();
+  }
+  changeInstrument(e: any) {
+    this.controlUC.Ticker = e.target.value;
   }
 
   @Watch('shownSection')
@@ -167,7 +208,6 @@ export default class Strategy extends Vue {
 
   get config() { return this.controlUC.Config; }
   get status() { return this.controlUC.Status; }
-  get pendingDeals() { return this.dealsListUC?.PendingDeals || []; }
   get logs() { return this.dealsListUC?.Logs || []; }
 }
 </script>

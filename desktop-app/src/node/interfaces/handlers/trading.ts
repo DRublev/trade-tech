@@ -60,6 +60,7 @@ ipcMain.handle(ipcEvents.CHANGE_STRATEGY_CONFIG, async (event, data) => {
     if (!runningTradingWorkers[data.figi]) throw new ReferenceError(`No working strategy for ${data.figi} was found`);
     const changed = await ConfigPersistor.changeConfig(data.ticker, data);
     await changeConfig(runningTradingWorkers[data.figi], changed.parameters);
+    return changed;
   } catch (e) {
     logger.error('CHANGE_CONFIG', e);
   }

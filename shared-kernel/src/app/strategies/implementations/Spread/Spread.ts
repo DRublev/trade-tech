@@ -1,15 +1,17 @@
 import stringify from 'fast-safe-stringify';
 import { OrderDirection } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
+import { BollingerBands } from '@debut/indicators';
 
 import { Order } from "@/app/types/order";
+import { Candle, Timeframes } from '@/app/types/candle';
 import { Orderbook } from "@/app/types/orderbook";
 import { toNum } from "@/infra/tinkoff/helpers";
 import { InvalidOperationException } from '@/utils/exceptions';
+
 import StrategyConfig from "../../Config";
 import { IStrategy, CancelOrderCommand, PostOrderCommand } from "../../iStrategy";
 import { PositionState, ToPlaceOrderInfo } from './types';
 import SpreadStrategyState from './SpreadStrategyState';
-
 
 export type SpreadStrategyConfig = StrategyConfig & {
   minSpread: number;
@@ -22,6 +24,10 @@ export type SpreadStrategyConfig = StrategyConfig & {
   watchAsk?: number;
   waitTillNextBuyMs?: number;
   waitAfterStopLossMs?: number;
+
+  considerBB?: boolean;
+  bbBuyBelow?: number;
+  bbSellAbove?: number;
 };
 
 /**
@@ -35,6 +41,11 @@ export default class SpreadStrategy implements IStrategy {
   private archive: PositionState[] = [];
 
   private latestOrderbook: Orderbook;
+
+  private candlesCloses: number[] = [];
+
+  private bb = null;
+  private bbGen = new BollingerBands(2, 2);
 
   constructor(
     private config: SpreadStrategyConfig,
@@ -62,7 +73,7 @@ export default class SpreadStrategy implements IStrategy {
       this.isProcessing = true;
       this.latestOrderbook = orderbook;
 
-      this.log('calc', `Orderbook ${stringify(orderbook)}`)
+      this.log('data', `Orderbook ${stringify(orderbook)}`)
       this.log('calc', 'Cancelling rotten bids');
       const shouldSkip = await this.cancelRottenBidOrders(orderbook);
       if (shouldSkip) {
@@ -130,6 +141,24 @@ export default class SpreadStrategy implements IStrategy {
     }
   }
 
+  public async onCandle(candle: Candle): Promise<void> {
+    try {
+      this.log('info', 'Candle: ' + stringify(candle));
+      const latestClose = toNum(candle.close);
+      this.candlesCloses.push(latestClose);
+  
+      const bb = this.bbGen.nextValue(latestClose);
+      if (!bb) return;
+      // %b = (last − lowerBB) / (upperBB − lowerBB)
+      const bbPercent = (latestClose - bb.lower) / (bb.upper - bb.lower);
+      this.bb = bbPercent;
+      this.log('calc', `BB%: ${bbPercent}, BB: ${stringify(bb)}`);
+    } catch (e) {
+      console.log('188 Spread', e);
+      this.log('error', e.toString());
+    }
+  }
+
   private calcToBuy(orderbook: Orderbook): ToPlaceOrderInfo[] {
     try {
       if (this.waitingBuyTimer) {
@@ -173,6 +202,12 @@ export default class SpreadStrategy implements IStrategy {
         this.log('calc', `Not enough money to buy ${lotsToBuy} lots. Left: ${this.state.LeftMoney}; Min bid: ${stringify(minBid)}`);
         lotsToBuy--;
       }
+
+      if (this.config.considerBB && this.bb > this.config.bbBuyBelow) {
+        this.log('calc', `BB% is too low to high. BB%: ${this.bb}; Buy below BB%: ${this.config.bbBuyBelow}`);
+        return [];
+      }
+
       const toBuyLots = [lotsToBuy];
       this.log('calc', `To buy: ${toBuyLots}`);
       const blockedMoney = Object.values(this.state.Bids).reduce((acc, bid) => !bid.isExecuted ? bid.dealSum + acc : acc, 0);
@@ -251,6 +286,10 @@ export default class SpreadStrategy implements IStrategy {
         return toSell;
       }
 
+      if (this.config.considerBB && this.bb < this.config.bbSellAbove) {
+        this.log('calc', `BB% is too low to sell. BB%: ${this.bb}; Sell above BB%: ${this.config.bbSellAbove}`);
+        return toSell;
+      }
 
       const asks = orderbook.asks.slice(0, this.config.watchAsk || this.config.moveOrdersOnStep);
       this.log('calc', `Asks: ${stringify(asks)}`);
@@ -413,7 +452,7 @@ export default class SpreadStrategy implements IStrategy {
     }
   }
 
-  private log(level: 'calc' | 'info' | 'error', message: string | any) {
+  private log(level: 'calc' | 'data' | 'info' | 'error', message: string | any) {
     this.stdOut.write(`${level}: ${typeof message === 'string' ? message : stringify(message)}\n`);
   }
 
@@ -427,6 +466,7 @@ export default class SpreadStrategy implements IStrategy {
   public get HoldingLots() { return this.state.HoldingLots; }
   public get ProcessingBuyOrders() { return Object.values(this.state.Bids).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
   public get ProcessingSellOrders() { return Object.values(this.state.Asks).reduce((acc, p) => p.isExecuted ? p.lots + acc : acc + p.executedLots, 0); }
-  public get Version() { return '1.0.12'; }
+  public get Version() { return '1.1.1'; }
   public get IsWorking() { return this.state.IsWorking; }
+  public get Interval() { return Timeframes.OneMinute; }
 }
