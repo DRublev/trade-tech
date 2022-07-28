@@ -33,5 +33,5 @@ export interface IStrategyStateConstructor {
     availableBalance: number,
     holdingLots: number,
     leftBalance?: number,
-  ): IStrategyStateConstructor;
+  ): StrategyState;
 }
