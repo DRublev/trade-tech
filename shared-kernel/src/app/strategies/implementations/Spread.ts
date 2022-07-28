@@ -1,6 +1,6 @@
 import stringify from 'fast-safe-stringify';
 import { OrderDirection } from 'invest-nodejs-grpc-sdk/dist/generated/orders';
-import boll from 'bollinger-bands';
+import { BollingerBands } from '@debut/indicators';
 
 import { Order } from "@/app/types/order";
 import { Orderbook } from "@/app/types/orderbook";
@@ -79,6 +79,7 @@ export default class SpreadStrategy implements IStrategy {
   private candlesCloses: number[] = [];
 
   private bb = null;
+  private bbGen = new BollingerBands(2, 2);
 
   constructor(
     private config: SpreadStrategyConfig,
@@ -174,14 +175,21 @@ export default class SpreadStrategy implements IStrategy {
   }
 
   public async onCandle(candle: Candle): Promise<void> {
-    const latestClose = toNum(candle.close);
-    this.candlesCloses.push(latestClose);
-
-    const bb = boll(this.candlesCloses);
-    // %b = (last − lowerBB) / (upperBB − lowerBB)
-    const bbPercent = (latestClose - bb.lower) / (bb.upper - bb.lower);
-    this.bb = bbPercent;
-    this.log('calc', `BB%: ${bbPercent}`);
+    try {
+      this.log('info', 'Candle: ' + stringify(candle));
+      const latestClose = toNum(candle.close);
+      this.candlesCloses.push(latestClose);
+  
+      const bb = this.bbGen.nextValue(latestClose);
+      if (!bb) return;
+      // %b = (last − lowerBB) / (upperBB − lowerBB)
+      const bbPercent = (latestClose - bb.lower) / (bb.upper - bb.lower);
+      this.bb = bbPercent;
+      this.log('calc', `BB%: ${bbPercent}, BB: ${stringify(bb)}`);
+    } catch (e) {
+      console.log('188 Spread', e);
+      this.log('error', e.toString());
+    }
   }
 
   private calcToBuy(orderbook: Orderbook): ToPlaceOrderInfo[] {
