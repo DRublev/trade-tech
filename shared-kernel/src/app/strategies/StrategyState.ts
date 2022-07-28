@@ -4,8 +4,8 @@ export default class StrategyState {
   constructor(
     protected isWorking: boolean,
     protected availableBalance: number,
-    protected leftBalance?: number,
     protected holdingLots: number = 0,
+    protected leftBalance?: number,
   ) {
     if (this.holdingLots < 0) throw new InvalidArgumentException('holdingLots', 'Must be positive or 0');
     if (!this.leftBalance && this.leftBalance != 0) {
@@ -25,4 +25,13 @@ export default class StrategyState {
     const msg = keys.map(key => `${key}: ${this[key]}`).join(',\n');
     return `${Date.now()}: {\n${msg}\n}`;
   }
+}
+
+export interface IStrategyStateConstructor {
+  new(
+    isWorking: boolean,
+    availableBalance: number,
+    holdingLots: number,
+    leftBalance?: number,
+  ): IStrategyStateConstructor;
 }
