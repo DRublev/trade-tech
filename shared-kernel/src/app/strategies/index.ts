@@ -1,3 +1,3 @@
 export { IStrategy } from './iStrategy';
 export { default as Strategies } from './strategies.enum';
-export { getStrategyConstructor } from './builder';
+export { getStrategyConstructor, getStrategyStateConstructor } from './builder';
