@@ -2,6 +2,7 @@ import { Candle } from "../types/candle";
 import { Order } from "../types/order";
 import { Orderbook } from "../types/orderbook";
 import StrategyConfig from "./Config";
+import StrategyState from "./StrategyState";
 
 
 export interface IStrategy {
@@ -10,7 +11,8 @@ export interface IStrategy {
   onCandle?(candle: Candle): Promise<void>;
   toggleWorking: ToggleWorkingModeCommand;
   changeConfig(newConfig: StrategyConfig): void;
-  
+  setState(state: StrategyState): void;
+
   Version?: string;
   Interval?: number;
   LeftMoney: number;
@@ -29,6 +31,7 @@ export type ToggleWorkingModeCommand = () => boolean;
 export interface IStrategyConstructor {
   new(
     config: StrategyConfig,
+    state: StrategyState,
     postOrder: PostOrderCommand,
     cancelOrder: CancelOrderCommand,
     stdOut: NodeJS.WritableStream,
