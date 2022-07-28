@@ -1,6 +1,6 @@
 import { ipcEvents } from "@/constants";
 
-export default class InstrumentsListUseCase {
+export default class InstrumentsListLogic {
   private instruments: Array<any> = [];
 
   public async load() {

@@ -3,7 +3,7 @@ import { ipcEvents } from "@/constants";
 import Analytics from "./analytics";
 import { eventTypes } from "./analytics/constants";
 
-export default class OnboardingUseCase {
+export default class OnboardingLogic {
   private mode: any = Store.Mode;
   private isTokenEntered = false;
   private account = Store.Account;

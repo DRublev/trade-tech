@@ -226,7 +226,7 @@ const DEBUG_CONFIGS = {
     }
   },
 }
-export default class DebugStrategyUseCase {
+export default class DebugStrategyLogic {
   private logs: string[] = [];
 
 

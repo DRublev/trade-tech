@@ -4,11 +4,11 @@ import MoneyDTO, { BalanceEntity } from "./MoneyDTO";
 
 type BalanceChangeListener = (balances: { [code: string]: BalanceEntity }) => void;
 
-class ActivesUseCase {
-  private static instance: ActivesUseCase;
+class ActivesLogic {
+  private static instance: ActivesLogic;
   private balance: { [code: string]: BalanceEntity } = {};
   private listeners: BalanceChangeListener[] = [];
-  private constructor() {}
+  private constructor() { }
 
   public async fetchBalances() {
     try {
@@ -34,4 +34,4 @@ class ActivesUseCase {
   }
 }
 
-export default ActivesUseCase.Instance;
+export default ActivesLogic.Instance;
