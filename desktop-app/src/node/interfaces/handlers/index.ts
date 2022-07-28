@@ -204,10 +204,9 @@ ipcMain.on(ipcEvents.TINKOFF_GET_CANDLES_STREAM, async (event, data) => {
       const isSandbox = storage.get('isSandbox');
       await createSdk(isSandbox);
     }
-    console.log('207 index', data.figi);
+    
     const stream = await TinkoffSdk.Sdk.CandlesStreamSubscriber.stream();
     for await (const candle of stream) {
-      console.log('174 index', candle);
       event.sender.send(ipcEvents.TINKOFF_ON_CANDLES_STREAM, candle);
     }
   } catch (e) {
