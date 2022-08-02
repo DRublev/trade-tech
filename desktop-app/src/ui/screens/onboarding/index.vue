@@ -2,27 +2,17 @@
   <div class="onboarding pt-24 text-center">
     <h1 class="mb-8 text-5xl">Trade.Tech</h1>
     <ChooseMode v-if="!isModeChosen" :chooseMode="chooseMode" />
-    <EnterSandboxToken
-      v-if="isModeChosen && isSandbox && !IsTokenEntered"
-      :done="onSandboxTokenEntered"
-    />
-    <EnterRealTokens
-      v-if="isModeChosen && !isSandbox && !IsTokenEntered"
-      :done="onRealTokensEntered"
-    />
-    <ChooseAccount
-      v-if="IsTokenEntered && !IsAccountChosen"
-      :accountOptions="accountOptions"
-      :done="onChooseAccount"
-      :isLoading="isAccountsListLoading"
-    />
+    <EnterSandboxToken v-if="isModeChosen && isSandbox && !IsTokenEntered" :done="onSandboxTokenEntered" />
+    <EnterRealTokens v-if="isModeChosen && !isSandbox && !IsTokenEntered" :done="onRealTokensEntered" />
+    <ChooseAccount v-if="IsTokenEntered && !IsAccountChosen" :accountOptions="accountOptions" :done="onChooseAccount"
+      :isLoading="isAccountsListLoading" />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 
-import { OnboardingUseCase } from "@/ui/useCases";
+import { OnboardingUseCase } from "@/ui/logic";
 
 import ChooseMode from "@/ui/components/onboarding/ChooseMode.vue";
 import EnterSandboxToken from "@/ui/components/onboarding/EnterSandboxToken.vue";

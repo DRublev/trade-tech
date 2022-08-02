@@ -11,7 +11,6 @@ class Store {
         ipcEvents.GET_FROM_STORE,
         { key: "isSandbox" }
       );
-      console.log("11 Store", storedIsSandbox);
       if (storedIsSandbox !== undefined) {
         this.isSandbox =
           storedIsSandbox instanceof Error ? true : Boolean(storedIsSandbox);
@@ -31,28 +30,6 @@ class Store {
     } else {
       console.error("No ipc detected");
     }
-  }
-
-  private get token() {
-    return this._token;
-  }
-
-  public get HasToken(): boolean {
-    return !!this._token;
-  }
-
-  public get Mode(): string | undefined {
-    if (this.isSandbox === undefined) return undefined;
-
-    return this.isSandbox ? "sandbox" : "production";
-  }
-
-  public get HasAccountChosen(): boolean {
-    return !!this._accountId;
-  }
-
-  public get Account() {
-    return this._accountId;
   }
 
   public async SetSandboxToken(value: string): Promise<void> {
@@ -79,9 +56,31 @@ class Store {
         key: "fullAccessToken",
         value: fullAccessToken,
       });
+      this._token = fullAccessToken;
+      console.log('82 Store', fullAccessToken);
     } catch (e) {
       console.error("SetRealTokens", e);
     }
+  }
+
+
+  public get HasToken(): boolean { return !!this._token; }
+  public get HasAccountChosen(): boolean { return !!this._accountId; }
+  public get Account() { return this._accountId; }
+  public get IsSandbox() { return this.isSandbox || true; }
+  public get Mode(): string | undefined {
+    if (this.isSandbox === undefined) return undefined;
+
+    return this.isSandbox ? "sandbox" : "production";
+  }
+
+  public set IsSandbox(value: boolean) {
+    (async function () {
+      await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, {
+        key: "isSandbox",
+        value,
+      });
+    })();
   }
 
   public set Account(value: any) {
@@ -89,18 +88,6 @@ class Store {
     (async function () {
       await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, {
         key: "accountId",
-        value,
-      });
-    })();
-  }
-
-  public get IsSandbox() {
-    return this.isSandbox || true;
-  }
-  public set IsSandbox(value: boolean) {
-    (async function () {
-      await (window as any).ipc.invoke(ipcEvents.SAVE_TO_STORE, {
-        key: "isSandbox",
         value,
       });
     })();

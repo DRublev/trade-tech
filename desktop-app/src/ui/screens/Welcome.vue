@@ -2,16 +2,9 @@
   <div class="h-screen w-full flex justify-center items-center">
     <Stepper class="mr-5 w-96 shrink-0" />
     <div class="w-full">
-      <router-view
-        v-slot="{ Component }"
-        @chooseMode="chooseMode"
-        @enterTokens="onTokensEntered"
-        @chooseAccount="onChooseAccount"
-        :isModeChosen="isModeChosen"
-        :isSandbox="isSandbox"
-        :accountOptions="accountOptions"
-        v-cloak
-      >
+      <router-view v-slot="{ Component }" @chooseMode="chooseMode" @enterTokens="onTokensEntered"
+        @chooseAccount="onChooseAccount" :isModeChosen="isModeChosen" :isSandbox="isSandbox"
+        :accountOptions="accountOptions" v-cloak>
         <transition name="fade" mode="out-in">
           <component :is="Component" />
         </transition>
@@ -22,7 +15,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { OnboardingUseCase } from "@/ui/useCases";
+import { OnboardingUseCase } from "@/ui/logic";
 
 import Onboarding from "./onboarding/index.vue";
 import Stepper from "./onboarding/Stepper.vue";
@@ -121,6 +114,7 @@ export default class Welcome extends Vue {
 h3 {
   margin: 40px 0 0;
 }
+
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.3s;

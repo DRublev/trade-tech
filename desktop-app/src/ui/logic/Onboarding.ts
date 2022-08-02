@@ -82,7 +82,7 @@ export default class OnboardingLogic {
       );
 
       await Store.SetRealTokens(readOnlyEncrypted, fullAccessEncrypted);
-      console.log(Store.HasToken);
+      console.log('86 Onboarding', Store.HasToken);
       this.isTokenEntered = true;
       Analytics.sendEvent(eventTypes.setToken, { type: "real" });
     } catch (e) {

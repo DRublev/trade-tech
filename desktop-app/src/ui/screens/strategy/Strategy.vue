@@ -94,9 +94,9 @@
 import { Options, Vue } from 'vue-class-component';
 import { Inject, Watch } from 'vue-property-decorator';
 
-import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/useCases/strategy';
-import { Deal } from '@/ui/useCases/strategy/DealsList';
-import { ActivesUseCase, InstrumentsListUseCase } from '@/ui/useCases';
+import { DealsListUseCase, StrategyChartUseCase, StrategyControlUseCase } from '@/ui/logic/strategy';
+import { Deal } from '@/ui/logic/strategy/DealsList';
+import { ActivesLogic, InstrumentsListUseCase } from '@/ui/logic';
 import Chart from '../../components/Chart';
 import Loader from '../../components/Loader.vue';
 import EditConfig from '../../components/EditConfig.vue';
@@ -149,7 +149,7 @@ export default class Strategy extends Vue {
     window.addEventListener('resize', this.updateChartSize(this.$refs.chartContainer));
     this.updateChartSize(this.$refs.chartContainer)();
     this.instrumentsListUC.load().then(() => {
-      this.instrumentOptions = this.instrumentsListUC.Instruments.map(i => ({
+      this.instrumentOptions = this.instrumentsListUC.Instruments.map((i: any) => ({
         value: i.ticker,
         label: `${i.name} (${i.ticker})`,
       }));
@@ -180,8 +180,8 @@ export default class Strategy extends Vue {
       `${d.pricePerLot}`,
     ]);
 
-    const deals = this.dealsListUC?.Deals.filter(d => !d.isClosed).map(mapDeal);
-    const pendingDeals = this.dealsListUC?.PendingDeals.filter(d => !d.isClosed).map(mapDeal);
+    const deals = this.dealsListUC?.Deals.filter((d: any) => !d.isClosed).map(mapDeal);
+    const pendingDeals = this.dealsListUC?.PendingDeals.filter((d: any) => !d.isClosed).map(mapDeal);
     if (latestDeal && !isPending) {
       this.mixpanel.track('deal', {
         action: latestDeal.action,
@@ -195,7 +195,7 @@ export default class Strategy extends Vue {
     this.deals = this.dealsListUC?.Deals || [];
     this.pendingDeals = this.dealsListUC?.PendingDeals || [];
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
-    ActivesUseCase.fetchBalances();
+    ActivesLogic.fetchBalances();
   }
   changeInstrument(e: any) {
     this.controlUC.Ticker = e.target.value;
