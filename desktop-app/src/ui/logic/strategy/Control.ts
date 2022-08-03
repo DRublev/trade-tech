@@ -37,6 +37,7 @@ export default class ControlUseCase {
 
   async changeConfig(newConfig: typeof this.config) {
     if (this.currentStatus.working) throw new Error('Cannot change ticker while strategy is working');
+    console.log('40 Control', this.config);
     const newConfigParams = Object.assign({}, this.config.parameters || {}, newConfig);
 
     const changed = await window.ipc.invoke(ipcEvents.CHANGE_STRATEGY_CONFIG, {

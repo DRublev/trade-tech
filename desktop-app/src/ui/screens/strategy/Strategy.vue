@@ -138,6 +138,8 @@ export default class Strategy extends Vue {
       const figi = this.controlUC.Config.figi || '';
       console.log('121 Strategy', figi);
       this.chartUC?.subscribeOnCandles(figi);
+    }).catch(e => {
+      console.log('142 Strategy', e);
     });
     this.mixpanel.identify();
 
@@ -255,6 +257,7 @@ main {
   max-width: 25vw;
   padding-top: 105px;
   background-color: #fff;
+  overflow-y: scroll;
 }
 
 .toolbar {
