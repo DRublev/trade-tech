@@ -249,11 +249,11 @@ main {
 }
 
 .sidebar {
-  position: fixed;
+  /* position: fixed;
   top: 0;
-  right: 60px;
+  right: 60px; */
   height: 100vh;
-  width: auto;
+  width: 0;
   max-width: 25vw;
   padding-top: 105px;
   background-color: #fff;
