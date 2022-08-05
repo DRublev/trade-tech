@@ -49,7 +49,7 @@ export default class ControlUseCase {
     this.config = changed;
   }
 
-  public get Config() { console.log(this.config); return this.config; }
+  public get Config() { return this.config; }
   public get Status() { return this.currentStatus; }
 
   public set Ticker(ticker: string) {
