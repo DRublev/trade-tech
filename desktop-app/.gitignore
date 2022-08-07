@@ -1,5 +1,6 @@
 storage
 **/*.log
 dist_electron
+dist_electron/**
 dist_electron/**/*
 trading-config.json

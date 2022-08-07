@@ -14,3 +14,14 @@ h1,h2,h3,h4,h5,h6 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
+
+/* #region Modals */
+.vue-universal-modal {
+  z-index: 9999;
+}
+
+.modal {
+  text-align: left;
+  background: #f6f6f6;
+}
+/* #endregion Modals */

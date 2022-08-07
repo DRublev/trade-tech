@@ -1,9 +1,9 @@
 <template>
   <section class="px-3">
     <h4 class="text-left text-2xl mb-3">Config</h4>
-    <div v-for="key in keys" :key="key">
-      <label class="pl-3">{{ key }}</label>
-      <input :placeholder="key" v-model="edited[key]" type="number" class="text-left rounded-2xl" />
+    <div v-for="key in keys" :key="key" class="mb-1 justify-between flex">
+      <label class="mr-3">{{ key }}</label>
+      <input :placeholder="key" v-model="edited[key]" type="number" class="text-left rounded-md ml-auto" />
     </div>
     <button class="w-full px-6 py-2 text-center border rounded-2xl text-white bg-slate-800" @click="save">
       Save
@@ -11,9 +11,12 @@
   </section>
 </template>
 <script lang="ts">
-import { TradingConfig } from '@/node/domain/TradingConfig';
 import { Vue } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+
+import { TradingConfig } from '@/node/domain/TradingConfig';
+import labels from './configLabels';
+
 
 
 export default class EditConfig extends Vue {
@@ -29,7 +32,7 @@ export default class EditConfig extends Vue {
     this.$emit('save', Object.assign({}, this.edited));
   }
 
-  get keys() { return Object.keys(this.config.parameters); }
+  get keys() { return Object.keys(this.config.parameters).map((key) => (labels as any)[key]?.label || key); }
 }
 </script>
 <style scoped>
