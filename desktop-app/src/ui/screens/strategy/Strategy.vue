@@ -4,8 +4,8 @@
       <div class="w-full pb-2 pt-4 justify-center topbar">
         <div class="w-1/3 flex flex-1 mx-8">
           <h2 class="text-left text-xl">{{ config.strategy }}</h2>
-          <select class="text-left rounded-2xl border pl-2 pr-3 py-1 ml-3 h-8" @change="changeInstrument($event)"
-            style="width:-webkit-fill-available">
+          <select class="text-left rounded-md border border-gray-400 pl-2 pr-3 py-1 ml-3 h-8"
+            @change="changeInstrument($event)" style="width:-webkit-fill-available">
             <option v-for="i in instrumentOptions" :key="i.value" :value="i.value"
               :selected="i.value === controlUC.Config.ticker">{{ i.label }}</option>
           </select>
@@ -29,7 +29,7 @@
         <div class="w-1/3 flex-1"></div>
 
       </div>
-      <div class="min-h-1/2 mx-4 mb-3 mt-3 chart-container" ref="chartContainer">
+      <div class="min-h-1/2 mx-4 mb-3 mt-3 chart-container rounded-md border border-gray-400" ref="chartContainer">
         <chart ref="chartComponent" :width="chartWidth" :height="chartHeight" />
       </div>
       <div class="w-full mx-3">
@@ -74,9 +74,7 @@
         </div>
       </div>
     </div>
-    <aside v-if="!!shownSection" class="sidebar transition">
-      <edit-config v-if="shownSection === 'config'" :config="config" v-on:save="controlUC.changeConfig" />
-    </aside>
+
     <aside class="toolbar pt-4">
       <ul class="flex flex-col controls-list mt-5 pr-5">
         <li>
@@ -87,6 +85,12 @@
         </li>
       </ul>
     </aside>
+
+    <Modal v-model="isConfigModalShown" :close="closeConfigModal">
+      <div class="modal p-5 rounded-md">
+        <edit-config :config="config" v-on:save="controlUC.changeConfig" />
+      </div>
+    </Modal>
   </main>
 
 </template>
@@ -99,7 +103,7 @@ import { Deal } from '@/ui/logic/strategy/DealsList';
 import { ActivesLogic, InstrumentsListUseCase } from '@/ui/logic';
 import Chart from '../../components/Chart';
 import Loader from '../../components/Loader.vue';
-import EditConfig from '../../components/EditConfig.vue';
+import EditConfig from '../../components/EditConfig';
 
 
 @Options({
@@ -199,14 +203,21 @@ export default class Strategy extends Vue {
     this.$refs.chartComponent.updateTrades(deals, pendingDeals);
     ActivesLogic.fetchBalances();
   }
+
   changeInstrument(e: any) {
     this.controlUC.Ticker = e.target.value;
+  }
+
+  closeConfigModal() {
+    this.shownSection = '';
   }
 
   @Watch('shownSection')
   onShownSectionChange() {
     this.updateChartSize(this.$refs.chartContainer)();
   }
+
+  get isConfigModalShown() { return this.shownSection === 'config'; }
 
   get config() { return this.controlUC.Config; }
   get status() { return this.controlUC.Status; }
@@ -236,8 +247,6 @@ main {
 }
 
 .chart-container {
-  border: 1px solid rgb(30 41 59);
-  border-radius: 25px;
   max-width: 100vw;
 }
 
