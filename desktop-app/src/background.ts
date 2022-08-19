@@ -2,7 +2,7 @@
 
 import "reflect-metadata";
 import path from 'path';
-import { app, protocol, BrowserWindow, shell } from 'electron'
+import { app, protocol, BrowserWindow, shell, Tray } from 'electron'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import './node/interfaces/handlers';
@@ -15,11 +15,14 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+const iconPath = path.join(__dirname, './2_rounded.png').toString();
+
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: iconPath,
     webPreferences: {
       nodeIntegrationInWorker: true,
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -36,6 +39,9 @@ async function createWindow() {
     shell.openExternal(url);
   });
 
+  if (process.platform === 'darwin') {
+    app.dock.setIcon(iconPath);
+  }
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -47,6 +53,7 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
 }
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -75,6 +82,7 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
+  
   createWindow()
 })
 
