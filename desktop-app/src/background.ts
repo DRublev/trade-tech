@@ -41,7 +41,6 @@ async function createWindow() {
 
   if (process.platform === 'darwin') {
     app.dock.setIcon(iconPath);
-    app.badgeCount = 10;
   }
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
